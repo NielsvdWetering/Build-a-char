@@ -1,0 +1,1 @@
+# Title## StatusProposed## Contextthere are multiple options for the type of entity id## Decisionall entities use UUID's for the PK collumn## Consequencessome tables will have an additional collumn, but the implementation of one single format will make the entities more easily readable
