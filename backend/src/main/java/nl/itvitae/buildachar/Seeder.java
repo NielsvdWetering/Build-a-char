@@ -25,6 +25,10 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedClasses() {
+    if (!characterClassService.getAll().isEmpty()) {
+      return;
+    }
+
     characterClassService.save("Warrior");
     characterClassService.save("Paladin");
     characterClassService.save("Wizard");
@@ -34,6 +38,10 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedArmors() {
+    if (!armorService.getAll().isEmpty()) {
+      return;
+    }
+
     armorService.save("Steel Helmet", "", 4.2, ArmorType.HEAD, ArmorClass.HEAVY);
     armorService.save("Steel Chestplate", "", 4.2, ArmorType.TORSO, ArmorClass.HEAVY);
     armorService.save("Steel Leggins", "", 4.2, ArmorType.LEGS, ArmorClass.HEAVY);
