@@ -1,9 +1,8 @@
 package nl.itvitae.buildachar.weapon;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nl.itvitae.buildachar.character.PlayerCharacter;
@@ -13,6 +12,10 @@ import nl.itvitae.buildachar.characterclass.CharacterClass;
 @NoArgsConstructor
 @Getter
 public class Weapon {
+  @Id
+  @GeneratedValue
+  private UUID id;
+
   private Integer attackPower;
 
   @Column(nullable = false, length = 999)
