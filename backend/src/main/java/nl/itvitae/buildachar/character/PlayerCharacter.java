@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
+import nl.itvitae.buildachar.charactertool.CharacterTool;
+import nl.itvitae.buildachar.race.Race;
 
 @Entity
 @NoArgsConstructor
@@ -24,6 +26,10 @@ public class PlayerCharacter {
   @ManyToOne private CharacterClass characterClass;
 
   @ManyToMany private Set<Armor> armors;
+
+  @ManyToOne private Race race;
+
+  @OneToMany private Set<CharacterTool> characterTools;
 
   public PlayerCharacter(String name, String description) {
     this.name = name;

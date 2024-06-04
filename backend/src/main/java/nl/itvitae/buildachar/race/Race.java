@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.buildachar.character.PlayerCharacter;
+
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -12,18 +16,20 @@ import lombok.Setter;
 public class Race {
     @Id
     @GeneratedValue
-    private Long id;
-    @Column(length=100)
-    private String name;
-    private final Integer baseStrength;
-    private final Integer baseDexterity;
-    private final Integer baseConstitution;
-    private final Integer baseIntelligence;
-    private final Integer baseWisdom;
-    private final Integer baseCharisma;
+    private UUID id;
 
-    //@OneToMany
-    //private final Character character;
+    @Column(nullable = false)
+    private String name;
+
+    private Integer baseStrength;
+    private Integer baseDexterity;
+    private Integer baseConstitution;
+    private Integer baseIntelligence;
+    private Integer baseWisdom;
+    private Integer baseCharisma;
+
+    @OneToMany(mappedBy = "race")
+    private Set<PlayerCharacter> playerCharacters;
 
     public Race(Integer baseStrength, Integer baseDexterity, Integer baseConstitution, Integer baseIntelligence, Integer baseWisdom, Integer baseCharisma) {
         this.baseStrength = baseStrength;
