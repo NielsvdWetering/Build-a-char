@@ -9,6 +9,7 @@ import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.tool.Tool;
+import nl.itvitae.buildachar.weapon.Weapon;
 
 @Entity
 @NoArgsConstructor
@@ -31,6 +32,9 @@ public class PlayerCharacter {
 
   @ManyToMany(mappedBy = "playerCharacters")
   private Set<Tool> tools;
+
+  @ManyToMany(mappedBy = "")
+  private Set<Weapon> weapons;
 
   public PlayerCharacter(String name, String description) {
     this.name = name;
