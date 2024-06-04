@@ -1,19 +1,18 @@
 package nl.itvitae.buildachar.tool;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import nl.itvitae.buildachar.charactertool.CharacterTool;
-
+import jakarta.persistence.*;
 import java.util.Set;
 import java.util.UUID;
+import nl.itvitae.buildachar.character.PlayerCharacter;
 
 @Entity
 public class Tool {
-    private UUID id;
-    @Column(nullable = false, length = 999)
-    private String description;
+  @Id
+  @GeneratedValue
+  private UUID id;
 
-    @OneToMany
-    private Set<CharacterTool> characterTools;
+  @Column(nullable = false, length = 999)
+  private String description;
+
+  @ManyToMany private Set<PlayerCharacter> playerCharacters;
 }
