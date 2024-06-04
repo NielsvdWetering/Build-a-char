@@ -16,11 +16,13 @@ public class Armor {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private String name;
+
+    private String description;
+
     private double defence;
 
     private ArmorType armorType;
-
-    private String description;
 
     private ArmorClass armorClass;
 
@@ -31,4 +33,12 @@ public class Armor {
     @Setter
     @ManyToMany(mappedBy = "allowedArmors")
     private Set<CharacterClass> requiredClasses;
+
+    public Armor(String name, String description, double defence, ArmorType armorType, ArmorClass armorClass) {
+        this.name = name;
+        this.description = description;
+        this.defence = defence;
+        this.armorType = armorType;
+        this.armorClass = armorClass;
+    }
 }

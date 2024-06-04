@@ -5,4 +5,5 @@ public abstract class ControllerRoutes {
 
     public static final String CHARACTER_ROUTE = BASE_ROUTE + "characters";
     public static final String CLASS_ROUTE = BASE_ROUTE + "classes";
+    public static final String ARMOR_ROUTE = BASE_ROUTE + "armors";
 }
