@@ -1,11 +1,10 @@
 package nl.itvitae.buildachar.armor;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +20,7 @@ public class ArmorService {
     }
 
     public Armor save(String name, String description, double defence, ArmorType armorType, ArmorClass armorClass){
-        return armorRepository.save(new Armor(name, description,defence,armorType,armorClass));
+        return armorRepository.save(
+                new Armor(name, description,defence,armorType,armorClass));
     }
 }

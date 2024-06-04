@@ -1,7 +1,6 @@
 package nl.itvitae.buildachar.characterclass;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CharacterClassRepository extends JpaRepository<CharacterClass, UUID> {}

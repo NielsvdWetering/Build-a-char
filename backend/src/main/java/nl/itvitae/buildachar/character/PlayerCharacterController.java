@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ControllerRoutes.CHARACTER_ROUTE)
 @CrossOrigin(origins = {"${app-cors}"})
 public class PlayerCharacterController {
-    private final PlayerCharacterService playerCharacterService;
+  private final PlayerCharacterService playerCharacterService;
 }
