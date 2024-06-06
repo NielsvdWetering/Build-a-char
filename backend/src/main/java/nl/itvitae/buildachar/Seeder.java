@@ -18,7 +18,7 @@ public class Seeder implements CommandLineRunner {
   private final CharacterClassService characterClassService;
   private final ToolService toolService;
   private final ArmorService armorService;
-  private final WeaponService weaponSerice;
+  private final WeaponService weaponService;
 
   @Override
   public void run(String... args) throws Exception {
@@ -82,11 +82,20 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedRace() {
-    // TODO random renderen
     raceService.save("Dwarf", 3.2, 1.2, 4.1, 2., 2.8, 2.4);
+    raceService.save("Elf", 2.8, 1.5, 4.0, 3.5, 3.0, 2.7);
+    raceService.save("Orc", 3.5, 1.8, 3.2, 2.7, 2.9, 2.5);
+    raceService.save("Human", 3.0, 1.7, 3.8, 3.0, 2.6, 2.8);
+    raceService.save("Halfling", 2.4, 1.2, 4.3, 3.8, 2.3, 2.0);
+    raceService.save("Gnome", 2.5, 1.3, 4.2, 3.9, 2.4, 2.1);
   }
 
   private void seedWeapons() {
-    weaponSerice.save("sword", "weapon", "medium?", 45.);
+    weaponService.save("sword", "weapon", "medium?", 45.);
+    weaponService.save("axe", "weapon", "heavy", 60.);
+    weaponService.save("dagger", "weapon", "light", 20.);
+    weaponService.save("bow", "ranged", "medium", 35.);
+    weaponService.save("spear", "weapon", "long", 50.);
+    weaponService.save("mace", "weapon", "heavy", 55.);
   }
 }
