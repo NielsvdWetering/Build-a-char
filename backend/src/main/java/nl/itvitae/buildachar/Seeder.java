@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
+import nl.itvitae.buildachar.character.PlayerCharacterService;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.race.RaceAttributes;
 import nl.itvitae.buildachar.race.RaceService;
@@ -21,6 +22,7 @@ public class Seeder implements CommandLineRunner {
   private final ToolService toolService;
   private final ArmorService armorService;
   private final WeaponService weaponService;
+  private final PlayerCharacterService playerCharacterService;
 
   @Override
   public void run(String... args) throws Exception {
@@ -29,6 +31,14 @@ public class Seeder implements CommandLineRunner {
     seedTools();
     seedWeapons();
     seedRace();
+    seedPlayerCharacters();
+  }
+
+  private void seedPlayerCharacters() {
+    if (!playerCharacterService.getAll().isEmpty()) return;
+
+    playerCharacterService.save("charles", "dude");
+    playerCharacterService.save("cake", "dake");
   }
 
   private void seedClasses() {
@@ -86,6 +96,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedRace() {
+    if (!raceService.getAll().isEmpty()) return;
     raceService.save("Dwarf", new RaceAttributes(3.2, 1.2, 4.1, 2., 2.8, 2.4));
     raceService.save("Elf", new RaceAttributes(2.8, 1.5, 4.0, 3.5, 3.0, 2.7));
     raceService.save("Orc", new RaceAttributes(3.5, 1.8, 3.2, 2.7, 2.9, 2.5));
@@ -95,6 +106,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedWeapons() {
+    if (!weaponService.getAll().isEmpty()) return;
     weaponService.save("sword", "weapon", WeaponType.BLUNT, 45.);
     weaponService.save("axe", "weapon", WeaponType.PIERCING, 60.);
     weaponService.save("dagger", "weapon", WeaponType.SLASHING, 20.);

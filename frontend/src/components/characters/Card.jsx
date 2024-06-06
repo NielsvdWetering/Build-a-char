@@ -1,20 +1,36 @@
 import React , { useEffect, useState }from 'react'
 import { DisplayField } from './DisplayField';
 
-export const Card = ({ fields }) => {
-/* takes in an array of objects with 2 key value pairs.
-  The first key takes in the name of te label for the field
-  The second takes in the actual content 
-*/
+export const Card = ({ characterObject }) => {
 
-  const [fieldList,setFieldList] = useState([{}]);
+  const [character,setCharacter] = useState([{}]);
+  const [armors,setArmors] = useState([{}])
   useEffect(() => {
-    setFieldList(fields);
-  }, [])
+    setCharacter(characterObject);
+    setArmors(characterObject.armors)
+  }, [characterObject])
   
   return (
-    <div className="m-2 p-2 border-2 flex-1">
-        {fieldList.map((field,index)=>(<DisplayField key={`${field.label}-${index}`} label={field.label} content={field.content}/>))}
+    <div className="m-10 p-2 border-2 flex-row">
+      <div className='border-2'>
+        <DisplayField label={"name"} content={character.name}/>
+        <DisplayField label={"race"} content={character.race}/>
+        <DisplayField label={"class"} content={character.characterClass} />
+        <DisplayField label={"description"} content={character.description} />
+      </div>
+      <div className='border-2'>
+        <DisplayField label={"weapon"} content={character.weapon}/>
+        <DisplayField label={"head"} content={character.armorHead}/>
+        <DisplayField label={"torso"} content={character.armorTorso}/>
+        <DisplayField label={"hands"} content={character.armorHands}/>
+        <DisplayField label={"legs"} content={character.armorLegs}/>
+        <DisplayField label={"feet"} content={character.armorFeet}/>
+        <DisplayField label={"tool"} content={character.tools}/>
+        </div>
+        <div className='border-2'>
+          Stats!!
+        </div>
+
     </div>
   )
 }

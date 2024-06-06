@@ -30,14 +30,29 @@ public class PlayerCharacter {
 
   @ManyToOne private Race race;
 
-  @ManyToMany(mappedBy = "playerCharacters")
-  private Set<Tool> tools;
+  @ManyToOne private Tool tool;
 
-  @ManyToMany(mappedBy = "playerCharacters")
-  private Set<Weapon> weapons;
+  @ManyToOne private Weapon weapon;
 
   public PlayerCharacter(String name, String description) {
     this.name = name;
     this.description = description;
+  }
+
+  public PlayerCharacter(
+      String name,
+      String description,
+      CharacterClass characterClass,
+      Set<Armor> armors,
+      Race race,
+      Tool tool,
+      Weapon weapon) {
+    this.name = name;
+    this.description = description;
+    this.characterClass = characterClass;
+    this.armors = armors;
+    this.race = race;
+    this.tool = tool;
+    this.weapon = weapon;
   }
 }
