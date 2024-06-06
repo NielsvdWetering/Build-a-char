@@ -17,12 +17,14 @@ public class Weapon {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  private Integer attackPower;
+  private String name;
 
   @Column(nullable = false, length = 999)
   private String description;
 
   private String type;
+
+  private Double attackPower;
 
   @Setter
   @ManyToMany
@@ -33,4 +35,11 @@ public class Weapon {
   private Set<PlayerCharacter> playerCharacters;
 
   @Setter @ManyToMany private Set<CharacterClass> characterClasses;
+
+  public Weapon(String name, String description, String type, Double attackPower) {
+    this.name = name;
+    this.description = description;
+    this.type = type;
+    this.attackPower = attackPower;
+  }
 }

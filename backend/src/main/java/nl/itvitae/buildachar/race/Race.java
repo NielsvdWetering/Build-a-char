@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.race;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -20,24 +21,28 @@ public class Race {
   @Column(nullable = false)
   private String name;
 
-  private Integer baseStrength;
-  private Integer baseDexterity;
-  private Integer baseConstitution;
-  private Integer baseIntelligence;
-  private Integer baseWisdom;
-  private Integer baseCharisma;
+  private Double baseStrength;
+  private Double baseDexterity;
+  private Double baseConstitution;
+  private Double baseIntelligence;
+  private Double baseWisdom;
+  private Double baseCharisma;
 
   @Setter
   @OneToMany(mappedBy = "race")
-  private Set<PlayerCharacter> playerCharacters;
+  private Set<PlayerCharacter> playerCharacters = new HashSet<>();
+
+  public void addToPlayerCharacters(Set<PlayerCharacter> characters) {
+    playerCharacters.addAll(characters);
+  }
 
   public Race(
-      Integer baseStrength,
-      Integer baseDexterity,
-      Integer baseConstitution,
-      Integer baseIntelligence,
-      Integer baseWisdom,
-      Integer baseCharisma) {
+      Double baseStrength,
+      Double baseDexterity,
+      Double baseConstitution,
+      Double baseIntelligence,
+      Double baseWisdom,
+      Double baseCharisma) {
     this.baseStrength = baseStrength;
     this.baseDexterity = baseDexterity;
     this.baseConstitution = baseConstitution;
@@ -48,13 +53,12 @@ public class Race {
 
   public Race(
       String name,
-      Integer baseStrength,
-      Integer baseDexterity,
-      Integer baseConstitution,
-      Integer baseIntelligence,
-      Integer baseWisdom,
-      Integer baseCharisma,
-      Set<PlayerCharacter> playerCharacters) {
+      Double baseStrength,
+      Double baseDexterity,
+      Double baseConstitution,
+      Double baseIntelligence,
+      Double baseWisdom,
+      Double baseCharisma) {
     this.name = name;
     this.baseStrength = baseStrength;
     this.baseDexterity = baseDexterity;
@@ -62,6 +66,5 @@ public class Race {
     this.baseIntelligence = baseIntelligence;
     this.baseWisdom = baseWisdom;
     this.baseCharisma = baseCharisma;
-    this.playerCharacters = playerCharacters;
   }
 }

@@ -2,9 +2,7 @@ package nl.itvitae.buildachar.race;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,13 +23,12 @@ public class RaceService {
 
   public void save(
       String name,
-      Integer baseStrength,
-      Integer baseDexterity,
-      Integer baseConstitution,
-      Integer baseIntelligence,
-      Integer baseWisdom,
-      Integer baseCharisma,
-      Set<PlayerCharacter> playerCharacters) {
+      Double baseStrength,
+      Double baseDexterity,
+      Double baseConstitution,
+      Double baseIntelligence,
+      Double baseWisdom,
+      Double baseCharisma) {
     raceRepository.save(
         new Race(
             name,
@@ -40,7 +37,6 @@ public class RaceService {
             baseConstitution,
             baseIntelligence,
             baseWisdom,
-            baseCharisma,
-            playerCharacters));
+            baseCharisma));
   }
 }

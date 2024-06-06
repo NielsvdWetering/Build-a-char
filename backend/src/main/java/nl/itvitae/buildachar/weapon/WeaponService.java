@@ -17,7 +17,7 @@ public class WeaponService {
     return weaponRepository.findById(id);
   }
 
-  public void save(Weapon weapon) {
-    weaponRepository.save(weapon);
+  public void save(String name, String description, String type, Double attackPower) {
+    weaponRepository.save(new Weapon(name, description, type, attackPower));
   }
 }

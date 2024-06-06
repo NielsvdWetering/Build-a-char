@@ -6,8 +6,8 @@ import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.race.RaceService;
-import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
+import nl.itvitae.buildachar.weapon.WeaponService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,7 @@ public class Seeder implements CommandLineRunner {
   private final CharacterClassService characterClassService;
   private final ToolService toolService;
   private final ArmorService armorService;
+  private final WeaponService weaponSerice;
 
   @Override
   public void run(String... args) throws Exception {
@@ -67,20 +68,25 @@ public class Seeder implements CommandLineRunner {
     if (!toolService.getAll().isEmpty()) {
       return;
     }
+    toolService.save("Hammer", "Tool used for driving nails into wood and other materials");
+    toolService.save("Screwdriver", "Tool for driving screws with a handle and a shaft");
     toolService.save(
-        new Tool("Hammer", "Tool used for driving nails into wood and other materials"));
-    toolService.save(new Tool("Screwdriver", "Tool for driving screws with a handle and a shaft"));
+        "Wrench",
+        "Tool used to provide grip and mechanical advantage in applying torque to turn objects");
     toolService.save(
-        new Tool(
-            "Wrench",
-            "Tool used to provide grip and mechanical advantage in applying torque to turn objects"));
+        "Pliers",
+        "Hand tool used to hold objects firmly, for bending, or for physical compression");
     toolService.save(
-        new Tool(
-            "Pliers",
-            "Hand tool used to hold objects firmly, for bending, or for physical compression"));
-    toolService.save(
-        new Tool(
-            "Drill",
-            "Power tool used for making holes in various materials or fastening materials together with screws"));
+        "Drill",
+        "Power tool used for making holes in various materials or fastening materials together with screws");
+  }
+
+  private void seedRace() {
+    // TODO random renderen
+    raceService.save("Dwarf", 3.2, 1.2, 4.1, 2., 2.8, 2.4);
+  }
+
+  private void seedWeapons() {
+    weaponSerice.save("sword", "weapon", "medium?", 45.);
   }
 }

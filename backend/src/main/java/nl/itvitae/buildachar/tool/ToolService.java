@@ -1,10 +1,9 @@
 package nl.itvitae.buildachar.tool;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ToolService {
@@ -18,7 +17,7 @@ public class ToolService {
     return toolRepository.findById(id);
   }
 
-  public void save(Tool tool) {
-    toolRepository.save(tool);
+  public void save(String name, String description) {
+    toolRepository.save(new Tool(name, description));
   }
 }
