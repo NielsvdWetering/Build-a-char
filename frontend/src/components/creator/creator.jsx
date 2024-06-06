@@ -5,6 +5,7 @@ import ClassSelect from "./subcomponents/classSelect";
 import DescriptionInput from "./subcomponents/descriptionInput";
 import axios from "axios";
 import NameInput from "./subcomponents/nameInput";
+import ToolSelect from "./subcomponents/toolSelect";
 
 export default function Creator() {
   const [name, setName] = useState("");
@@ -16,6 +17,9 @@ export default function Creator() {
 
   const [description, setDescription] = useState("");
 
+  const [tools, setTools] = useState([]);
+  const [selectedTool, setSelectedTool] = useState(null);
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/races")
@@ -26,6 +30,11 @@ export default function Creator() {
       .get("http://localhost:8080/api/v1/classes")
       .catch(console.error)
       .then((response) => setCharacterClasses(response.data));
+
+    axios
+      .get("http://localhost:8080/api/v1/tools")
+      .catch(console.error)
+      .then((response) => setTools(response.data));
   }, []);
 
   return (
@@ -43,7 +52,9 @@ export default function Creator() {
             setDescription={setDescription}
           />
         </CreatorColumn>
-        <CreatorColumn>content in the 2nd column</CreatorColumn>
+        <CreatorColumn>
+          <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
+        </CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
       </div>
       <button onClick={() => console.log(name)}>Test</button>
