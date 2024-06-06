@@ -1,9 +1,7 @@
-import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import Home from "./components/home/home";
 import Creator from "./components/creator/creator";
 import Characters from "./components/characters/characters";
-
 
 import { Routes, Route } from "react-router-dom";
 
