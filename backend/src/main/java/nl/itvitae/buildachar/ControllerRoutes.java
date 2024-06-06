@@ -8,5 +8,5 @@ public abstract class ControllerRoutes {
   public static final String ARMOR_ROUTE = BASE_ROUTE + "armors";
   public static final String TOOL_ROUTE = BASE_ROUTE + "tools";
   public static final String WEAPON_ROUTE = BASE_ROUTE + "weapons";
-  public static final String RACE_ROUTE = BASE_ROUTE + "race";
+  public static final String RACE_ROUTE = BASE_ROUTE + "races";
 }
