@@ -7,28 +7,29 @@ import axios from "axios";
 export default function Creator() {
   const [selectedRace, setSelectedRace] = useState(null);
   const [races, setRaces] = useState([]);
-  const [characterClass, setCharacterClass] = useState();
+  const [SelectedCharacterClass, setSelectedCharacterClass] = useState(null);
+  const [characterClasses, setCharacterClasses] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/races")
       .catch(console.error)
       .then((response) => setRaces(response.data));
+
+    axios
+      .get("http://localhost:8080/api/v1/classes")
+      .catch(console.error)
+      .then((response) => setCharacterClasses(response.data));
   }, []);
-
-  useEffect(() => {
-    if (!races || races === null || races.length === 0) {
-      return;
-    }
-
-    setSelectedRace(races[1]);
-  }, [races]);
 
   return (
     <>
       <div id="page" className="flex h-full justify-around">
         <CreatorColumn>
-          <ClassSelect />
+          <ClassSelect
+            characterClasses={characterClasses}
+            setSelectedCharacterClass={setSelectedCharacterClass}
+          />
           <RaceSelect races={races} setSelectedRace={setSelectedRace} />
         </CreatorColumn>
         <CreatorColumn>content in the 2nd column</CreatorColumn>

@@ -1,24 +1,28 @@
-import React from "react";
-
-export default function ClassSelect({}) {
-    const 
-
-const getClasses(() => {}) 
-
+export default function RaceSelect({
+  characterClasses,
+  setSelectedCharacterClass,
+}) {
+  const defaultValue = "Select your class";
   return (
     <>
-      <select className="select select-secondary w-full max-w-xs">
-        <option disabled selected>
-          Pick your favorite language
+      <select
+        className="select select-secondary w-full"
+        onChange={(event) =>
+          setSelectedCharacterClass(JSON.parse(event.target.value))
+        }
+        value={defaultValue}
+      >
+        <option disabled value={defaultValue}>
+          Select your class
         </option>
-        <option>Java</option>
-        <option>Go</option>
-        <option>C</option>
-        <option>C#</option>
-        <option>C++</option>
-        <option>Rust</option>
-        <option>JavaScript</option>
-        <option>Python</option>
+        {characterClasses.map((characterClass) => (
+          <option
+            key={characterClass.id}
+            value={JSON.stringify(characterClass)}
+          >
+            {characterClass.name}
+          </option>
+        ))}
       </select>
     </>
   );
