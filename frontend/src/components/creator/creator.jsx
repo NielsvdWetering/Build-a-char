@@ -14,14 +14,6 @@ export default function Creator() {
       .then((response) => setRaces(response.data));
   }, []);
 
-  useEffect(() => {
-    if (!races || races === null || races.length === 0) {
-      return;
-    }
-
-    setSelectedRace(races[1]);
-  }, [races]);
-
   return (
     <>
       <div id="page" className="flex h-full justify-around">
