@@ -18,6 +18,7 @@ export default function Creator() {
   const [description, setDescription] = useState("");
 
   const [weapons, setWeapons] = useState([]);
+  const [selectedWeapon, setSelectedWeapon] = useState(null);
 
   useEffect(() => {
     axios
@@ -52,7 +53,10 @@ export default function Creator() {
           />
         </CreatorColumn>
         <CreatorColumn>
-          <WeaponSelect weapons={weapons} setWeapons={setWeapons} />
+          <WeaponSelect
+            weapons={weapons}
+            setSelectedWeapon={setSelectedWeapon}
+          />
         </CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
       </div>
