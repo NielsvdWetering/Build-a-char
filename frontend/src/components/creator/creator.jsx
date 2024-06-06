@@ -5,6 +5,7 @@ import ClassSelect from "./subcomponents/classSelect";
 import DescriptionInput from "./subcomponents/descriptionInput";
 import axios from "axios";
 import NameInput from "./subcomponents/nameInput";
+import WeaponSelect from "./subcomponents/weaponSelect";
 
 export default function Creator() {
   const [name, setName] = useState("");
@@ -16,6 +17,8 @@ export default function Creator() {
 
   const [description, setDescription] = useState("");
 
+  const [weapons, setWeapons] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/races")
@@ -26,6 +29,11 @@ export default function Creator() {
       .get("http://localhost:8080/api/v1/classes")
       .catch(console.error)
       .then((response) => setCharacterClasses(response.data));
+
+    axios
+      .get("http://localhost:8080/api/v1/weapons")
+      .catch(console.error)
+      .then((response) => setWeapons(response.data));
   }, []);
 
   return (
@@ -43,10 +51,11 @@ export default function Creator() {
             setDescription={setDescription}
           />
         </CreatorColumn>
-        <CreatorColumn>content in the 2nd column</CreatorColumn>
+        <CreatorColumn>
+          <WeaponSelect weapons={weapons} setWeapons={setWeapons} />
+        </CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
       </div>
-      <button onClick={() => console.log(name)}>Test</button>
     </>
   );
 }
