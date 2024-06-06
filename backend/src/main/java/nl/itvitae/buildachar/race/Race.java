@@ -21,51 +21,19 @@ public class Race {
   @Column(nullable = false)
   private String name;
 
-  private Double baseStrength;
-  private Double baseDexterity;
-  private Double baseConstitution;
-  private Double baseIntelligence;
-  private Double baseWisdom;
-  private Double baseCharisma;
+  @Embedded private RaceAttributes raceAttributes;
 
   @Setter
   @OneToMany(mappedBy = "race")
   private Set<PlayerCharacter> playerCharacters = new HashSet<>();
 
+  public Race(String name, RaceAttributes raceAttributes) {
+    this.name = name;
+    this.raceAttributes = raceAttributes;
+  }
+
   public void addToPlayerCharacters(Set<PlayerCharacter> characters) {
     playerCharacters.addAll(characters);
-  }
-
-  public Race(
-      Double baseStrength,
-      Double baseDexterity,
-      Double baseConstitution,
-      Double baseIntelligence,
-      Double baseWisdom,
-      Double baseCharisma) {
-    this.baseStrength = baseStrength;
-    this.baseDexterity = baseDexterity;
-    this.baseConstitution = baseConstitution;
-    this.baseIntelligence = baseIntelligence;
-    this.baseWisdom = baseWisdom;
-    this.baseCharisma = baseCharisma;
-  }
-
-  public Race(
-      String name,
-      Double baseStrength,
-      Double baseDexterity,
-      Double baseConstitution,
-      Double baseIntelligence,
-      Double baseWisdom,
-      Double baseCharisma) {
-    this.name = name;
-    this.baseStrength = baseStrength;
-    this.baseDexterity = baseDexterity;
-    this.baseConstitution = baseConstitution;
-    this.baseIntelligence = baseIntelligence;
-    this.baseWisdom = baseWisdom;
-    this.baseCharisma = baseCharisma;
   }
 }
 

@@ -21,22 +21,7 @@ public class RaceService {
     return raceRepository.findById(id);
   }
 
-  public void save(
-      String name,
-      Double baseStrength,
-      Double baseDexterity,
-      Double baseConstitution,
-      Double baseIntelligence,
-      Double baseWisdom,
-      Double baseCharisma) {
-    raceRepository.save(
-        new Race(
-            name,
-            baseStrength,
-            baseDexterity,
-            baseConstitution,
-            baseIntelligence,
-            baseWisdom,
-            baseCharisma));
+  public void save(String name, RaceAttributes raceAttributes) {
+    raceRepository.save(new Race(name, raceAttributes));
   }
 }
