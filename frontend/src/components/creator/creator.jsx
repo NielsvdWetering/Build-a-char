@@ -26,11 +26,7 @@ export default function Creator() {
     <>
       <div id="page" className="flex h-full justify-around">
         <CreatorColumn>
-          <RaceSelect
-            races={races}
-            selectedRace={selectedRace}
-            setSelectedRace={setSelectedRace}
-          />
+          <RaceSelect races={races} setSelectedRace={setSelectedRace} />
         </CreatorColumn>
         <CreatorColumn>content in the 2nd column</CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
