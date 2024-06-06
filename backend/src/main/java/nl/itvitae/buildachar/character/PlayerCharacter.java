@@ -33,7 +33,7 @@ public class PlayerCharacter {
   @ManyToMany(mappedBy = "playerCharacters")
   private Set<Tool> tools;
 
-  @ManyToMany(mappedBy = "")
+  @ManyToMany(mappedBy = "playerCharacters")
   private Set<Weapon> weapons;
 
   public PlayerCharacter(String name, String description) {

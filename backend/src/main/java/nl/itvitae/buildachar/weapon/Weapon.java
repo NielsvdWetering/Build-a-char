@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 
@@ -13,7 +14,7 @@ import nl.itvitae.buildachar.characterclass.CharacterClass;
 @Getter
 public class Weapon {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
   private Integer attackPower;
@@ -23,7 +24,13 @@ public class Weapon {
 
   private String type;
 
-  @ManyToMany private Set<PlayerCharacter> playerCharacters;
+  @Setter
+  @ManyToMany
+  @JoinTable(
+      name = "weapon_player_character",
+      joinColumns = @JoinColumn(name = "weapon_id"),
+      inverseJoinColumns = @JoinColumn(name = "player_character_id"))
+  private Set<PlayerCharacter> playerCharacters;
 
-  @ManyToMany private Set<CharacterClass> characterClasses;
+  @Setter @ManyToMany private Set<CharacterClass> characterClasses;
 }

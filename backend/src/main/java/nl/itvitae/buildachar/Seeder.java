@@ -6,6 +6,7 @@ import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.race.RaceService;
+import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class Seeder implements CommandLineRunner {
   public void run(String... args) throws Exception {
     seedClasses();
     seedArmors();
+    seedTools();
   }
 
   private void seedClasses() {
@@ -59,5 +61,26 @@ public class Seeder implements CommandLineRunner {
     armorService.save("Light Pants", "", 4.2, ArmorType.LEGS, ArmorClass.LIGHT);
     armorService.save("Thin Gloves", "", 4.2, ArmorType.HANDS, ArmorClass.LIGHT);
     armorService.save("Worn Boots", "", 4.2, ArmorType.FEET, ArmorClass.LIGHT);
+  }
+
+  private void seedTools() {
+    if (!toolService.getAll().isEmpty()) {
+      return;
+    }
+    toolService.save(
+        new Tool("Hammer", "Tool used for driving nails into wood and other materials"));
+    toolService.save(new Tool("Screwdriver", "Tool for driving screws with a handle and a shaft"));
+    toolService.save(
+        new Tool(
+            "Wrench",
+            "Tool used to provide grip and mechanical advantage in applying torque to turn objects"));
+    toolService.save(
+        new Tool(
+            "Pliers",
+            "Hand tool used to hold objects firmly, for bending, or for physical compression"));
+    toolService.save(
+        new Tool(
+            "Drill",
+            "Power tool used for making holes in various materials or fastening materials together with screws"));
   }
 }
