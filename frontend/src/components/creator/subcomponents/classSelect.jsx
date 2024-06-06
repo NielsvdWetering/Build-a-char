@@ -10,7 +10,7 @@ export default function RaceSelect({
         onChange={(event) =>
           setSelectedCharacterClass(JSON.parse(event.target.value))
         }
-        value={defaultValue}
+        defaultValue={defaultValue}
       >
         <option disabled value={defaultValue}>
           Select your class
