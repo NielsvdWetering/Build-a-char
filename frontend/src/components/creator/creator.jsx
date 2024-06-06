@@ -3,8 +3,11 @@ import CreatorColumn from "./creatorColumn";
 import RaceSelect from "./subcomponents/raceSelect";
 import DescriptionInput from "./subcomponents/descriptionInput";
 import axios from "axios";
+import NameInput from "./subcomponents/nameInput";
 
 export default function Creator() {
+  const [name, setName] = useState("");
+
   const [selectedRace, setSelectedRace] = useState(null);
   const [races, setRaces] = useState([]);
 
@@ -21,6 +24,7 @@ export default function Creator() {
     <>
       <div id="page" className="flex h-full justify-around">
         <CreatorColumn>
+          <NameInput name={name} setName={setName} />
           <RaceSelect races={races} setSelectedRace={setSelectedRace} />
           <DescriptionInput
             description={description}
@@ -30,6 +34,7 @@ export default function Creator() {
         <CreatorColumn>content in the 2nd column</CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
       </div>
+      <button onClick={() => console.log(name)}>Test</button>
     </>
   );
 }
