@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ControllerRoutes.CHARACTER_ROUTE)
+@RequestMapping(ControllerRoutes.TOOL_ROUTE)
 @CrossOrigin(origins = {"${app-cors}"})
 public class ToolController {}
