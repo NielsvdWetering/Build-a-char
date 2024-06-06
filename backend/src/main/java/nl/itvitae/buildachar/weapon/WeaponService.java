@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 public class WeaponService {
   private WeaponRepository weaponRepository;
 
+  public WeaponService(WeaponRepository weaponRepository) {
+    this.weaponRepository = weaponRepository;
+  }
+
   public List<Weapon> getAll() {
     return weaponRepository.findAll();
   }
@@ -17,7 +21,7 @@ public class WeaponService {
     return weaponRepository.findById(id);
   }
 
-  public void save(String name, String description, String type, Double attackPower) {
-    weaponRepository.save(new Weapon(name, description, type, attackPower));
+  public void save(String name, String description, WeaponType weaponType, Double attackPower) {
+    weaponRepository.save(new Weapon(name, description, weaponType, attackPower));
   }
 }

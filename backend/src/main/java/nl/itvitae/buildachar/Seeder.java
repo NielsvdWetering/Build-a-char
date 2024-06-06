@@ -8,6 +8,7 @@ import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.weapon.WeaponService;
+import nl.itvitae.buildachar.weapon.WeaponType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,8 @@ public class Seeder implements CommandLineRunner {
     seedClasses();
     seedArmors();
     seedTools();
+    seedWeapons();
+    seedRace();
   }
 
   private void seedClasses() {
@@ -91,11 +94,11 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedWeapons() {
-    weaponService.save("sword", "weapon", "medium?", 45.);
-    weaponService.save("axe", "weapon", "heavy", 60.);
-    weaponService.save("dagger", "weapon", "light", 20.);
-    weaponService.save("bow", "ranged", "medium", 35.);
-    weaponService.save("spear", "weapon", "long", 50.);
-    weaponService.save("mace", "weapon", "heavy", 55.);
+    weaponService.save("sword", "weapon", WeaponType.BLUNT, 45.);
+    weaponService.save("axe", "weapon", WeaponType.PIERCING, 60.);
+    weaponService.save("dagger", "weapon", WeaponType.SLASHING, 20.);
+    weaponService.save("bow", "ranged", WeaponType.PIERCING, 35.);
+    weaponService.save("spear", "weapon", WeaponType.BLUNT, 50.);
+    weaponService.save("mace", "weapon", WeaponType.SLASHING, 55.);
   }
 }

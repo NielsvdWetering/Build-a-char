@@ -22,7 +22,7 @@ public class Weapon {
   @Column(nullable = false, length = 999)
   private String description;
 
-  private String type;
+  private WeaponType weaponType;
 
   private Double attackPower;
 
@@ -36,10 +36,10 @@ public class Weapon {
 
   @Setter @ManyToMany private Set<CharacterClass> characterClasses;
 
-  public Weapon(String name, String description, String type, Double attackPower) {
+  public Weapon(String name, String description, WeaponType weaponType, Double attackPower) {
     this.name = name;
     this.description = description;
-    this.type = type;
+    this.weaponType = weaponType;
     this.attackPower = attackPower;
   }
 }

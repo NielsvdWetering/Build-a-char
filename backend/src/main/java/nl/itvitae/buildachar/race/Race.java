@@ -68,3 +68,5 @@ public class Race {
     this.baseCharisma = baseCharisma;
   }
 }
+
+// embedded fields

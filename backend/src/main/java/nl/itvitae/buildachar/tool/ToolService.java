@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 public class ToolService {
   private ToolRepository toolRepository;
 
+  public ToolService(ToolRepository toolRepository) {
+    this.toolRepository = toolRepository;
+  }
+
   public List<Tool> getAll() {
     return toolRepository.findAll();
   }
