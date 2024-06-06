@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ControllerRoutes.CHARACTER_ROUTE)
+@RequestMapping(ControllerRoutes.RACE_ROUTE)
 @CrossOrigin(origins = {"${app-cors}"})
-public class RaceController {
-
-}
+public class RaceController {}
