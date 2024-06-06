@@ -5,11 +5,7 @@ import axios from "axios";
 
 export default function Creator() {
   const [selectedRace, setSelectedRace] = useState(null);
-  const [races, setRaces] = useState([
-    { id: 1, name: "test1" },
-    { id: 2, name: "test2" },
-    { id: 3, name: "test3" },
-  ]);
+  const [races, setRaces] = useState([]);
 
   useEffect(() => {
     axios
