@@ -18,5 +18,5 @@ export default function RaceSelect({ races, setSelectedRace }) {
         ))}
       </select>
     </>
- );
+  );
 }

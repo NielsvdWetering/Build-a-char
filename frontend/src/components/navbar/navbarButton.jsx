@@ -4,7 +4,7 @@ export default function NavbarButton({ title, onClick }) {
   return (
     <>
       <div
-        className="btn btn-ghost text-primary-content mx-2 text-xl"
+        className="btn btn-ghost mx-2 text-xl text-primary-content"
         onClick={onClick}
       >
         {title}
