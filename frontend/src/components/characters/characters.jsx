@@ -12,7 +12,6 @@ export default function Characters() {
   const fetchCharacters = () => {
     axios.get("http://localhost:8080/api/v1/characters")
       .then((response) => {
-        console.log(response.data);
         setCharacters(response.data);
       })
       .catch((error) => {
