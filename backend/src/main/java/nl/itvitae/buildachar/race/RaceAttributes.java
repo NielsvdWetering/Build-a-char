@@ -11,12 +11,12 @@ public class RaceAttributes {
   public RaceAttributes() {}
 
   public RaceAttributes(
-      Double baseStrength,
-      Double baseDexterity,
-      Double baseConstitution,
-      Double baseIntelligence,
-      Double baseWisdom,
-      Double baseCharisma) {
+      Integer baseStrength,
+      Integer baseDexterity,
+      Integer baseConstitution,
+      Integer baseIntelligence,
+      Integer baseWisdom,
+      Integer baseCharisma) {
     this.baseStrength = baseStrength;
     this.baseDexterity = baseDexterity;
     this.baseConstitution = baseConstitution;
@@ -25,10 +25,10 @@ public class RaceAttributes {
     this.baseCharisma = baseCharisma;
   }
 
-  private Double baseStrength;
-  private Double baseDexterity;
-  private Double baseConstitution;
-  private Double baseIntelligence;
-  private Double baseWisdom;
-  private Double baseCharisma;
+  private Integer baseStrength;
+  private Integer baseDexterity;
+  private Integer baseConstitution;
+  private Integer baseIntelligence;
+  private Integer baseWisdom;
+  private Integer baseCharisma;
 }
