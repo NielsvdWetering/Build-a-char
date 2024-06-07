@@ -22,4 +22,12 @@ public class CharacterClassService {
   public CharacterClass save(String name) {
     return characterClassRepository.save(new CharacterClass(name));
   }
+
+  public CharacterClass update(CharacterClass characterClass) {
+    if (characterClass == null) {
+      throw new IllegalArgumentException("CharacterClassService.update: characterClass is null");
+    }
+
+    return characterClassRepository.save(characterClass);
+  }
 }

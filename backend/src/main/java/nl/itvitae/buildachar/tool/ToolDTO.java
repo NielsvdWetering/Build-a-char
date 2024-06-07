@@ -1,9 +1,8 @@
 package nl.itvitae.buildachar.tool;
 
-import java.util.UUID;
 
-public record ToolDTO(UUID id, String name, String description) {
+public record ToolDTO(String id, String name, String description) {
   public static ToolDTO from(Tool tool) {
-    return new ToolDTO(tool.getId(), tool.getName(), tool.getDescription());
+    return new ToolDTO(tool.getId().toString(), tool.getName(), tool.getDescription());
   }
 }

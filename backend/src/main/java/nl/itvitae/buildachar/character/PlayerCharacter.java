@@ -1,10 +1,12 @@
 package nl.itvitae.buildachar.character;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.race.Race;
@@ -24,17 +26,19 @@ public class PlayerCharacter {
 
   private String description;
 
-  @ManyToOne private CharacterClass characterClass;
+  @Setter @ManyToOne private CharacterClass characterClass;
 
   @ManyToMany private Set<Armor> armors;
 
-  @ManyToOne private Race race;
+  @Setter @ManyToOne private Race race;
 
-  @ManyToMany(mappedBy = "playerCharacters")
-  private Set<Tool> tools;
+  @Setter
+  @ManyToMany(mappedBy = "playerCharacters", cascade = CascadeType.ALL)
+  private Set<Tool> tools = new HashSet<>();
 
-  @ManyToMany(mappedBy = "playerCharacters")
-  private Set<Weapon> weapons;
+  @Setter
+  @ManyToMany(mappedBy = "playerCharacters", cascade = CascadeType.ALL)
+  private Set<Weapon> weapons = new HashSet<>();
 
   public PlayerCharacter(String name, String description) {
     this.name = name;

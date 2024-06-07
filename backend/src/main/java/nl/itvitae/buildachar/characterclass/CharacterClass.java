@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.characterclass;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class CharacterClass {
 
   @Setter
   @OneToMany(mappedBy = "characterClass")
-  private Set<PlayerCharacter> characters;
+  private Set<PlayerCharacter> characters = new HashSet<>();
 
   @Setter @ManyToMany private Set<Armor> allowedArmors;
 
