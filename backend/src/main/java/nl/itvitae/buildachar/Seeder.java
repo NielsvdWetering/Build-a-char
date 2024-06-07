@@ -4,11 +4,18 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
+import nl.itvitae.buildachar.character.PlayerCharacter;
+import nl.itvitae.buildachar.character.PlayerCharacterRepository;
 import nl.itvitae.buildachar.character.PlayerCharacterService;
+import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
+import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceAttributes;
+import nl.itvitae.buildachar.race.RaceRepository;
 import nl.itvitae.buildachar.race.RaceService;
+import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
+import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
 import nl.itvitae.buildachar.weapon.WeaponType;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +31,9 @@ public class Seeder implements CommandLineRunner {
   private final WeaponService weaponService;
   private final PlayerCharacterService playerCharacterService;
 
+  private final PlayerCharacterRepository playerCharacterRepository;
+  private final RaceRepository raceRepository;
+
   @Override
   public void run(String... args) throws Exception {
     seedClasses();
@@ -37,8 +47,16 @@ public class Seeder implements CommandLineRunner {
   private void seedPlayerCharacters() {
     if (!playerCharacterService.getAll().isEmpty()) return;
 
-    playerCharacterService.save("charles", "dude");
-    playerCharacterService.save("cake", "dake");
+    CharacterClass characterClass = characterClassService.getAll().stream().findFirst().get();
+    Weapon weapon = weaponService.getAll().stream().findFirst().get();
+    Tool tool = toolService.getAll().stream().findFirst().get();
+
+    Race race = raceService.getAll().stream().findFirst().get();
+    PlayerCharacter newCharacter = new PlayerCharacter("Sjaak", "idk");
+    newCharacter.setRace(race);
+    newCharacter.setWeapon(weapon);
+    newCharacter.setTool(tool);
+    playerCharacterRepository.save(newCharacter);
   }
 
   private void seedClasses() {
