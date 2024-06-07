@@ -3,6 +3,7 @@ package nl.itvitae.buildachar.tool;
 import jakarta.persistence.*;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.buildachar.character.PlayerCharacter;
@@ -10,6 +11,7 @@ import nl.itvitae.buildachar.characterclass.CharacterClass;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Tool {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
