@@ -46,6 +46,8 @@ export default function Creator() {
       .then((response) => setTools(response.data));
   }, []);
 
+  console.log(tools);
+
   return (
     <>
       <div id="page" className="flex h-full justify-around">
@@ -68,8 +70,32 @@ export default function Creator() {
           />
           <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
         </CreatorColumn>
-        <CreatorColumn>content in the 3th column</CreatorColumn>
+        <CreatorColumn>
+          <button
+            disabled={!name || name.length === 0}
+            className="btn btn-primary"
+            onClick={sumbitNewCharacter}
+          >
+            Create Character
+          </button>
+        </CreatorColumn>
       </div>
     </>
   );
+
+  function sumbitNewCharacter() {
+    const characterData = {
+      name,
+      description,
+      raceId: selectedRace?.id,
+      classId: SelectedCharacterClass?.id,
+      weaponId: selectedWeapon?.id,
+      toolId: selectedTool?.id,
+    };
+
+    axios
+      .post("http://localhost:8080/api/v1/characters", characterData)
+      .catch(console.error)
+      .then(console.log);
+  }
 }
