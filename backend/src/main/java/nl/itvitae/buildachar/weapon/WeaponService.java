@@ -24,4 +24,12 @@ public class WeaponService {
   public void save(String name, String description, WeaponType weaponType, Double attackPower) {
     weaponRepository.save(new Weapon(name, description, weaponType, attackPower));
   }
+
+  public void update(Weapon weapon) {
+    if (weapon == null) {
+      throw new IllegalArgumentException("WeaponService.update: weapon is null");
+    }
+
+    weaponRepository.save(weapon);
+  }
 }

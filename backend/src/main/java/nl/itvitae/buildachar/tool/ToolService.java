@@ -24,4 +24,12 @@ public class ToolService {
   public void save(String name, String description) {
     toolRepository.save(new Tool(name, description));
   }
+
+  public void update(Tool tool) {
+    if (tool == null) {
+      throw new IllegalArgumentException("ToolService.update: tool is null");
+    }
+
+    toolRepository.save(tool);
+  }
 }

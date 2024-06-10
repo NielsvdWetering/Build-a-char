@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.buildachar.armor.Armor;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 
 @Entity
 @NoArgsConstructor
@@ -19,10 +18,6 @@ public class CharacterClass {
 
   @Column(nullable = false)
   private String name;
-
-  @Setter
-  @OneToMany(mappedBy = "characterClass")
-  private Set<PlayerCharacter> characters;
 
   @Setter @ManyToMany private Set<Armor> allowedArmors;
 

@@ -24,4 +24,12 @@ public class RaceService {
   public void save(String name, RaceAttributes raceAttributes) {
     raceRepository.save(new Race(name, raceAttributes));
   }
+
+  public void update(Race race) {
+    if (race == null) {
+      throw new IllegalArgumentException("RaceService.update: race is null");
+    }
+
+    raceRepository.save(race);
+  }
 }

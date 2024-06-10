@@ -6,7 +6,6 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 
 @Entity
@@ -25,14 +24,6 @@ public class Weapon {
   private WeaponType weaponType;
 
   private Double attackPower;
-
-  @Setter
-  @ManyToMany
-  @JoinTable(
-      name = "weapon_player_character",
-      joinColumns = @JoinColumn(name = "weapon_id"),
-      inverseJoinColumns = @JoinColumn(name = "player_character_id"))
-  private Set<PlayerCharacter> playerCharacters;
 
   @Setter @ManyToMany private Set<CharacterClass> characterClasses;
 
