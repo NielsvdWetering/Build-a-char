@@ -2,7 +2,6 @@ package nl.itvitae.buildachar.character;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
@@ -47,25 +46,19 @@ public class PlayerCharacterService {
     }
 
     if (race != null) {
-      race.addToPlayerCharacters(Set.of(newPlayerCharacter));
-      raceService.update(race);
       newPlayerCharacter.setRace(race);
     }
 
     if (characterClass != null) {
-      characterClass.getCharacters().add(newPlayerCharacter);
-      characterClassService.update(characterClass);
       newPlayerCharacter.setCharacterClass(characterClass);
     }
 
     if (weapon != null) {
       newPlayerCharacter.getWeapons().add(weapon);
-      weapon.getPlayerCharacters().add(newPlayerCharacter);
     }
 
     if (tool != null) {
       newPlayerCharacter.getTools().add(tool);
-      tool.getPlayerCharacters().add(newPlayerCharacter);
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));
