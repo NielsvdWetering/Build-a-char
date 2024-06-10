@@ -56,7 +56,6 @@ public class PlayerCharacterService {
     return playerCharacterRepository.save(new PlayerCharacter(name, description));
   }
 
-  // TODO Endpoints checken, en even check toevoegen voor die .get() bij armorList
   public PlayerCharacter patch(UUID id, PlayerCharacterPatchDTO playerCharacterPatchDTO) {
     if (playerCharacterRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
     PlayerCharacter existingPlayerCharacter = playerCharacterRepository.findById(id).get();
@@ -88,8 +87,8 @@ public class PlayerCharacterService {
     if (playerCharacterPatchDTO.armor() != null) {
       Set<Armor> newArmorList =
           playerCharacterPatchDTO.armor().stream()
-              .map(armor -> armorRepository.findById(UUID.fromString(armor)).get())
-              .collect(Collectors.toSet()); // die get is zonder check, hoe los ik dat efficient op.
+              .map(armor -> armorRepository.findById(UUID.fromString(armor)).orElseThrow())
+              .collect(Collectors.toSet());
       existingPlayerCharacter.setArmors(newArmorList);
     }
 
