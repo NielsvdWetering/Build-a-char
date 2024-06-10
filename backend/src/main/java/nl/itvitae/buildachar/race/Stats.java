@@ -7,10 +7,10 @@ import lombok.Setter;
 @Embeddable
 @Getter
 @Setter
-public class RaceStats {
-  public RaceStats() {}
+public class Stats {
+  public Stats() {}
 
-  public RaceStats(
+  public Stats(
       Integer baseStrength,
       Integer baseDexterity,
       Integer baseConstitution,

@@ -51,13 +51,13 @@ public class PlayerCharacterController {
 
     return new PlayerCharacterDto(
         playerCharacter.getId(),
-        playerCharacter.getName() == null ? "unknown" : playerCharacter.getName(),
-        playerCharacter.getDescription() == null ? "unknown" : playerCharacter.getDescription(),
+        playerCharacter.getName(),
+        playerCharacter.getDescription(),
         playerCharacter.getCharacterClass() == null
             ? "unknown"
             : playerCharacter.getCharacterClass().getName(),
         playerCharacter.getRace() == null ? "unknown" : playerCharacter.getRace().getName(),
-        playerCharacter.getRace() != null ? playerCharacter.getRace().getRaceStats() : null,
+        playerCharacter.getRace() != null ? playerCharacter.getRace().getStats() : null,
         playerCharacter.getTool() == null ? "unknown" : playerCharacter.getTool().getName(),
         playerCharacter.getWeapon() == null ? "unknown" : playerCharacter.getWeapon().getName(),
         armorHead,

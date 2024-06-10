@@ -26,27 +26,27 @@ export const Card = ({ character }) => {
           <div className="font-semibold text-primary-content">
             <DisplayField
               label={"Strength"}
-              content={character.raceAttributes.baseStrength}
+              content={character.stats.baseStrength}
             />
             <DisplayField
               label={"Dexterity"}
-              content={character.raceAttributes.baseDexterity}
+              content={character.stats.baseDexterity}
             />
             <DisplayField
               label={"Constitution"}
-              content={character.raceAttributes.baseConstitution}
+              content={character.stats.baseConstitution}
             />
             <DisplayField
               label={"Intelligence"}
-              content={character.raceAttributes.baseIntelligence}
+              content={character.stats.baseIntelligence}
             />
             <DisplayField
               label={"Wisdom"}
-              content={character.raceAttributes.baseWisdom}
+              content={character.stats.baseWisdom}
             />
             <DisplayField
               label={"Charisma"}
-              content={character.raceAttributes.baseCharisma}
+              content={character.stats.baseCharisma}
             />
           </div>
         </>

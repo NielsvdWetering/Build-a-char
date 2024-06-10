@@ -1,7 +1,7 @@
 package nl.itvitae.buildachar.character;
 
 import java.util.UUID;
-import nl.itvitae.buildachar.race.RaceStats;
+import nl.itvitae.buildachar.race.Stats;
 
 public record PlayerCharacterDto(
     UUID id,
@@ -9,7 +9,7 @@ public record PlayerCharacterDto(
     String description,
     String characterClass,
     String race,
-    RaceStats raceStats,
+    Stats stats,
     String tool,
     String weapon,
     String armorHead,
