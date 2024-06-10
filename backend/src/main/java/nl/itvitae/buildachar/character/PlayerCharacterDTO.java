@@ -1,15 +1,15 @@
 package nl.itvitae.buildachar.character;
 
 import java.util.UUID;
-import nl.itvitae.buildachar.race.RaceAttributes;
+import nl.itvitae.buildachar.race.Stats;
 
-public record PlayerCharacterDto(
+public record PlayerCharacterDTO(
     UUID id,
     String name,
     String description,
     String characterClass,
     String race,
-    RaceAttributes raceAttributes,
+    Stats stats,
     String tool,
     String weapon,
     String armorHead,

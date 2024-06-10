@@ -21,7 +21,7 @@ public class RaceService {
     return raceRepository.findById(id);
   }
 
-  public void save(String name, RaceAttributes raceAttributes) {
-    raceRepository.save(new Race(name, raceAttributes));
+  public void save(String name, Stats stats) {
+    raceRepository.save(new Race(name, stats));
   }
 }

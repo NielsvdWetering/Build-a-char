@@ -19,10 +19,10 @@ public class Race {
   @Setter
   private String name;
 
-  @Embedded private RaceAttributes raceAttributes;
+  @Embedded private Stats stats;
 
-  public Race(String name, RaceAttributes raceAttributes) {
+  public Race(String name, Stats stats) {
     this.name = name;
-    this.raceAttributes = raceAttributes;
+    this.stats = stats;
   }
 }

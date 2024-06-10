@@ -19,7 +19,7 @@ public class PlayerCharacterController {
   @NonNull private final PlayerCharacterService playerCharacterService;
 
   @GetMapping
-  public ResponseEntity<List<PlayerCharacterDto>> getAll() {
+  public ResponseEntity<List<PlayerCharacterDTO>> getAll() {
     List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
     if (playerCharacters.isEmpty()) {
       return ResponseEntity.notFound().build();
@@ -28,11 +28,11 @@ public class PlayerCharacterController {
     }
   }
 
-  public List<PlayerCharacterDto> toCharacterDto(List<PlayerCharacter> playerCharacters) {
+  public List<PlayerCharacterDTO> toCharacterDto(List<PlayerCharacter> playerCharacters) {
     return playerCharacters.stream().map(this::convertToDto).toList();
   }
 
-  private PlayerCharacterDto convertToDto(PlayerCharacter playerCharacter) {
+  private PlayerCharacterDTO convertToDto(PlayerCharacter playerCharacter) {
     String armorHead = null;
     String armorTorso = null;
     String armorLegs = null;
@@ -49,15 +49,15 @@ public class PlayerCharacterController {
       }
     }
 
-    return new PlayerCharacterDto(
+    return new PlayerCharacterDTO(
         playerCharacter.getId(),
-        playerCharacter.getName() == null ? "unknown" : playerCharacter.getName(),
-        playerCharacter.getDescription() == null ? "unknown" : playerCharacter.getDescription(),
+        playerCharacter.getName(),
+        playerCharacter.getDescription(),
         playerCharacter.getCharacterClass() == null
             ? "unknown"
             : playerCharacter.getCharacterClass().getName(),
         playerCharacter.getRace() == null ? "unknown" : playerCharacter.getRace().getName(),
-        playerCharacter.getRace() != null ? playerCharacter.getRace().getRaceAttributes() : null,
+        playerCharacter.getRace() != null ? playerCharacter.getRace().getStats() : null,
         playerCharacter.getTool() == null ? "unknown" : playerCharacter.getTool().getName(),
         playerCharacter.getWeapon() == null ? "unknown" : playerCharacter.getWeapon().getName(),
         armorHead,
