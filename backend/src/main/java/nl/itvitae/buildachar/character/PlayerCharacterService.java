@@ -5,19 +5,43 @@ import static nl.itvitae.buildachar.armor.ArmorType.*;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import nl.itvitae.buildachar.patcher.Patcher;
+import java.util.stream.Collectors;
+import nl.itvitae.buildachar.armor.Armor;
+import nl.itvitae.buildachar.armor.ArmorRepository;
+import nl.itvitae.buildachar.characterclass.CharacterClass;
+import nl.itvitae.buildachar.characterclass.CharacterClassRepository;
+import nl.itvitae.buildachar.race.Race;
+import nl.itvitae.buildachar.race.RaceRepository;
+import nl.itvitae.buildachar.tool.Tool;
+import nl.itvitae.buildachar.tool.ToolRepository;
+import nl.itvitae.buildachar.weapon.Weapon;
+import nl.itvitae.buildachar.weapon.WeaponRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerCharacterService {
   private PlayerCharacterRepository playerCharacterRepository;
-  private Patcher patcher;
+  private ArmorRepository armorRepository;
+  private WeaponRepository weaponRepository;
+  private ToolRepository toolRepository;
+  private CharacterClassRepository characterClassRepository;
+  private RaceRepository raceRepository;
 
   public PlayerCharacterService(
-      PlayerCharacterRepository playerCharacterRepository, Patcher patcher) {
+      PlayerCharacterRepository playerCharacterRepository,
+      ArmorRepository armorRepository,
+      WeaponRepository weaponRepository,
+      ToolRepository toolRepository,
+      CharacterClassRepository characterClassRepository,
+      RaceRepository raceRepository) {
     this.playerCharacterRepository = playerCharacterRepository;
-    this.patcher = patcher;
+    this.armorRepository = armorRepository;
+    this.weaponRepository = weaponRepository;
+    this.toolRepository = toolRepository;
+    this.characterClassRepository = characterClassRepository;
+    this.raceRepository = raceRepository;
   }
 
   public List<PlayerCharacter> getAll() {
@@ -32,25 +56,53 @@ public class PlayerCharacterService {
     return playerCharacterRepository.save(new PlayerCharacter(name, description));
   }
 
-  public PlayerCharacter update(PlayerCharacter playerCharacter) {
-    return playerCharacterRepository.save(playerCharacter);
+  // TODO Endpoints checken, en even check toevoegen voor die .get() bij armorList
+  public PlayerCharacter patch(UUID id, PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+    if (playerCharacterRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
+    PlayerCharacter existingPlayerCharacter = playerCharacterRepository.findById(id).get();
+
+    if (playerCharacterPatchDTO.name() != null)
+      existingPlayerCharacter.setName(playerCharacterPatchDTO.name());
+
+    if (playerCharacterPatchDTO.description() != null)
+      existingPlayerCharacter.setDescription(playerCharacterPatchDTO.description());
+
+    if (playerCharacterPatchDTO.race() != null) {
+      Optional<Race> optionalRace =
+          raceRepository.findById(UUID.fromString(playerCharacterPatchDTO.race()));
+      optionalRace.ifPresent(existingPlayerCharacter::setRace);
+    }
+
+    if (playerCharacterPatchDTO.characterClass() != null) {
+      Optional<CharacterClass> optionalClass =
+          characterClassRepository.findById(
+              UUID.fromString(playerCharacterPatchDTO.characterClass()));
+      optionalClass.ifPresent(existingPlayerCharacter::setCharacterClass);
+    }
+
+    if (playerCharacterPatchDTO.weapon() != null) {
+      Optional<Weapon> optionalWeapon =
+          weaponRepository.findById(UUID.fromString(playerCharacterPatchDTO.weapon()));
+      optionalWeapon.ifPresent(existingPlayerCharacter::setWeapon);
+    }
+    if (playerCharacterPatchDTO.armor() != null) {
+      Set<Armor> newArmorList =
+          playerCharacterPatchDTO.armor().stream()
+              .map(armor -> armorRepository.findById(UUID.fromString(armor)).get())
+              .collect(Collectors.toSet()); // die get is zonder check, hoe los ik dat efficient op.
+      existingPlayerCharacter.setArmors(newArmorList);
+    }
+
+    if (playerCharacterPatchDTO.tool() != null) {
+      Optional<Tool> optionalTool =
+          toolRepository.findById(UUID.fromString(playerCharacterPatchDTO.tool()));
+      optionalTool.ifPresent(existingPlayerCharacter::setTool);
+    }
+    playerCharacterRepository.save(existingPlayerCharacter);
+    return existingPlayerCharacter;
   }
 
-  public PlayerCharacter patch(UUID id, PlayerCharacterPatchDTO playerCharacterPatchDTO) {
-    Optional<PlayerCharacter> optionalExistingPlayerCharacter =
-        playerCharacterRepository.findById(id);
-    if (optionalExistingPlayerCharacter.isEmpty())
-      throw new EntityNotFoundException("Player Character with id " + id + " can not be found");
-    PlayerCharacter existingPlayerCharacter = optionalExistingPlayerCharacter.get();
-
-    try {
-      Patcher.playerCharacterPatcher(existingPlayerCharacter, playerCharacterPatchDTO);
-      // check if class is valid
-      // save
-      playerCharacterRepository.save(existingPlayerCharacter);
-    } catch (Exception err) {
-      System.out.println(err);
-    }
-    return null;
+  public PlayerCharacter update(PlayerCharacter newCharacter) {
+    return playerCharacterRepository.save(newCharacter);
   }
 }
