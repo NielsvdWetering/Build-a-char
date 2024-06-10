@@ -1,5 +1,7 @@
 package nl.itvitae.buildachar.character;
 
+import java.util.List;
+
 public record CreatePlayerCharacterDTO(
     String id,
     String name,
@@ -7,4 +9,5 @@ public record CreatePlayerCharacterDTO(
     String raceId,
     String classId,
     String weaponId,
-    String toolId) {}
+    String toolId,
+    List<String> armorIds) {}

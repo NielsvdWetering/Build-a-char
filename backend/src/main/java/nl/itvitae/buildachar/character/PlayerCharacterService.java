@@ -4,14 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.helpers.Result;
-import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
-import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
-import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
 import org.springframework.stereotype.Service;
 
@@ -32,33 +28,31 @@ public class PlayerCharacterService {
     return playerCharacterRepository.findById(id);
   }
 
-  public Result<PlayerCharacter> save(
-      String name,
-      String description,
-      Race race,
-      CharacterClass characterClass,
-      Weapon weapon,
-      Tool tool) {
-    PlayerCharacter newPlayerCharacter = new PlayerCharacter(name, description);
-
-    if (name == null || name.isBlank()) {
+  public Result<PlayerCharacter> save(NewCharacterValues values) {
+    if (values.name() == null || values.name().isBlank()) {
       return Result.errorResult("name is required");
     }
 
-    if (race != null) {
-      newPlayerCharacter.setRace(race);
+    PlayerCharacter newPlayerCharacter = new PlayerCharacter(values.name(), values.description());
+
+    if (values.race() != null) {
+      newPlayerCharacter.setRace(values.race());
     }
 
-    if (characterClass != null) {
-      newPlayerCharacter.setCharacterClass(characterClass);
+    if (values.characterClass() != null) {
+      newPlayerCharacter.setCharacterClass(values.characterClass());
     }
 
-    if (weapon != null) {
-      newPlayerCharacter.getWeapons().add(weapon);
+    if (values.weapon() != null) {
+      newPlayerCharacter.getWeapons().add(values.weapon());
     }
 
-    if (tool != null) {
-      newPlayerCharacter.getTools().add(tool);
+    if (values.tool() != null) {
+      newPlayerCharacter.getTools().add(values.tool());
+    }
+
+    if (values.armors() != null && !values.armors().isEmpty()) {
+      values.armors().forEach(armor -> newPlayerCharacter.getArmors().add(armor));
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));

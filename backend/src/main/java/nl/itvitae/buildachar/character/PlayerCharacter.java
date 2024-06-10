@@ -28,17 +28,13 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
-  @ManyToMany private Set<Armor> armors;
+  @ManyToMany private final Set<Armor> armors = new HashSet<>();
 
   @Setter @ManyToOne private Race race;
 
-  @Setter
-  @ManyToMany(mappedBy = "playerCharacters", cascade = CascadeType.ALL)
-  private Set<Tool> tools = new HashSet<>();
+  @ManyToMany private final Set<Tool> tools = new HashSet<>();
 
-  @Setter
-  @ManyToMany(mappedBy = "playerCharacters", cascade = CascadeType.ALL)
-  private Set<Weapon> weapons = new HashSet<>();
+  @ManyToMany private final Set<Weapon> weapons = new HashSet<>();
 
   public PlayerCharacter(String name, String description) {
     this.name = name;

@@ -112,6 +112,9 @@ export default function Creator() {
       classId: SelectedCharacterClass?.id,
       weaponId: selectedWeapon?.id,
       toolId: selectedTool?.id,
+      armorIds: Object.values(selectedArmorPieces)
+        .filter((armorPiece) => armorPiece && armorPiece.id)
+        .map((armorPiece) => armorPiece.id),
     };
 
     axios

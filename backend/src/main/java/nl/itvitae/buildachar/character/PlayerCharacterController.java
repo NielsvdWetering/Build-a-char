@@ -2,10 +2,11 @@ package nl.itvitae.buildachar.character;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
+import nl.itvitae.buildachar.armor.Armor;
+import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.exceptions.RestException;
@@ -32,158 +33,98 @@ public class PlayerCharacterController {
   private final CharacterClassService characterClassService;
   private final WeaponService weaponService;
   private final ToolService toolService;
+  private final ArmorService armorService;
 
   @PostMapping
   public ResponseEntity<Void> create(
       @RequestBody CreatePlayerCharacterDTO characterDTO, UriComponentsBuilder ucb) {
-    CreateCharacterValidationResult validationResult = getCreateCharacterDTOErrors(characterDTO);
-
-    if (!validationResult.succeeded()) {
-      throw new RestException(HttpStatus.BAD_REQUEST, String.join(";", validationResult.errors()));
-    }
-
-    Race race =
-        validationResult
-            .raceId()
-            .map(
-                raceId ->
-                    raceService
-                        .getById(raceId)
-                        .orElseThrow(
-                            () ->
-                                new RestException(
-                                    HttpStatus.BAD_REQUEST,
-                                    "race with id '" + characterDTO.raceId() + "' not found")))
-            .orElse(null);
-
-    CharacterClass characterClass =
-        validationResult
-            .classId()
-            .map(
-                classId ->
-                    characterClassService
-                        .getById(classId)
-                        .orElseThrow(
-                            () ->
-                                new RestException(
-                                    HttpStatus.BAD_REQUEST,
-                                    "characterClass with id '"
-                                        + characterDTO.classId()
-                                        + "' not found")))
-            .orElse(null);
-
-    Weapon weapon =
-        validationResult
-            .weaponId()
-            .map(
-                weaponId ->
-                    weaponService
-                        .getById(weaponId)
-                        .orElseThrow(
-                            () ->
-                                new RestException(
-                                    HttpStatus.BAD_REQUEST,
-                                    "weapon with id '" + characterDTO.weaponId() + "' not found")))
-            .orElse(null);
-
-    Tool tool =
-        validationResult
-            .toolId()
-            .map(
-                toolId ->
-                    toolService
-                        .findById(toolId)
-                        .orElseThrow(
-                            () ->
-                                new RestException(
-                                    HttpStatus.BAD_REQUEST,
-                                    "tool with id '" + characterDTO.toolId() + "' not found")))
-            .orElse(null);
-
     Result<PlayerCharacter> saveCharacterResult =
-        playerCharacterService.save(
-            characterDTO.name(), characterDTO.description(), race, characterClass, weapon, tool);
+        playerCharacterService.save(getNewCharacterValues(characterDTO));
 
     if (!saveCharacterResult.succeeded()) {
       throw new RestException(HttpStatus.BAD_REQUEST, saveCharacterResult.error());
     }
 
-    URI uri = ucb.path("{id}").build(saveCharacterResult.body().getId());
+    URI uri =
+        ucb.path(ControllerRoutes.CHARACTER_ROUTE + "/{id}")
+            .build(saveCharacterResult.body().getId());
     return ResponseEntity.created(uri).build();
   }
 
-  private CreateCharacterValidationResult getCreateCharacterDTOErrors(
-      CreatePlayerCharacterDTO characterDTO) {
-    ArrayList<String> errors = new ArrayList<>();
-
-    Result<Optional<UUID>> validateRaceResult = validateRace(characterDTO.raceId());
-    Result<Optional<UUID>> validateClassResult = validateClass(characterDTO.classId());
-    Result<Optional<UUID>> validateWeaponResult = validateWeapon(characterDTO.weaponId());
-    Result<Optional<UUID>> validateToolResult = validateTool(characterDTO.toolId());
-
-    if (!validateRaceResult.succeeded()) {
-      errors.add(validateRaceResult.error());
-    }
-    if (!validateClassResult.succeeded()) {
-      errors.add(validateClassResult.error());
-    }
-    if (!validateWeaponResult.succeeded()) {
-      errors.add(validateWeaponResult.error());
-    }
-    if (!validateToolResult.succeeded()) {
-      errors.add(validateToolResult.error());
+  private NewCharacterValues getNewCharacterValues(CreatePlayerCharacterDTO characterDTO) {
+    if (characterDTO.name() == null || characterDTO.name().isBlank()) {
+      throw new RestException(HttpStatus.BAD_REQUEST, "name is required");
     }
 
-    return new CreateCharacterValidationResult(
-        errors.isEmpty(),
-        errors,
-        validateRaceResult.body(),
-        validateClassResult.body(),
-        validateWeaponResult.body(),
-        validateToolResult.body());
+    return new NewCharacterValues(
+        characterDTO.name(),
+        characterDTO.description(),
+        getRaceFromId(characterDTO.raceId()),
+        getClassFromId(characterDTO.raceId()),
+        getWeaponFromId(characterDTO.raceId()),
+        getToolFromId(characterDTO.raceId()),
+        getArmorsFromId(characterDTO.armorIds()));
   }
 
-  private Result<Optional<UUID>> validateRace(String raceId) {
+  private Race getRaceFromId(String raceId) {
     if (raceId == null) {
-      return Result.succesResult(Optional.empty());
+      return null;
     }
 
     return UUIDHelper.tryParseUUID(raceId)
-        .map(Optional::of)
-        .map(Result::succesResult)
-        .orElseGet(() -> Result.errorResult("raceId is not a valid UUID"));
+        .flatMap(raceService::getById)
+        .orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST, "raceId is invalid"));
   }
 
-  private Result<Optional<UUID>> validateClass(String classId) {
+  private CharacterClass getClassFromId(String classId) {
     if (classId == null) {
-      return Result.succesResult(Optional.empty());
+      return null;
     }
 
     return UUIDHelper.tryParseUUID(classId)
-        .map(Optional::of)
-        .map(Result::succesResult)
-        .orElseGet(() -> Result.errorResult("classId is not a valid UUID"));
+        .flatMap(characterClassService::getById)
+        .orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST, "classId is invalid"));
   }
 
-  private Result<Optional<UUID>> validateWeapon(String weaponId) {
+  private Weapon getWeaponFromId(String weaponId) {
     if (weaponId == null) {
-      return Result.succesResult(Optional.empty());
+      return null;
     }
 
     return UUIDHelper.tryParseUUID(weaponId)
-        .map(Optional::of)
-        .map(Result::succesResult)
-        .orElseGet(() -> Result.errorResult("weaponId is not a valid UUID"));
+        .flatMap(weaponService::getById)
+        .orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST, "weaponId is invalid"));
   }
 
-  private Result<Optional<UUID>> validateTool(String toolId) {
+  private Tool getToolFromId(String toolId) {
     if (toolId == null) {
-      return Result.succesResult(Optional.empty());
+      return null;
     }
 
     return UUIDHelper.tryParseUUID(toolId)
-        .map(Optional::of)
-        .map(Result::succesResult)
-        .orElseGet(() -> Result.errorResult("toolId is not a valid UUID"));
+        .flatMap(toolService::findById)
+        .orElseThrow(() -> new RestException(HttpStatus.BAD_REQUEST, "toolId is invalid"));
+  }
+
+  private List<Armor> getArmorsFromId(List<String> armorIds) {
+    if (armorIds == null) {
+      return null;
+    }
+
+    List<String> invalidIds = new ArrayList<>();
+
+    List<Armor> parsedArmors = new ArrayList<>();
+    for (String armorId : armorIds) {
+      UUIDHelper.tryParseUUID(armorId)
+          .flatMap(armorService::getById)
+          .ifPresentOrElse(parsedArmors::add, () -> invalidIds.add(armorId));
+    }
+
+    if (!invalidIds.isEmpty()) {
+      throw new RestException(
+          HttpStatus.BAD_REQUEST, "armorIds [" + String.join(", ", invalidIds) + "] are invalid");
+    }
+
+    return parsedArmors;
   }
 }
