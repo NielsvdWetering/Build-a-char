@@ -6,6 +6,8 @@ import DescriptionInput from "./subcomponents/descriptionInput";
 import axios from "axios";
 import NameInput from "./subcomponents/nameInput";
 import ArmorSelect from "./subcomponents/armorSelect";
+import WeaponSelect from "./subcomponents/weaponSelect";
+import ToolSelect from "./subcomponents/toolSelect";
 
 export default function Creator() {
   const [name, setName] = useState("");
@@ -25,11 +27,17 @@ export default function Creator() {
 
   const [description, setDescription] = useState("");
 
+  const [weapons, setWeapons] = useState([]);
+  const [selectedWeapon, setSelectedWeapon] = useState(null);
+
+  const [tools, setTools] = useState([]);
+  const [selectedTool, setSelectedTool] = useState(null);
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/races")
-      .catch(console.error)
-      .then((response) => setRaces(response.data));
+      .then((response) => setRaces(response.data))
+      .catch(console.error);
 
     axios
       .get("http://localhost:8080/api/v1/classes")
@@ -39,6 +47,16 @@ export default function Creator() {
     axios
       .get("http://localhost:8080/api/v1/armors/sortedByType")
       .then((response) => setSortedArmorPieces(response.data))
+      .catch(console.error);
+
+    axios
+      .get("http://localhost:8080/api/v1/weapons")
+      .then((response) => setWeapons(response.data))
+      .catch(console.error);
+
+    axios
+      .get("http://localhost:8080/api/v1/tools")
+      .then((response) => setTools(response.data))
       .catch(console.error);
   }, []);
 
@@ -67,6 +85,11 @@ export default function Creator() {
             setSelectedArmorPieces={setSelectedArmorPieces}
             selectedArmorPieces={selectedArmorPieces}
           />
+          <WeaponSelect
+            weapons={weapons}
+            setSelectedWeapon={setSelectedWeapon}
+          />
+          <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
         </CreatorColumn>
         <CreatorColumn>content in the 3th column</CreatorColumn>
       </div>
