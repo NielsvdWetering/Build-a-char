@@ -48,7 +48,7 @@ export default function Creator() {
 
   return (
     <>
-      <div id="page" className="bg-bear flex h-full justify-around bg-cover">
+      <div id="page" className="flex h-full justify-around">
         <CreatorColumn>
           <NameInput name={name} setName={setName} />
           <RaceSelect races={races} setSelectedRace={setSelectedRace} />
