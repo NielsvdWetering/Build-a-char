@@ -4,10 +4,16 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
+import nl.itvitae.buildachar.character.PlayerCharacter;
+import nl.itvitae.buildachar.character.PlayerCharacterService;
+import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
-import nl.itvitae.buildachar.race.RaceAttributes;
+import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
+import nl.itvitae.buildachar.race.Stats;
+import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
+import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
 import nl.itvitae.buildachar.weapon.WeaponType;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +27,7 @@ public class Seeder implements CommandLineRunner {
   private final ToolService toolService;
   private final ArmorService armorService;
   private final WeaponService weaponService;
+  private final PlayerCharacterService playerCharacterService;
 
   @Override
   public void run(String... args) throws Exception {
@@ -29,6 +36,22 @@ public class Seeder implements CommandLineRunner {
     seedTools();
     seedWeapons();
     seedRace();
+    seedPlayerCharacters();
+  }
+
+  private void seedPlayerCharacters() {
+    if (!playerCharacterService.getAll().isEmpty()) return;
+
+    CharacterClass characterClass = characterClassService.getAll().stream().findFirst().get();
+    Weapon weapon = weaponService.getAll().stream().findFirst().get();
+    Tool tool = toolService.getAll().stream().findFirst().get();
+
+    Race race = raceService.getAll().stream().findFirst().get();
+    PlayerCharacter newCharacter = playerCharacterService.save("Sjaak", "idk");
+    newCharacter.setRace(race);
+    newCharacter.setWeapon(weapon);
+    newCharacter.setTool(tool);
+    playerCharacterService.update(newCharacter);
   }
 
   private void seedClasses() {
@@ -86,15 +109,17 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedRace() {
-    raceService.save("Dwarf", new RaceAttributes(3.2, 1.2, 4.1, 2., 2.8, 2.4));
-    raceService.save("Elf", new RaceAttributes(2.8, 1.5, 4.0, 3.5, 3.0, 2.7));
-    raceService.save("Orc", new RaceAttributes(3.5, 1.8, 3.2, 2.7, 2.9, 2.5));
-    raceService.save("Human", new RaceAttributes(3.0, 1.7, 3.8, 3.0, 2.6, 2.8));
-    raceService.save("Halfling", new RaceAttributes(2.4, 1.2, 4.3, 3.8, 2.3, 2.0));
-    raceService.save("Gnome", new RaceAttributes(2.5, 1.3, 4.2, 3.9, 2.4, 2.1));
+    if (!raceService.getAll().isEmpty()) return;
+    raceService.save("Dwarf", new Stats(3, 1, 4, 2, 2, 1));
+    raceService.save("Elf", new Stats(2, 1, 4, 3, 3, 2));
+    raceService.save("Orc", new Stats(3, 1, 3, 2, 2, 2));
+    raceService.save("Human", new Stats(3, 1, 3, 3, 2, 2));
+    raceService.save("Halfling", new Stats(2, 1, 4, 3, 2, 2));
+    raceService.save("Gnome", new Stats(2, 1, 4, 3, 2, 2));
   }
 
   private void seedWeapons() {
+    if (!weaponService.getAll().isEmpty()) return;
     weaponService.save("sword", "weapon", WeaponType.BLUNT, 45.);
     weaponService.save("axe", "weapon", WeaponType.PIERCING, 60.);
     weaponService.save("dagger", "weapon", WeaponType.SLASHING, 20.);

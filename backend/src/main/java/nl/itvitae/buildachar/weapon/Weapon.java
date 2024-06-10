@@ -11,6 +11,7 @@ import nl.itvitae.buildachar.characterclass.CharacterClass;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Weapon {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,7 +26,7 @@ public class Weapon {
 
   private Double attackPower;
 
-  @Setter @ManyToMany private Set<CharacterClass> characterClasses;
+  @ManyToMany private Set<CharacterClass> characterClasses;
 
   public Weapon(String name, String description, WeaponType weaponType, Double attackPower) {
     this.name = name;

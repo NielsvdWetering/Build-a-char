@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.characterclass;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import nl.itvitae.buildachar.armor.Armor;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class CharacterClass {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,7 +21,7 @@ public class CharacterClass {
   @Column(nullable = false)
   private String name;
 
-  @Setter @ManyToMany private Set<Armor> allowedArmors;
+  @ManyToMany private Set<Armor> allowedArmors = new HashSet<>();
 
   public CharacterClass(String name) {
     this.name = name;

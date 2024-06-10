@@ -1,5 +1,7 @@
 package nl.itvitae.buildachar.character;
 
+import static nl.itvitae.buildachar.armor.ArmorType.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,5 +58,9 @@ public class PlayerCharacterService {
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));
+  }
+
+  public PlayerCharacter update(PlayerCharacter playerCharacter) {
+    return playerCharacterRepository.save(playerCharacter);
   }
 }
