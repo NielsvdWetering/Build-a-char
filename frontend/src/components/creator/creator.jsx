@@ -5,6 +5,7 @@ import ClassSelect from "./subcomponents/classSelect";
 import DescriptionInput from "./subcomponents/descriptionInput";
 import axios from "axios";
 import NameInput from "./subcomponents/nameInput";
+import ArmorSelect from "./subcomponents/armorSelect";
 import WeaponSelect from "./subcomponents/weaponSelect";
 import ToolSelect from "./subcomponents/toolSelect";
 
@@ -12,9 +13,17 @@ export default function Creator() {
   const [name, setName] = useState("");
 
   const [selectedRace, setSelectedRace] = useState(null);
-  const [races, setRaces] = useState([]);
+  const [races, setRaces] = useState();
   const [SelectedCharacterClass, setSelectedCharacterClass] = useState(null);
-  const [characterClasses, setCharacterClasses] = useState([]);
+  const [characterClasses, setCharacterClasses] = useState();
+  const [sortedArmorPieces, setSortedArmorPieces] = useState();
+  const [selectedArmorPieces, setSelectedArmorPieces] = useState({
+    head: null,
+    torso: null,
+    leg: null,
+    hand: null,
+    feet: null,
+  });
 
   const [description, setDescription] = useState("");
 
@@ -27,26 +36,33 @@ export default function Creator() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/races")
-      .catch(console.error)
-      .then((response) => setRaces(response.data));
+      .then((response) => setRaces(response.data))
+      .catch(console.error);
 
     axios
       .get("http://localhost:8080/api/v1/classes")
-      .catch(console.error)
-      .then((response) => setCharacterClasses(response.data));
+      .then((response) => setCharacterClasses(response.data))
+      .catch(console.error);
+
+    axios
+      .get("http://localhost:8080/api/v1/armors/sortedByType")
+      .then((response) => setSortedArmorPieces(response.data))
+      .catch(console.error);
 
     axios
       .get("http://localhost:8080/api/v1/weapons")
-      .catch(console.error)
-      .then((response) => setWeapons(response.data));
+      .then((response) => setWeapons(response.data))
+      .catch(console.error);
 
     axios
       .get("http://localhost:8080/api/v1/tools")
-      .catch(console.error)
-      .then((response) => setTools(response.data));
+      .then((response) => setTools(response.data))
+      .catch(console.error);
   }, []);
 
-  console.log(tools);
+  if (!races || !characterClasses || !sortedArmorPieces) {
+    return <div>loading</div>;
+  }
 
   return (
     <>
@@ -64,6 +80,11 @@ export default function Creator() {
           />
         </CreatorColumn>
         <CreatorColumn>
+          <ArmorSelect
+            sortedArmorPieces={sortedArmorPieces}
+            setSelectedArmorPieces={setSelectedArmorPieces}
+            selectedArmorPieces={selectedArmorPieces}
+          />
           <WeaponSelect
             weapons={weapons}
             setSelectedWeapon={setSelectedWeapon}
