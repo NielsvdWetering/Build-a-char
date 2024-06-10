@@ -6,7 +6,6 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 
 @Entity
@@ -26,10 +25,6 @@ public class Armor {
   private ArmorType armorType;
 
   private ArmorClass armorClass;
-
-  @Setter
-  @ManyToMany(mappedBy = "armors")
-  private Set<PlayerCharacter> characters;
 
   @Setter
   @ManyToMany(mappedBy = "allowedArmors")
