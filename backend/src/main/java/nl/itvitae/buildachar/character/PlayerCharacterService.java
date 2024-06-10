@@ -38,6 +38,7 @@ public class PlayerCharacterService {
     PlayerCharacter newPlayerCharacter = new PlayerCharacter(values.name(), values.description());
 
     if (values.race() != null) {
+      System.out.println("SETTING RACE");
       newPlayerCharacter.setRace(values.race());
     }
 
@@ -46,11 +47,11 @@ public class PlayerCharacterService {
     }
 
     if (values.weapon() != null) {
-      newPlayerCharacter.getWeapons().add(values.weapon());
+      newPlayerCharacter.setWeapon(values.weapon());
     }
 
     if (values.tool() != null) {
-      newPlayerCharacter.getTools().add(values.tool());
+      newPlayerCharacter.setTool(values.tool());
     }
 
     if (values.armors() != null && !values.armors().isEmpty()) {

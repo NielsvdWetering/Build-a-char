@@ -41,21 +41,4 @@ public class PlayerCharacter {
     this.name = name;
     this.description = description;
   }
-
-  public PlayerCharacter(
-      String name,
-      String description,
-      CharacterClass characterClass,
-      Set<Armor> armors,
-      Race race,
-      Tool tool,
-      Weapon weapon) {
-    this.name = name;
-    this.description = description;
-    this.characterClass = characterClass;
-    this.armors = armors;
-    this.race = race;
-    this.tool = tool;
-    this.weapon = weapon;
-  }
 }

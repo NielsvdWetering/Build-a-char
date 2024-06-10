@@ -126,6 +126,7 @@ public class PlayerCharacterController {
     }
 
     return parsedArmors;
+  }
 
   @GetMapping
   public ResponseEntity<List<PlayerCharacterDTO>> getAll() {
