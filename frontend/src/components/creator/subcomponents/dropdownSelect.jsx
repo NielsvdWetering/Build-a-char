@@ -1,17 +1,13 @@
-export default function DropdownSelect({
-  defaultValue,
-  options,
-  handleChange,
-}) {
+export default function DropdownSelect({ description, options, handleChange }) {
   return (
     <>
       <select
         className="select select-secondary w-full"
         onChange={(event) => handleChange(JSON.parse(event.target.value))}
-        defaultValue={defaultValue}
+        defaultValue={description}
       >
-        <option disabled value={defaultValue}>
-          {defaultValue}
+        <option disabled value={description}>
+          {description}
         </option>
         {options.map((option) => (
           <option key={option.id} value={JSON.stringify(option)}>
