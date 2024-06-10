@@ -57,7 +57,7 @@ public class PlayerCharacterController {
             ? "unknown"
             : playerCharacter.getCharacterClass().getName(),
         playerCharacter.getRace() == null ? "unknown" : playerCharacter.getRace().getName(),
-        playerCharacter.getRace() != null ? playerCharacter.getRace().getRaceAttributes() : null,
+        playerCharacter.getRace() != null ? playerCharacter.getRace().getRaceStats() : null,
         playerCharacter.getTool() == null ? "unknown" : playerCharacter.getTool().getName(),
         playerCharacter.getWeapon() == null ? "unknown" : playerCharacter.getWeapon().getName(),
         armorHead,

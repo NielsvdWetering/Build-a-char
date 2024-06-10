@@ -9,8 +9,8 @@ import nl.itvitae.buildachar.character.PlayerCharacterService;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
 import nl.itvitae.buildachar.race.Race;
-import nl.itvitae.buildachar.race.RaceAttributes;
 import nl.itvitae.buildachar.race.RaceService;
+import nl.itvitae.buildachar.race.RaceStats;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.weapon.Weapon;
@@ -110,12 +110,12 @@ public class Seeder implements CommandLineRunner {
 
   private void seedRace() {
     if (!raceService.getAll().isEmpty()) return;
-    raceService.save("Dwarf", new RaceAttributes(3, 1, 4, 2, 2, 1));
-    raceService.save("Elf", new RaceAttributes(2, 1, 4, 3, 3, 2));
-    raceService.save("Orc", new RaceAttributes(3, 1, 3, 2, 2, 2));
-    raceService.save("Human", new RaceAttributes(3, 1, 3, 3, 2, 2));
-    raceService.save("Halfling", new RaceAttributes(2, 1, 4, 3, 2, 2));
-    raceService.save("Gnome", new RaceAttributes(2, 1, 4, 3, 2, 2));
+    raceService.save("Dwarf", new RaceStats(3, 1, 4, 2, 2, 1));
+    raceService.save("Elf", new RaceStats(2, 1, 4, 3, 3, 2));
+    raceService.save("Orc", new RaceStats(3, 1, 3, 2, 2, 2));
+    raceService.save("Human", new RaceStats(3, 1, 3, 3, 2, 2));
+    raceService.save("Halfling", new RaceStats(2, 1, 4, 3, 2, 2));
+    raceService.save("Gnome", new RaceStats(2, 1, 4, 3, 2, 2));
   }
 
   private void seedWeapons() {
