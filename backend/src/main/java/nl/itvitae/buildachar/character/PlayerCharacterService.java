@@ -84,9 +84,9 @@ public class PlayerCharacterService {
           weaponRepository.findById(UUID.fromString(playerCharacterPatchDTO.weapon()));
       optionalWeapon.ifPresent(existingPlayerCharacter::setWeapon);
     }
-    if (playerCharacterPatchDTO.armor() != null) {
+    if (playerCharacterPatchDTO.armors() != null) {
       Set<Armor> newArmorList =
-          playerCharacterPatchDTO.armor().stream()
+          playerCharacterPatchDTO.armors().stream()
               .map(armor -> armorRepository.findById(UUID.fromString(armor)).orElseThrow())
               .collect(Collectors.toSet());
       existingPlayerCharacter.setArmors(newArmorList);

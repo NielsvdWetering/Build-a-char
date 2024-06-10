@@ -8,5 +8,5 @@ public record PlayerCharacterPatchDTO(
     String race,
     String characterClass,
     String weapon,
-    List<String> armor,
+    List<String> armors,
     String tool) {}
