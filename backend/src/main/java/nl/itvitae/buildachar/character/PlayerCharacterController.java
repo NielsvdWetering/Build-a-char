@@ -1,25 +1,24 @@
 package nl.itvitae.buildachar.character;
 
 import java.util.List;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import java.util.UUID;
 import nl.itvitae.buildachar.ControllerRoutes;
 import nl.itvitae.buildachar.armor.Armor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(ControllerRoutes.CHARACTER_ROUTE)
 @CrossOrigin(origins = {"${app-cors}"})
 public class PlayerCharacterController {
-  @NonNull private final PlayerCharacterService playerCharacterService;
+  private final PlayerCharacterService playerCharacterService;
+
+  public PlayerCharacterController(PlayerCharacterService playerCharacterService) {
+    this.playerCharacterService = playerCharacterService;
+  }
 
   @GetMapping
-  public ResponseEntity<List<PlayerCharacterDTO>> getAll() {
+  public ResponseEntity<List<PlayerCharacterPostDTO>> getAll() {
     List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
     if (playerCharacters.isEmpty()) {
       return ResponseEntity.notFound().build();
@@ -28,11 +27,11 @@ public class PlayerCharacterController {
     }
   }
 
-  public List<PlayerCharacterDTO> toCharacterDto(List<PlayerCharacter> playerCharacters) {
+  public List<PlayerCharacterPostDTO> toCharacterDto(List<PlayerCharacter> playerCharacters) {
     return playerCharacters.stream().map(this::convertToDto).toList();
   }
 
-  private PlayerCharacterDTO convertToDto(PlayerCharacter playerCharacter) {
+  private PlayerCharacterPostDTO convertToDto(PlayerCharacter playerCharacter) {
     String armorHead = null;
     String armorTorso = null;
     String armorLegs = null;
@@ -49,7 +48,7 @@ public class PlayerCharacterController {
       }
     }
 
-    return new PlayerCharacterDTO(
+    return new PlayerCharacterPostDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
         playerCharacter.getDescription(),
@@ -65,5 +64,11 @@ public class PlayerCharacterController {
         armorLegs,
         armorHands,
         armorFeet);
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<PlayerCharacter> patch(
+      @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+    return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
   }
 }
