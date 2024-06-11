@@ -1,9 +1,18 @@
 import { Card } from "./Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { StatsView } from "./StatsView";
 
 export default function Characters() {
   const [characters, setCharacters] = useState([]);
+  const tempStats = {
+    strength: 4,
+    dexterity: 5,
+    constitution: 123,
+    intelligence: 21123,
+    wisdom: 123312,
+    charisma: 1231,
+  };
 
   useEffect(() => {
     fetchCharacters();
@@ -23,14 +32,15 @@ export default function Characters() {
   };
 
   return (
-    <>
-      <div>
-        <ul className="flex h-full justify-around">
-          {characters.map((character) => (
-            <Card character={character} key={character.id} />
-          ))}
-        </ul>
-      </div>
-    </>
+    // <>
+    //   <div>
+    //     <ul className="flex h-full justify-around">
+    //       {characters.map((character) => (
+    //         <Card character={character} key={character.id} />
+    //       ))}
+    //     </ul>
+    //   </div>
+    // </>
+    <StatsView stats={tempStats} />
   );
 }
