@@ -32,8 +32,8 @@ export default function CharacterDisplay() {
           <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
-          <div className="h-full w-full rounded-md bg-secondary p-4">
-            <span className="text-secondary-content">
+          <div className="h-full w-full rounded-md bg-primary p-4">
+            <span className="text-primary-content">
               {character.description}
             </span>
           </div>

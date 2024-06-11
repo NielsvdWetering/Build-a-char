@@ -2,7 +2,7 @@ export default function DropdownSelect({ description, options, handleChange }) {
   return (
     <>
       <select
-        className="select select-secondary w-full"
+        className="select select-primary w-full"
         onChange={(event) => handleChange(JSON.parse(event.target.value))}
         defaultValue={description}
       >

@@ -2,7 +2,7 @@ import React from "react";
 
 export const IndividualStatView = ({ label, stat }) => {
   return (
-    <div className="m-0.5 grid w-full grid-cols-1 rounded bg-accent p-0.5">
+    <div className="m-0.5 grid w-full grid-cols-1 rounded bg-secondary p-0.5">
       <span className="text-center text-secondary-content md:font-bold">
         {label.replace("base", "").substring(0, 3).toUpperCase()}
       </span>
