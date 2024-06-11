@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import PageColumn from "../pageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "../characters/StatsView";
+import { StatsView } from "./StatsView";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
