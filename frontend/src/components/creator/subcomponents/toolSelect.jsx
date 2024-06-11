@@ -4,7 +4,7 @@ export default function ToolSelect({ tools, setSelectedTool }) {
   return (
     <>
       <select
-        className="select select-secondary w-full"
+        className="select select-primary w-full"
         onChange={(event) => setSelectedTool(JSON.parse(event.target.value))}
         defaultValue={defaultValue}
       >

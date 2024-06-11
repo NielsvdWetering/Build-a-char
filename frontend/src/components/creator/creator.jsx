@@ -94,7 +94,7 @@ export default function Creator() {
         <PageColumn>
           <button
             disabled={!name || name.length === 0}
-            className="btn btn-primary"
+            className="btn"
             onClick={sumbitNewCharacter}
           >
             Create Character
