@@ -6,7 +6,7 @@ export const IndividualStatView = ({ label, stat }) => {
       <span className="accent-content text-center md:font-bold">
         {label.replace("base", "")}
       </span>
-      <span className="accent-content text-center">{stat}</span>
+      <span className="accent-content text-center text-5xl">{stat}</span>
     </div>
   );
 };
