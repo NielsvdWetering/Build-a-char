@@ -187,10 +187,10 @@ public class PlayerCharacterController {
 
   @GetMapping("/{id}")
   public ResponseEntity<PlayerCharacterGetDTO> getById(@PathVariable UUID id) {
-    Optional<PlayerCharacter> possiblePlayer = playerCharacterService.getById(id);
-    if (possiblePlayer.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok(possiblePlayer.map(PlayerCharacterGetDTO::from).get());
+    return playerCharacterService
+        .getById(id)
+        .map(PlayerCharacterGetDTO::from)
+        .map(ResponseEntity::ok)
+        .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
   }
 }

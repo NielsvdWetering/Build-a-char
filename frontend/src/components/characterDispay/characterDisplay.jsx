@@ -22,7 +22,9 @@ export default function CharacterDisplay() {
     <>
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
-          <div className="aspect-video w-full bg-accent">character picture</div>
+          <div className="aspect-video w-full bg-accent text-accent-content">
+            character picture
+          </div>
           <h1 className="text-3xl">{character.name}</h1>
         </PageColumn>
         <PageColumn>
