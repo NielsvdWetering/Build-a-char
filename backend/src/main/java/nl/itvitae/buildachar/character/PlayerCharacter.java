@@ -29,7 +29,7 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
-  @ManyToMany private final Set<Armor> armors = new HashSet<>();
+  @ManyToMany private Set<Armor> armors = new HashSet<>();
 
   @Setter @ManyToOne private Race race;
 

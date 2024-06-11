@@ -8,51 +8,29 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.armor.ArmorRepository;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassRepository;
+import nl.itvitae.buildachar.helpers.Result;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceRepository;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
-import lombok.RequiredArgsConstructor;
-import nl.itvitae.buildachar.characterclass.CharacterClassService;
-import nl.itvitae.buildachar.helpers.Result;
-import nl.itvitae.buildachar.race.RaceService;
-import nl.itvitae.buildachar.tool.ToolService;
-import nl.itvitae.buildachar.weapon.WeaponService;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class PlayerCharacterService {
-  private ArmorRepository armorRepository;
-  private WeaponRepository weaponRepository;
-  private ToolRepository toolRepository;
-  private CharacterClassRepository characterClassRepository;
-  private RaceRepository raceRepository;
-
-  public PlayerCharacterService(
-      PlayerCharacterRepository playerCharacterRepository,
-      ArmorRepository armorRepository,
-      WeaponRepository weaponRepository,
-      ToolRepository toolRepository,
-      CharacterClassRepository characterClassRepository,
-      RaceRepository raceRepository) {
-    this.playerCharacterRepository = playerCharacterRepository;
-    this.armorRepository = armorRepository;
-    this.weaponRepository = weaponRepository;
-    this.toolRepository = toolRepository;
-    this.characterClassRepository = characterClassRepository;
-    this.raceRepository = raceRepository;
-  }
+  private final ArmorRepository armorRepository;
+  private final WeaponRepository weaponRepository;
+  private final ToolRepository toolRepository;
+  private final CharacterClassRepository characterClassRepository;
+  private final RaceRepository raceRepository;
   private final PlayerCharacterRepository playerCharacterRepository;
-  private final RaceService raceService;
-  private final CharacterClassService characterClassService;
-  private final WeaponService weaponService;
-  private final ToolService toolService;
 
   public List<PlayerCharacter> getAll() {
     return playerCharacterRepository.findAll();
