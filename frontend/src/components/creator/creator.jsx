@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CreatorColumn from "./creatorColumn";
+import PageColumn from "../pageColumn";
 import RaceSelect from "./subcomponents/raceSelect";
 import ClassSelect from "./subcomponents/classSelect";
 import DescriptionInput from "./subcomponents/descriptionInput";
@@ -67,7 +67,7 @@ export default function Creator() {
   return (
     <>
       <div id="page" className="flex h-full justify-around">
-        <CreatorColumn>
+        <PageColumn>
           <NameInput name={name} setName={setName} />
           <RaceSelect races={races} setSelectedRace={setSelectedRace} />
           <ClassSelect
@@ -78,8 +78,8 @@ export default function Creator() {
             description={description}
             setDescription={setDescription}
           />
-        </CreatorColumn>
-        <CreatorColumn>
+        </PageColumn>
+        <PageColumn>
           <ArmorSelect
             sortedArmorPieces={sortedArmorPieces}
             setSelectedArmorPieces={setSelectedArmorPieces}
@@ -90,8 +90,8 @@ export default function Creator() {
             setSelectedWeapon={setSelectedWeapon}
           />
           <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
-        </CreatorColumn>
-        <CreatorColumn>
+        </PageColumn>
+        <PageColumn>
           <button
             disabled={!name || name.length === 0}
             className="btn btn-primary"
@@ -99,7 +99,7 @@ export default function Creator() {
           >
             Create Character
           </button>
-        </CreatorColumn>
+        </PageColumn>
       </div>
     </>
   );

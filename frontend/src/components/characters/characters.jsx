@@ -1,9 +1,11 @@
 import { Card } from "./Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Characters() {
   const [characters, setCharacters] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCharacters();
@@ -27,7 +29,11 @@ export default function Characters() {
       <div>
         <ul className="flex h-full justify-around">
           {characters.map((character) => (
-            <Card character={character} key={character.id} />
+            <Card
+              character={character}
+              key={character.id}
+              onClick={() => navigate("/characters/" + character.id)}
+            />
           ))}
         </ul>
       </div>

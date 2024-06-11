@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { DisplayField } from "./DisplayField";
 import { TextField } from "./TextField";
-import CreatorColumn from "../creator/creatorColumn";
+import PageColumn from "../pageColumn";
+import { useNavigate } from "react-router-dom";
 
-export const Card = ({ character }) => {
-  console.log("CHARACTER", character);
+export const Card = ({ character, onClick }) => {
   return (
-    <div className="grid grid-flow-col border-2 border-emerald-900 p-10">
+    <div
+      onClick={onClick}
+      className="grid grid-flow-col border-2 border-emerald-900 p-10"
+    >
       {character && (
         <>
-          <CreatorColumn>
+          <PageColumn>
             <DisplayField label={"name"} content={character.name} />
             <DisplayField label={"race"} content={character.race} />
             <DisplayField label={"class"} content={character.characterClass} />
             <TextField label={"description"} content={character.description} />
-          </CreatorColumn>
-          <CreatorColumn>
+          </PageColumn>
+          <PageColumn>
             <DisplayField label={"weapon"} content={character.weapon} />
             <DisplayField label={"head"} content={character.armorHead} />
             <DisplayField label={"torso"} content={character.armorTorso} />
@@ -23,9 +26,9 @@ export const Card = ({ character }) => {
             <DisplayField label={"legs"} content={character.armorLegs} />
             <DisplayField label={"feet"} content={character.armorFeet} />
             <DisplayField label={"tool"} content={character.tool} />
-          </CreatorColumn>
+          </PageColumn>
           {character.stats && (
-            <CreatorColumn>
+            <PageColumn>
               <DisplayField
                 label={"Strength"}
                 content={character.stats.baseStrength}
@@ -50,7 +53,7 @@ export const Card = ({ character }) => {
                 label={"Charisma"}
                 content={character.stats.baseCharisma}
               />
-            </CreatorColumn>
+            </PageColumn>
           )}
         </>
       )}
