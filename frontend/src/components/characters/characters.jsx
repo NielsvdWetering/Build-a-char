@@ -7,14 +7,6 @@ import { useNavigate } from "react-router-dom";
 export default function Characters() {
   const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
-  const tempStats = {
-    strength: 4,
-    dexterity: 5,
-    constitution: 123,
-    intelligence: 21123,
-    wisdom: 123312,
-    charisma: 1231,
-  };
 
   useEffect(() => {
     fetchCharacters();
@@ -35,8 +27,8 @@ export default function Characters() {
 
   return (
     <>
-      {/* <div>
-        <ul className="flex h-full justify-around">
+      <div>
+        <ul className="grid grid-cols-3 gap-2">
           {characters.map((character) => (
             <Card
               character={character}
@@ -45,8 +37,7 @@ export default function Characters() {
             />
           ))}
         </ul>
-      </div> */}
-      <StatsView stats={tempStats} />
+      </div>
     </>
   );
 }

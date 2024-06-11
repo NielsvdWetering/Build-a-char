@@ -11,14 +11,14 @@ public class Stats {
   public Stats() {}
 
   public Stats(
-      Integer baseStrength,
       Integer baseDexterity,
+      Integer baseStrength,
       Integer baseConstitution,
       Integer baseIntelligence,
       Integer baseWisdom,
       Integer baseCharisma) {
-    this.baseStrength = baseStrength;
     this.baseDexterity = baseDexterity;
+    this.baseStrength = baseStrength;
     this.baseConstitution = baseConstitution;
     this.baseIntelligence = baseIntelligence;
     this.baseWisdom = baseWisdom;
