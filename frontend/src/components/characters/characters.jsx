@@ -10,7 +10,6 @@ export default function Characters() {
 
   useEffect(() => {
     fetchCharacters();
-    console.log(characters);
   }, []);
 
   const fetchCharacters = () => {

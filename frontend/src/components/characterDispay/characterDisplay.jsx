@@ -18,7 +18,6 @@ export default function CharacterDisplay() {
   if (!character) {
     return <div>loading</div>;
   }
-  console.log(character);
 
   return (
     <>

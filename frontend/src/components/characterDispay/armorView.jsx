@@ -1,7 +1,6 @@
 import React from "react";
 
 export const ArmorView = ({ armorList }) => {
-  console.log("armorlist", armorList);
   const armorOrder = ["HEAD", "TORSO", "HANDS", "LEGS", "FEET"];
   return (
     <ul className="aspect-video rounded-md bg-secondary p-5">
