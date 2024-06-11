@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.character;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
-  @ManyToMany private Set<Armor> armors;
+  @ManyToMany private final Set<Armor> armors = new HashSet<>();
 
   @Setter @ManyToOne private Race race;
 
@@ -39,22 +40,5 @@ public class PlayerCharacter {
   public PlayerCharacter(String name, String description) {
     this.name = name;
     this.description = description;
-  }
-
-  public PlayerCharacter(
-      String name,
-      String description,
-      CharacterClass characterClass,
-      Set<Armor> armors,
-      Race race,
-      Tool tool,
-      Weapon weapon) {
-    this.name = name;
-    this.description = description;
-    this.characterClass = characterClass;
-    this.armors = armors;
-    this.race = race;
-    this.tool = tool;
-    this.weapon = weapon;
   }
 }

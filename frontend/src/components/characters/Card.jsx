@@ -3,6 +3,7 @@ import { DisplayField } from "./DisplayField";
 import { TextField } from "./TextField";
 
 export const Card = ({ character }) => {
+  console.log("CHARACTER", character);
   return (
     <div className="border-bg-primary m-10 w-1/2 flex-row rounded-lg border-2 bg-emerald-800 p-8 text-sky-50">
       {character ? (
@@ -23,32 +24,34 @@ export const Card = ({ character }) => {
             <DisplayField label={"tool"} content={character.tools} />
           </div>
 
-          <div className="font-semibold text-primary-content">
-            <DisplayField
-              label={"Strength"}
-              content={character.stats.baseStrength}
-            />
-            <DisplayField
-              label={"Dexterity"}
-              content={character.stats.baseDexterity}
-            />
-            <DisplayField
-              label={"Constitution"}
-              content={character.stats.baseConstitution}
-            />
-            <DisplayField
-              label={"Intelligence"}
-              content={character.stats.baseIntelligence}
-            />
-            <DisplayField
-              label={"Wisdom"}
-              content={character.stats.baseWisdom}
-            />
-            <DisplayField
-              label={"Charisma"}
-              content={character.stats.baseCharisma}
-            />
-          </div>
+          {character.stats && (
+            <div className="font-semibold text-primary-content">
+              <DisplayField
+                label={"Strength"}
+                content={character.stats.baseStrength}
+              />
+              <DisplayField
+                label={"Dexterity"}
+                content={character.stats.baseDexterity}
+              />
+              <DisplayField
+                label={"Constitution"}
+                content={character.stats.baseConstitution}
+              />
+              <DisplayField
+                label={"Intelligence"}
+                content={character.stats.baseIntelligence}
+              />
+              <DisplayField
+                label={"Wisdom"}
+                content={character.stats.baseWisdom}
+              />
+              <DisplayField
+                label={"Charisma"}
+                content={character.stats.baseCharisma}
+              />
+            </div>
+          )}
         </>
       ) : null}
     </div>

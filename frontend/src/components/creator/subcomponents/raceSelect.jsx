@@ -6,7 +6,7 @@ export default function RaceSelect({ races, setSelectedRace }) {
       <select
         className="select select-secondary w-full"
         onChange={(event) => setSelectedRace(JSON.parse(event.target.value))}
-        value={defaultValue}
+        defaultValue={defaultValue}
       >
         <option disabled value={defaultValue}>
           {defaultValue}
