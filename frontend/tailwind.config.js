@@ -11,10 +11,9 @@ export default {
         buildachar: {
           primary: "#989E80",
           "primary-content": "#403D3A",
-          secondary: "#989E80",
-          "secondary-content": "#403D3A",
-          accent: "#DCE4C8",
-          "accent-content": "#605B56",
+          secondary: "DCE4C8",
+          "secondary-content": "#605B56",
+          accent: "#C13E3C",
           neutral: "#918a81",
           "base-100": "#605B56",
         },

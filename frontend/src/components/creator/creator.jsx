@@ -94,7 +94,7 @@ export default function Creator() {
         <PageColumn>
           <button
             disabled={!name || name.length === 0}
-            className="btn"
+            className="btn btn-accent text-accent-content"
             onClick={sumbitNewCharacter}
           >
             Create Character
