@@ -6,7 +6,7 @@ export default function RaceSelect({
   return (
     <>
       <select
-        className="select select-secondary w-full"
+        className="select select-primary w-full"
         onChange={(event) =>
           setSelectedCharacterClass(JSON.parse(event.target.value))
         }

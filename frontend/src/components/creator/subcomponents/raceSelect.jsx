@@ -4,7 +4,7 @@ export default function RaceSelect({ races, setSelectedRace }) {
   return (
     <>
       <select
-        className="select select-secondary w-full"
+        className="select select-primary w-full"
         onChange={(event) => setSelectedRace(JSON.parse(event.target.value))}
         defaultValue={defaultValue}
       >

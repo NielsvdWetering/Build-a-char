@@ -4,7 +4,7 @@ export default function WeaponSelect({ weapons, setSelectedWeapon }) {
   return (
     <>
       <select
-        className="select select-secondary w-full"
+        className="select select-primary w-full"
         onChange={(event) => setSelectedWeapon(JSON.parse(event.target.value))}
         defaultValue={defaultValue}
       >
