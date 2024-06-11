@@ -3,6 +3,7 @@ package nl.itvitae.buildachar.character;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
@@ -182,5 +183,14 @@ public class PlayerCharacterController {
   public ResponseEntity<PlayerCharacter> patch(
       @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {
     return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<PlayerCharacterGetDTO> getById(@PathVariable UUID id) {
+    return playerCharacterService
+        .getById(id)
+        .map(PlayerCharacterGetDTO::from)
+        .map(ResponseEntity::ok)
+        .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
   }
 }
