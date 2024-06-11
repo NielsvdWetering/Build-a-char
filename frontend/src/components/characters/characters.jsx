@@ -1,6 +1,7 @@
 import { Card } from "./Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { StatsView } from "./StatsView";
 import { useNavigate } from "react-router-dom";
 
 export default function Characters() {
@@ -27,7 +28,7 @@ export default function Characters() {
   return (
     <>
       <div>
-        <ul className="flex h-full justify-around">
+        <ul className="grid grid-cols-3 gap-2">
           {characters.map((character) => (
             <Card
               character={character}

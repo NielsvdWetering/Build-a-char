@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import PageColumn from "../pageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { StatsView } from "../characters/StatsView";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
-
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/characters/" + id)
@@ -22,10 +22,13 @@ export default function CharacterDisplay() {
     <>
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
-          <div className="aspect-video w-full bg-accent text-accent-content">
+          <div className="aspect-video w-full rounded-md bg-accent text-accent-content">
             character picture
           </div>
-          <h1 className="text-3xl">{character.name}</h1>
+          <div className="rounded-md">
+            <h1 className="text-3xl">{character.name}</h1>
+          </div>
+          <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
           <div className="h-full w-full rounded-md bg-secondary p-4">
