@@ -16,6 +16,7 @@ import nl.itvitae.buildachar.weapon.Weapon;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class PlayerCharacter {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,9 +33,9 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private Race race;
 
-  @ManyToMany private final Set<Tool> tools = new HashSet<>();
+  @Setter @ManyToOne private Tool tool;
 
-  @ManyToMany private final Set<Weapon> weapons = new HashSet<>();
+  @Setter @ManyToOne private Weapon weapon;
 
   public PlayerCharacter(String name, String description) {
     this.name = name;

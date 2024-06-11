@@ -16,14 +16,13 @@ public class Race {
   private UUID id;
 
   @Column(nullable = false)
+  @Setter
   private String name;
 
-  @Embedded private RaceAttributes raceAttributes;
+  @Embedded private Stats stats;
 
-  public Race(String name, RaceAttributes raceAttributes) {
+  public Race(String name, Stats stats) {
     this.name = name;
-    this.raceAttributes = raceAttributes;
+    this.stats = stats;
   }
 }
-
-// embedded fields

@@ -17,9 +17,11 @@ public class Tool {
   private UUID id;
 
   @Column(nullable = false)
+  @Setter
   private String name;
 
   @Column(nullable = false, length = 999)
+  @Setter
   private String description;
 
   @Setter @ManyToMany private Set<CharacterClass> characterClasses;

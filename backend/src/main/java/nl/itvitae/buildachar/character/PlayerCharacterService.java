@@ -1,5 +1,7 @@
 package nl.itvitae.buildachar.character;
 
+import static nl.itvitae.buildachar.armor.ArmorType.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +38,7 @@ public class PlayerCharacterService {
     PlayerCharacter newPlayerCharacter = new PlayerCharacter(values.name(), values.description());
 
     if (values.race() != null) {
+      System.out.println("SETTING RACE");
       newPlayerCharacter.setRace(values.race());
     }
 
@@ -44,11 +47,11 @@ public class PlayerCharacterService {
     }
 
     if (values.weapon() != null) {
-      newPlayerCharacter.getWeapons().add(values.weapon());
+      newPlayerCharacter.setWeapon(values.weapon());
     }
 
     if (values.tool() != null) {
-      newPlayerCharacter.getTools().add(values.tool());
+      newPlayerCharacter.setTool(values.tool());
     }
 
     if (values.armors() != null && !values.armors().isEmpty()) {
@@ -56,5 +59,9 @@ public class PlayerCharacterService {
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));
+  }
+
+  public PlayerCharacter update(PlayerCharacter playerCharacter) {
+    return playerCharacterRepository.save(playerCharacter);
   }
 }

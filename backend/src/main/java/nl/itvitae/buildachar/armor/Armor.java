@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.armor;
 
 import jakarta.persistence.*;
+
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -18,14 +19,14 @@ public class Armor {
 
   private String name;
 
-  private String description;
+  @Setter private String description;
 
-  private double defence;
+  @Setter private double defence;
 
-  private ArmorType armorType;
+  @Setter private ArmorType armorType;
 
-  private ArmorClass armorClass;
-
+  @Setter private ArmorClass armorClass;
+  
   @Setter
   @ManyToMany(mappedBy = "allowedArmors")
   private Set<CharacterClass> requiredClasses;
