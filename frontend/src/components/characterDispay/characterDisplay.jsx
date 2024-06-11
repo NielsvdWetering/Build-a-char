@@ -3,6 +3,7 @@ import PageColumn from "../pageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { StatsView } from "./StatsView";
+import { ArmorView } from "./armorView";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -17,6 +18,7 @@ export default function CharacterDisplay() {
   if (!character) {
     return <div>loading</div>;
   }
+  console.log(character);
 
   return (
     <>
@@ -25,7 +27,7 @@ export default function CharacterDisplay() {
           <div className="aspect-video w-full rounded-md bg-accent text-accent-content">
             character picture
           </div>
-          <div className="rounded-md">
+          <div className="aspect-video rounded-md">
             <h1 className="text-3xl">{character.name}</h1>
           </div>
           <StatsView stats={character.stats} />
@@ -37,7 +39,9 @@ export default function CharacterDisplay() {
             </span>
           </div>
         </PageColumn>
-        <PageColumn></PageColumn>
+        <PageColumn>
+          <ArmorView armorList={character.armorList} />
+        </PageColumn>
       </div>
     </>
   );
