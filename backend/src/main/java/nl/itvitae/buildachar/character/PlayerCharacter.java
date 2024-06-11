@@ -25,7 +25,7 @@ public class PlayerCharacter {
   @Setter
   private String name;
 
-  @Setter private String description;
+  @Lob @Setter private String description;
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
