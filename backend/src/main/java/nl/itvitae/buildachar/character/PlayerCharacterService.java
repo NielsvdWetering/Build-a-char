@@ -2,25 +2,35 @@ package nl.itvitae.buildachar.character;
 
 import static nl.itvitae.buildachar.armor.ArmorType.*;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.buildachar.characterclass.CharacterClassService;
+import nl.itvitae.buildachar.armor.Armor;
+import nl.itvitae.buildachar.armor.ArmorRepository;
+import nl.itvitae.buildachar.characterclass.CharacterClass;
+import nl.itvitae.buildachar.characterclass.CharacterClassRepository;
 import nl.itvitae.buildachar.helpers.Result;
-import nl.itvitae.buildachar.race.RaceService;
-import nl.itvitae.buildachar.tool.ToolService;
-import nl.itvitae.buildachar.weapon.WeaponService;
+import nl.itvitae.buildachar.race.Race;
+import nl.itvitae.buildachar.race.RaceRepository;
+import nl.itvitae.buildachar.tool.Tool;
+import nl.itvitae.buildachar.tool.ToolRepository;
+import nl.itvitae.buildachar.weapon.Weapon;
+import nl.itvitae.buildachar.weapon.WeaponRepository;
 import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class PlayerCharacterService {
+  private final ArmorRepository armorRepository;
+  private final WeaponRepository weaponRepository;
+  private final ToolRepository toolRepository;
+  private final CharacterClassRepository characterClassRepository;
+  private final RaceRepository raceRepository;
   private final PlayerCharacterRepository playerCharacterRepository;
-  private final RaceService raceService;
-  private final CharacterClassService characterClassService;
-  private final WeaponService weaponService;
-  private final ToolService toolService;
 
   public List<PlayerCharacter> getAll() {
     return playerCharacterRepository.findAll();
@@ -61,7 +71,52 @@ public class PlayerCharacterService {
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));
   }
 
-  public PlayerCharacter update(PlayerCharacter playerCharacter) {
-    return playerCharacterRepository.save(playerCharacter);
+  public PlayerCharacter patch(UUID id, PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+    if (playerCharacterRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
+    PlayerCharacter existingPlayerCharacter = playerCharacterRepository.findById(id).get();
+
+    if (playerCharacterPatchDTO.name() != null)
+      existingPlayerCharacter.setName(playerCharacterPatchDTO.name());
+
+    if (playerCharacterPatchDTO.description() != null)
+      existingPlayerCharacter.setDescription(playerCharacterPatchDTO.description());
+
+    if (playerCharacterPatchDTO.race() != null) {
+      Optional<Race> optionalRace =
+          raceRepository.findById(UUID.fromString(playerCharacterPatchDTO.race()));
+      optionalRace.ifPresent(existingPlayerCharacter::setRace);
+    }
+
+    if (playerCharacterPatchDTO.characterClass() != null) {
+      Optional<CharacterClass> optionalClass =
+          characterClassRepository.findById(
+              UUID.fromString(playerCharacterPatchDTO.characterClass()));
+      optionalClass.ifPresent(existingPlayerCharacter::setCharacterClass);
+    }
+
+    if (playerCharacterPatchDTO.weapon() != null) {
+      Optional<Weapon> optionalWeapon =
+          weaponRepository.findById(UUID.fromString(playerCharacterPatchDTO.weapon()));
+      optionalWeapon.ifPresent(existingPlayerCharacter::setWeapon);
+    }
+    if (playerCharacterPatchDTO.armors() != null) {
+      Set<Armor> newArmorList =
+          playerCharacterPatchDTO.armors().stream()
+              .map(armor -> armorRepository.findById(UUID.fromString(armor)).orElseThrow())
+              .collect(Collectors.toSet());
+      existingPlayerCharacter.setArmors(newArmorList);
+    }
+
+    if (playerCharacterPatchDTO.tool() != null) {
+      Optional<Tool> optionalTool =
+          toolRepository.findById(UUID.fromString(playerCharacterPatchDTO.tool()));
+      optionalTool.ifPresent(existingPlayerCharacter::setTool);
+    }
+    playerCharacterRepository.save(existingPlayerCharacter);
+    return existingPlayerCharacter;
+  }
+
+  public PlayerCharacter update(PlayerCharacter newCharacter) {
+    return playerCharacterRepository.save(newCharacter);
   }
 }

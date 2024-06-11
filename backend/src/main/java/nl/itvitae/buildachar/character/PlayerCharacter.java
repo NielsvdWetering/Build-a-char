@@ -16,20 +16,20 @@ import nl.itvitae.buildachar.weapon.Weapon;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
 public class PlayerCharacter {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
   @Column(nullable = false)
+  @Setter
   private String name;
 
-  private String description;
+  @Setter private String description;
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
-  @ManyToMany private final Set<Armor> armors = new HashSet<>();
+  @ManyToMany private Set<Armor> armors = new HashSet<>();
 
   @Setter @ManyToOne private Race race;
 
@@ -40,5 +40,27 @@ public class PlayerCharacter {
   public PlayerCharacter(String name, String description) {
     this.name = name;
     this.description = description;
+  }
+
+  public void setArmors(Set<Armor> newArmorList) {
+    armors.clear();
+    armors.addAll(newArmorList);
+  }
+
+  public PlayerCharacter(
+      String name,
+      String description,
+      CharacterClass characterClass,
+      Set<Armor> armors,
+      Race race,
+      Tool tool,
+      Weapon weapon) {
+    this.name = name;
+    this.description = description;
+    this.characterClass = characterClass;
+    this.armors = armors;
+    this.race = race;
+    this.tool = tool;
+    this.weapon = weapon;
   }
 }

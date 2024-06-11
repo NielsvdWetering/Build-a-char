@@ -3,7 +3,7 @@ package nl.itvitae.buildachar.character;
 import java.util.UUID;
 import nl.itvitae.buildachar.race.Stats;
 
-public record PlayerCharacterDTO(
+public record PlayerCharacterPostDTO(
     UUID id,
     String name,
     String description,
