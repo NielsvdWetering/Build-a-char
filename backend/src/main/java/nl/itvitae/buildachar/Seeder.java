@@ -44,13 +44,14 @@ public class Seeder implements CommandLineRunner {
   private void seedPlayerCharacters() {
     if (!playerCharacterService.getAll().isEmpty()) return;
 
-    CharacterClass characterClass = characterClassService.getAll().stream().findFirst().get();
-    Weapon weapon = weaponService.getAll().stream().findFirst().get();
-    Tool tool = toolService.getAll().stream().findFirst().get();
-    Race race = raceService.getAll().stream().findFirst().get();
+    CharacterClass characterClass =
+        characterClassService.getAll().stream().findFirst().orElseThrow();
+    Weapon weapon = weaponService.getAll().stream().findFirst().orElseThrow();
+    Tool tool = toolService.getAll().stream().findFirst().orElseThrow();
+    Race race = raceService.getAll().stream().findFirst().orElseThrow();
 
     NewCharacterValues values =
-        new NewCharacterValues("Sjaak", "idk", null, characterClass, weapon, tool, null);
+        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, null);
     Result<PlayerCharacter> newCharacter = playerCharacterService.save(values);
   }
 
