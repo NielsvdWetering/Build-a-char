@@ -7,6 +7,7 @@ export default function Characters() {
 
   useEffect(() => {
     fetchCharacters();
+    console.log(characters);
   }, []);
 
   const fetchCharacters = () => {
@@ -24,7 +25,7 @@ export default function Characters() {
   return (
     <>
       <div>
-        <ul className="flex flex-row">
+        <ul className="flex h-full justify-around">
           {characters.map((character) => (
             <Card character={character} key={character.id} />
           ))}
