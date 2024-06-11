@@ -11,7 +11,6 @@ import nl.itvitae.buildachar.characterclass.CharacterClass;
 @Entity
 @NoArgsConstructor
 @Getter
-@Setter
 public class Tool {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

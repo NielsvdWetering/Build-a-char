@@ -1,10 +1,13 @@
 package nl.itvitae.buildachar.armor;
 
 import jakarta.persistence.*;
+
+import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.buildachar.characterclass.CharacterClass;
 
 @Entity
 @NoArgsConstructor
@@ -23,6 +26,10 @@ public class Armor {
   @Setter private ArmorType armorType;
 
   @Setter private ArmorClass armorClass;
+  
+  @Setter
+  @ManyToMany(mappedBy = "allowedArmors")
+  private Set<CharacterClass> requiredClasses;
 
   public Armor(
       String name, String description, double defence, ArmorType armorType, ArmorClass armorClass) {

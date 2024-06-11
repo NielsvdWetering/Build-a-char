@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
+import nl.itvitae.buildachar.character.NewCharacterValues;
 import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.character.PlayerCharacterService;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
+import nl.itvitae.buildachar.helpers.Result;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.race.Stats;
@@ -42,17 +44,14 @@ public class Seeder implements CommandLineRunner {
   private void seedPlayerCharacters() {
     if (!playerCharacterService.getAll().isEmpty()) return;
 
-    CharacterClass characterClass =
-        characterClassService.getAll().stream().findFirst().orElseThrow();
-    Weapon weapon = weaponService.getAll().stream().findFirst().orElseThrow();
-    Tool tool = toolService.getAll().stream().findFirst().orElseThrow();
+    CharacterClass characterClass = characterClassService.getAll().stream().findFirst().get();
+    Weapon weapon = weaponService.getAll().stream().findFirst().get();
+    Tool tool = toolService.getAll().stream().findFirst().get();
+    Race race = raceService.getAll().stream().findFirst().get();
 
-    Race race = raceService.getAll().stream().findFirst().orElseThrow();
-    PlayerCharacter newCharacter = playerCharacterService.save("Sjaak", "idk");
-    newCharacter.setRace(race);
-    newCharacter.setWeapon(weapon);
-    newCharacter.setTool(tool);
-    playerCharacterService.update(newCharacter);
+    NewCharacterValues values =
+        new NewCharacterValues("Sjaak", "idk", null, characterClass, weapon, tool, null);
+    Result<PlayerCharacter> newCharacter = playerCharacterService.save(values);
   }
 
   private void seedClasses() {

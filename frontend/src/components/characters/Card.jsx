@@ -4,9 +4,10 @@ import { TextField } from "./TextField";
 import CreatorColumn from "../creator/creatorColumn";
 
 export const Card = ({ character }) => {
+  console.log("CHARACTER", character);
   return (
     <div className="grid grid-flow-col border-2 border-emerald-900 p-10">
-      {character ? (
+      {character && (
         <>
           <CreatorColumn>
             <DisplayField label={"name"} content={character.name} />
@@ -52,7 +53,7 @@ export const Card = ({ character }) => {
             </CreatorColumn>
           )}
         </>
-      ) : null}
+      )}
     </div>
   );
 };
