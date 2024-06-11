@@ -60,9 +60,9 @@ public class PlayerCharacterController {
         characterDTO.name(),
         characterDTO.description(),
         getRaceFromId(characterDTO.raceId()),
-        getClassFromId(characterDTO.raceId()),
-        getWeaponFromId(characterDTO.raceId()),
-        getToolFromId(characterDTO.raceId()),
+        getClassFromId(characterDTO.classId()),
+        getWeaponFromId(characterDTO.weaponId()),
+        getToolFromId(characterDTO.toolId()),
         getArmorsFromId(characterDTO.armorIds()));
   }
 
