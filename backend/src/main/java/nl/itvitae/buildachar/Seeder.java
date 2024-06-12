@@ -53,7 +53,7 @@ public class Seeder implements CommandLineRunner {
     Race race = raceService.getAll().stream().findFirst().orElseThrow();
     List<Armor> armors = armorService.getAll();
 
-    List<Armor> armorList = armors.subList(0, 4);
+    List<Armor> armorList = armors.subList(0, 5);
 
     NewCharacterValues values =
         new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList);

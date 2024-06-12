@@ -29,7 +29,11 @@ export default function CharacterDisplay() {
           <div className="aspect-video rounded-md">
             <h1 className="text-3xl">{character.name}</h1>
           </div>
-          <StatsView stats={character.stats} />
+          {character.armorList ? (
+            <StatsView stats={character.stats} />
+          ) : (
+            <Error msg={"armor list does not exist"} />
+          )}
         </PageColumn>
         <PageColumn>
           <div className="h-full w-full rounded-md bg-primary p-4">

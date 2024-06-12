@@ -3,7 +3,7 @@ import React from "react";
 export const ArmorView = ({ armorList }) => {
   const armorOrder = ["HEAD", "TORSO", "HANDS", "LEGS", "FEET"];
   return (
-    <ul className="aspect-video rounded-md bg-secondary p-5">
+    <ul className="aspect-video rounded-md bg-secondary p-5 shadow-lg">
       {armorList
         .sort((a, b) => {
           return (
