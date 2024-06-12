@@ -6,14 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 export const Card = ({ character, onClick }) => {
   return (
-    <div onClick={onClick} className="border-2 border-accent">
+    <div
+      onClick={onClick}
+      className="shadow-custom-dark rounded bg-neutral p-2"
+    >
       {character && (
         <>
-          <div className="">
-            <DisplayField label={"name"} content={character.name} />
-            <DisplayField label={"race"} content={character.race} />
-            <DisplayField label={"class"} content={character.characterClass} />
-          </div>
+          <DisplayField label={"name"} content={character.name} />
+          <DisplayField label={"race"} content={character.race} />
+          <DisplayField label={"class"} content={character.characterClass} />
         </>
       )}
     </div>
