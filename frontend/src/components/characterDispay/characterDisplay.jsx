@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { StatsView } from "./StatsView";
 import { ArmorView } from "./armorView";
+import { RingLoader } from "react-spinners";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -16,7 +17,12 @@ export default function CharacterDisplay() {
   }, []);
 
   if (!character) {
-    return <div>loading</div>;
+    return (
+      <div className="flex flex-col items-center">
+        <RingLoader color="#403D3A" cssOverride={{}} size={200} />
+        <span>Loading</span>
+      </div>
+    );
   }
 
   return (
