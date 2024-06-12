@@ -1,7 +1,6 @@
 import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "../characterDispay/subcomponents/StatsView";
 import { useNavigate } from "react-router-dom";
 
 export default function Characters() {

@@ -5,6 +5,9 @@ import axios from "axios";
 import { StatsView } from "./subcomponents/StatsView";
 import { ArmorView } from "./subcomponents/armorView";
 import { RingLoader } from "react-spinners";
+import { CharacterImage } from "./subcomponents/characterImage";
+import { CharacterDescription } from "./subcomponents/characterDescription";
+import { CharacterName } from "./subcomponents/characterName";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -29,24 +32,12 @@ export default function CharacterDisplay() {
     <>
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
-          <div className="aspect-video w-full rounded-md bg-accent text-accent-content">
-            character picture
-          </div>
-          <div className="aspect-video rounded-md">
-            <h1 className="text-3xl">{character.name}</h1>
-          </div>
-          {character.armorList ? (
-            <StatsView stats={character.stats} />
-          ) : (
-            <Error msg={"armor list does not exist"} />
-          )}
+          <CharacterImage />
+          <CharacterName name={character.name} />
+          <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
-          <div className="h-full w-full rounded-md bg-primary p-4">
-            <span className="text-primary-content">
-              {character.description}
-            </span>
-          </div>
+          <CharacterDescription description={character.description} />
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
