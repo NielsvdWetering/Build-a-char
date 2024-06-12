@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import PageColumn from "../pageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "./StatsView";
-import { ArmorView } from "./armorView";
+import { StatsView } from "./subcomponents/StatsView";
+import { ArmorView } from "./subcomponents/armorView";
 import { RingLoader } from "react-spinners";
 
 export default function CharacterDisplay() {
