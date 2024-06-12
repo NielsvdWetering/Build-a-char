@@ -4,7 +4,7 @@ export const Card = ({ character, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="shadow-custom-dark cursor-pointer rounded bg-neutral p-2"
+      className="shadow-custom-dark cursor-pointer rounded bg-neutral p-2 hover:bg-secondary"
     >
       {character && (
         <>
