@@ -44,17 +44,16 @@ public class PlayerCharacterService {
     if (values.name() == null || values.name().isBlank()) {
       return Result.errorResult("name is required");
     }
-
-    PlayerCharacter newPlayerCharacter = new PlayerCharacter(values.name(), values.description());
-
-    if (values.race() != null) {
-      System.out.println("SETTING RACE");
-      newPlayerCharacter.setRace(values.race());
+    if (values.race() == null) {
+      return Result.errorResult("race is required");
+    }
+    if (values.characterClass() == null) {
+      return Result.errorResult("class is required");
     }
 
-    if (values.characterClass() != null) {
-      newPlayerCharacter.setCharacterClass(values.characterClass());
-    }
+    PlayerCharacter newPlayerCharacter =
+        new PlayerCharacter(
+            values.name(), values.description(), values.race(), values.characterClass());
 
     if (values.weapon() != null) {
       newPlayerCharacter.setWeapon(values.weapon());

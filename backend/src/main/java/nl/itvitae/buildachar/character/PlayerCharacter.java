@@ -37,9 +37,12 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private Weapon weapon;
 
-  public PlayerCharacter(String name, String description) {
+  public PlayerCharacter(
+      String name, String description, Race race, CharacterClass characterClass) {
     this.name = name;
     this.description = description;
+    this.race = race;
+    this.characterClass = characterClass;
   }
 
   public void setArmors(Set<Armor> newArmorList) {
