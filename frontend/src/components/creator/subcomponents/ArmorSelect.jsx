@@ -1,4 +1,4 @@
-import DropdownSelect from "./dropdownSelect";
+import DropdownSelect from "./DropdownSelect";
 
 export default function ArmorSelect({
   sortedArmorPieces,

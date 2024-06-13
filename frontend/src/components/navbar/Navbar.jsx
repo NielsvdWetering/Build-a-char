@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarButton from "./navbarButton";
+import NavbarButton from "./NavbarButton";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar({}) {

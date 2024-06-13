@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import PageColumn from "../pageColumn";
-import RaceSelect from "./subcomponents/raceSelect";
-import ClassSelect from "./subcomponents/classSelect";
-import DescriptionInput from "./subcomponents/descriptionInput";
+import PageColumn from "../PageColumn";
+import RaceSelect from "./subcomponents/RaceSelect";
+import ClassSelect from "./subcomponents/ClassSelect";
+import DescriptionInput from "./subcomponents/DescriptionInput";
 import axios from "axios";
-import NameInput from "./subcomponents/nameInput";
-import ArmorSelect from "./subcomponents/armorSelect";
-import WeaponSelect from "./subcomponents/weaponSelect";
-import ToolSelect from "./subcomponents/toolSelect";
+import NameInput from "./subcomponents/NameInput";
+import ArmorSelect from "./subcomponents/ArmorSelect";
+import WeaponSelect from "./subcomponents/WeaponSelect";
+import ToolSelect from "./subcomponents/ToolSelect";
 
 export default function Creator() {
   const [name, setName] = useState("");

@@ -1,8 +1,8 @@
-import Navbar from "./components/navbar/navbar";
-import Home from "./components/home/home";
-import Creator from "./components/creator/creator";
-import Characters from "./components/characters/characters";
-import CharacterDisplay from "./components/characterDispay/characterDisplay";
+import Navbar from "./components/navbar/Navbar";
+import Home from "./components/home/Home";
+import Creator from "./components/creator/Creator";
+import Characters from "./components/characters/Characters";
+import CharacterDisplay from "./components/characterDisplay/CharacterDisplay";
 
 import { Routes, Route } from "react-router-dom";
 
