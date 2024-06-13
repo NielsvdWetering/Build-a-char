@@ -32,6 +32,7 @@ export default function CharacterPatcher() {
         ...characterData,
         characterClassId: characterData.classId,
       })
-      .then(console.log);
+      .then((response) => navigate(`/characters/${id}`))
+      .catch(console.error);
   }
 }
