@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageColumn from "../PageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -12,6 +12,7 @@ import { CharacterInfo } from "./CharacterInfo";
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/characters/" + id)
@@ -35,8 +36,8 @@ export default function CharacterDisplay() {
           <CharacterImage />
           <CharacterInfo
             name={character.name}
-            race={character.race}
-            characterClass={character.characterClass}
+            race={character.race.name}
+            characterClass={character.characterClass.name}
           />
           <StatsView stats={character.stats} />
         </PageColumn>
@@ -45,6 +46,9 @@ export default function CharacterDisplay() {
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
+          <button className="btn btn-primary" onClick={() => navigate("edit")}>
+            Edit
+          </button>
         </PageColumn>
       </div>
     </>
