@@ -1,10 +1,20 @@
-export default function DropdownSelect({ description, options, handleChange }) {
+export default function DropdownSelect({
+  defaultValue,
+  description,
+  options,
+  handleChange,
+}) {
+  const selectedOption = defaultValue
+    ? options.find((option) => option.id === defaultValue.id)
+    : undefined;
   return (
     <>
       <select
         className="select select-primary w-full"
         onChange={(event) => handleChange(JSON.parse(event.target.value))}
-        defaultValue={description}
+        defaultValue={
+          selectedOption ? JSON.stringify(selectedOption) : description
+        }
       >
         <option disabled value={description}>
           {description}

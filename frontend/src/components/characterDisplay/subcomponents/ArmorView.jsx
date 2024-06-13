@@ -19,7 +19,7 @@ export const ArmorView = ({ armorList }) => {
             className="grid-rows grid h-1/5 grid-cols-3 items-center gap-2 font-bold capitalize text-secondary-content"
           >
             <div className="grid grid-cols-2">
-              <span>{armor.armorType.toLowerCase()}</span>
+              <span>{armor.type.toLowerCase()}</span>
               <span>{armor.armorClass.toLowerCase()}</span>
             </div>
             <span>{armor.name}</span>

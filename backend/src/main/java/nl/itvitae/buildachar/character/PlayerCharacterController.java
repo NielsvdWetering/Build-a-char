@@ -3,7 +3,6 @@ package nl.itvitae.buildachar.character;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
@@ -38,7 +37,7 @@ public class PlayerCharacterController {
   private final ArmorService armorService;
 
   @PostMapping
-  public ResponseEntity<Void> create(
+  public ResponseEntity<CreatedCharacterDTO> create(
       @RequestBody CreatePlayerCharacterDTO characterDTO, UriComponentsBuilder ucb) {
     Result<PlayerCharacter> saveCharacterResult =
         playerCharacterService.save(getNewCharacterValues(characterDTO));
@@ -50,7 +49,8 @@ public class PlayerCharacterController {
     URI uri =
         ucb.path(ControllerRoutes.CHARACTER_ROUTE + "/{id}")
             .build(saveCharacterResult.body().getId());
-    return ResponseEntity.created(uri).build();
+    return ResponseEntity.created(uri)
+        .body(new CreatedCharacterDTO(saveCharacterResult.body().getId().toString()));
   }
 
   private NewCharacterValues getNewCharacterValues(CreatePlayerCharacterDTO characterDTO) {

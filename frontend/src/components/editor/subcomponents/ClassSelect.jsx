@@ -1,8 +1,10 @@
-export default function RaceSelect({
+export default function ClassSelect({
+  defaultValue,
   characterClasses,
   setSelectedCharacterClass,
 }) {
-  const defaultValue = "Select your class";
+  const description = "Select your class";
+
   return (
     <>
       <select
@@ -10,10 +12,10 @@ export default function RaceSelect({
         onChange={(event) =>
           setSelectedCharacterClass(JSON.parse(event.target.value))
         }
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ? JSON.stringify(defaultValue) : description}
       >
-        <option disabled value={defaultValue}>
-          Select your class
+        <option disabled value={description}>
+          {description}
         </option>
         {characterClasses.map((characterClass) => (
           <option

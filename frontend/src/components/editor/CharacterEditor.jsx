@@ -9,29 +9,39 @@ import ArmorSelect from "./subcomponents/ArmorSelect";
 import WeaponSelect from "./subcomponents/WeaponSelect";
 import ToolSelect from "./subcomponents/ToolSelect";
 
-export default function Creator() {
-  const [name, setName] = useState("");
+export default function CharacterEditor({
+  onSubmit,
+  submitLabel,
+  initialValues,
+}) {
+  initialValues ??= {};
+  const [name, setName] = useState(initialValues.name ?? "");
 
-  const [selectedRace, setSelectedRace] = useState(null);
   const [races, setRaces] = useState();
-  const [SelectedCharacterClass, setSelectedCharacterClass] = useState(null);
+  const [selectedRace, setSelectedRace] = useState(initialValues.race);
+
   const [characterClasses, setCharacterClasses] = useState();
+  const [SelectedCharacterClass, setSelectedCharacterClass] = useState(
+    initialValues.characterClass,
+  );
   const [sortedArmorPieces, setSortedArmorPieces] = useState();
   const [selectedArmorPieces, setSelectedArmorPieces] = useState({
-    head: null,
-    torso: null,
-    leg: null,
-    hand: null,
-    feet: null,
+    head: initialValues.armorList?.find((armor) => armor.type === "HEAD"),
+    torso: initialValues.armorList?.find((armor) => armor.type === "TORSO"),
+    leg: initialValues.armorList?.find((armor) => armor.type === "LEGS"),
+    hand: initialValues.armorList?.find((armor) => armor.type === "HANDS"),
+    feet: initialValues.armorList?.find((armor) => armor.type === "FEET"),
   });
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    initialValues.description ?? "",
+  );
 
   const [weapons, setWeapons] = useState([]);
-  const [selectedWeapon, setSelectedWeapon] = useState(null);
+  const [selectedWeapon, setSelectedWeapon] = useState(initialValues.weapon);
 
   const [tools, setTools] = useState([]);
-  const [selectedTool, setSelectedTool] = useState(null);
+  const [selectedTool, setSelectedTool] = useState(initialValues.tool);
 
   useEffect(() => {
     axios
@@ -69,8 +79,13 @@ export default function Creator() {
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
           <NameInput name={name} setName={setName} />
-          <RaceSelect races={races} setSelectedRace={setSelectedRace} />
+          <RaceSelect
+            defaultValue={selectedRace}
+            races={races}
+            setSelectedRace={setSelectedRace}
+          />
           <ClassSelect
+            defaultValue={SelectedCharacterClass}
             characterClasses={characterClasses}
             setSelectedCharacterClass={setSelectedCharacterClass}
           />
@@ -86,18 +101,23 @@ export default function Creator() {
             selectedArmorPieces={selectedArmorPieces}
           />
           <WeaponSelect
+            defaultValue={selectedWeapon}
             weapons={weapons}
             setSelectedWeapon={setSelectedWeapon}
           />
-          <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
+          <ToolSelect
+            defaultValue={selectedTool}
+            tools={tools}
+            setSelectedTool={setSelectedTool}
+          />
         </PageColumn>
         <PageColumn>
           <button
             disabled={!canSubmit()}
             className="btn btn-accent text-accent-content"
-            onClick={sumbitNewCharacter}
+            onClick={handleSubmit}
           >
-            Create Character
+            {submitLabel ?? "Submit"}
           </button>
         </PageColumn>
       </div>
@@ -108,12 +128,12 @@ export default function Creator() {
     return name && name.length !== 0 && selectedRace && SelectedCharacterClass;
   }
 
-  function sumbitNewCharacter() {
+  function handleSubmit() {
     if (!canSubmit()) {
       return;
     }
 
-    const characterData = {
+    onSubmit({
       name,
       description,
       raceId: selectedRace?.id,
@@ -123,11 +143,6 @@ export default function Creator() {
       armorIds: Object.values(selectedArmorPieces)
         .filter((armorPiece) => armorPiece && armorPiece.id)
         .map((armorPiece) => armorPiece.id),
-    };
-
-    axios
-      .post("http://localhost:8080/api/v1/characters", characterData)
-      .catch(console.error)
-      .then(console.log);
+    });
   }
 }

@@ -80,35 +80,35 @@ public class PlayerCharacterService {
     if (playerCharacterPatchDTO.description() != null)
       existingPlayerCharacter.setDescription(playerCharacterPatchDTO.description());
 
-    if (playerCharacterPatchDTO.race() != null) {
+    if (playerCharacterPatchDTO.raceId() != null) {
       Optional<Race> optionalRace =
-          raceRepository.findById(UUID.fromString(playerCharacterPatchDTO.race()));
+          raceRepository.findById(UUID.fromString(playerCharacterPatchDTO.raceId()));
       optionalRace.ifPresent(existingPlayerCharacter::setRace);
     }
 
-    if (playerCharacterPatchDTO.characterClass() != null) {
+    if (playerCharacterPatchDTO.characterClassId() != null) {
       Optional<CharacterClass> optionalClass =
           characterClassRepository.findById(
-              UUID.fromString(playerCharacterPatchDTO.characterClass()));
+              UUID.fromString(playerCharacterPatchDTO.characterClassId()));
       optionalClass.ifPresent(existingPlayerCharacter::setCharacterClass);
     }
 
-    if (playerCharacterPatchDTO.weapon() != null) {
+    if (playerCharacterPatchDTO.weaponId() != null) {
       Optional<Weapon> optionalWeapon =
-          weaponRepository.findById(UUID.fromString(playerCharacterPatchDTO.weapon()));
+          weaponRepository.findById(UUID.fromString(playerCharacterPatchDTO.weaponId()));
       optionalWeapon.ifPresent(existingPlayerCharacter::setWeapon);
     }
-    if (playerCharacterPatchDTO.armors() != null) {
+    if (playerCharacterPatchDTO.armorIds() != null) {
       Set<Armor> newArmorList =
-          playerCharacterPatchDTO.armors().stream()
+          playerCharacterPatchDTO.armorIds().stream()
               .map(armor -> armorRepository.findById(UUID.fromString(armor)).orElseThrow())
               .collect(Collectors.toSet());
       existingPlayerCharacter.setArmors(newArmorList);
     }
 
-    if (playerCharacterPatchDTO.tool() != null) {
+    if (playerCharacterPatchDTO.toolId() != null) {
       Optional<Tool> optionalTool =
-          toolRepository.findById(UUID.fromString(playerCharacterPatchDTO.tool()));
+          toolRepository.findById(UUID.fromString(playerCharacterPatchDTO.toolId()));
       optionalTool.ifPresent(existingPlayerCharacter::setTool);
     }
     playerCharacterRepository.save(existingPlayerCharacter);
