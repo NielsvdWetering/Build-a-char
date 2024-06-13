@@ -1,7 +1,6 @@
-import { Card } from "./Card";
+import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "../characterDispay/StatsView";
 import { useNavigate } from "react-router-dom";
 
 export default function Characters() {
@@ -10,7 +9,6 @@ export default function Characters() {
 
   useEffect(() => {
     fetchCharacters();
-    console.log(characters);
   }, []);
 
   const fetchCharacters = () => {
@@ -18,7 +16,6 @@ export default function Characters() {
       .get("http://localhost:8080/api/v1/characters")
       .then((response) => {
         setCharacters(response.data);
-        console.log(characters);
       })
       .catch((error) => {
         console.error("There was an error fetching the characters!", error);
@@ -28,7 +25,7 @@ export default function Characters() {
   return (
     <>
       <div>
-        <ul className="grid grid-cols-3 gap-2">
+        <ul className="grid grid-cols-3 gap-2 p-3">
           {characters.map((character) => (
             <Card
               character={character}

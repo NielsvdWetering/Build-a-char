@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        "custom-light": "0 5px 15px rgba(255, 255, 255, 0.2)",
+        "custom-dark": "0 5px 15px rgba(0, 0, 0, 0.5)",
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {
