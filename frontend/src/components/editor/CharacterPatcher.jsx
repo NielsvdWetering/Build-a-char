@@ -23,7 +23,7 @@ export default function CharacterPatcher() {
       initialValues={character}
     />
   ) : (
-    <div>loading...</div>
+    <RingLoader />
   );
 
   function patchCharacter(characterData) {
