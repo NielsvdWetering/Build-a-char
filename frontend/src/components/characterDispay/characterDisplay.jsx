@@ -8,6 +8,7 @@ import { RingLoader } from "react-spinners";
 import { CharacterImage } from "./subcomponents/characterImage";
 import { CharacterDescription } from "./subcomponents/characterDescription";
 import { CharacterName } from "./subcomponents/characterName";
+import Inventory from "./subcomponents/inventory";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -41,6 +42,7 @@ export default function CharacterDisplay() {
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
+          <Inventory weapons={character.weapons} tools={character.tools} />
         </PageColumn>
       </div>
     </>
