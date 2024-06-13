@@ -1,19 +1,7 @@
 import InventoryItem from "./inventoryItem";
+import { renderToStaticMarkup } from "react-dom/server";
 
 export default function Inventory({ weapons, tools }) {
-  const weaponTooltip = (weapon) => {
-    return (
-      <div>
-        <div className="flex justify-between">
-          <span>Weapon Type</span> <span>{weapon.weaponType}</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Attack Power</span> <span>{weapon.attackPower}</span>
-        </div>
-      </div>
-    );
-  };
-
   const tooltip = "test2";
   return (
     <>
@@ -25,7 +13,18 @@ export default function Inventory({ weapons, tools }) {
           <InventoryItem
             key={item.id}
             inventoryItem={item.name}
-            tooltip={weaponTooltip(item)}
+            tooltip={renderToStaticMarkup(
+              <div>
+                <div className="flex justify-between">
+                  <span className="mr-4">Weapon Type:</span>{" "}
+                  <span className="mx-2">{item.weaponType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="m2-4">Attack Power:</span>{" "}
+                  <span className="mx-2">{item.attackPower}</span>
+                </div>
+              </div>,
+            )}
           />
         ))}
         {tools.map((item) => (
@@ -35,7 +34,6 @@ export default function Inventory({ weapons, tools }) {
             tooltip={tooltip}
           />
         ))}
-        {weaponTooltip(weapons[0])}
       </div>
     </>
   );
