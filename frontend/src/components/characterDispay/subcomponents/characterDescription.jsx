@@ -4,7 +4,9 @@ import { Error } from "../../generic/Error";
 export const CharacterDescription = ({ description }) => {
   return (
     <div className="h-full w-full rounded-md bg-primary p-4 shadow-custom-dark">
-      <span className="text-primary-content">{description}</span>
+      <span className="text-primary-content">
+        {description ? description : "No description"}
+      </span>
     </div>
   );
 };
