@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
-import PageColumn from "../pageColumn";
+import PageColumn from "../PageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { StatsView } from "./subcomponents/StatsView";
-import { ArmorView } from "./subcomponents/armorView";
+import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
-import { CharacterImage } from "./subcomponents/characterImage";
-import { CharacterDescription } from "./subcomponents/characterDescription";
-import { CharacterName } from "./subcomponents/characterName";
+import { CharacterImage } from "./subcomponents/CharacterImage";
+import { CharacterDescription } from "./subcomponents/CharacterDescription";
+import { CharacterName } from "./subcomponents/CharacterName";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
