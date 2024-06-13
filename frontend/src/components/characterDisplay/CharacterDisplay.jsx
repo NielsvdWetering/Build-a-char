@@ -7,7 +7,7 @@ import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
 import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
-import { CharacterName } from "./subcomponents/CharacterName";
+import { CharacterInfo } from "./CharacterInfo";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -33,7 +33,11 @@ export default function CharacterDisplay() {
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
           <CharacterImage />
-          <CharacterName name={character.name} />
+          <CharacterInfo
+            name={character.name}
+            race={character.race}
+            characterClass={character.characterClass}
+          />
           <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
