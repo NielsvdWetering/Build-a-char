@@ -1,5 +1,5 @@
 import React from "react";
-import { Error } from "../../generic/error";
+import { Error } from "../../generic/Error";
 
 export const CharacterDescription = ({ description }) => {
   return (
