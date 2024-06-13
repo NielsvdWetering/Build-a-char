@@ -9,7 +9,11 @@ import ArmorSelect from "./subcomponents/ArmorSelect";
 import WeaponSelect from "./subcomponents/WeaponSelect";
 import ToolSelect from "./subcomponents/ToolSelect";
 
-export default function Creator({ onSubmit, submitLabel, initialValues }) {
+export default function CharacterEditor({
+  onSubmit,
+  submitLabel,
+  initialValues,
+}) {
   initialValues ??= {};
 
   const [name, setName] = useState(initialValues.name ?? "");
