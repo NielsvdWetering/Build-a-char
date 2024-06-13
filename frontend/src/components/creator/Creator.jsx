@@ -105,7 +105,7 @@ export default function Creator() {
   );
 
   function canSubmit() {
-    name && name.length === 0 && selectedRace && SelectedCharacterClass;
+    return name && name.length !== 0 && selectedRace && SelectedCharacterClass;
   }
 
   function sumbitNewCharacter() {
