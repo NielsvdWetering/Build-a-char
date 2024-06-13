@@ -93,7 +93,7 @@ export default function Creator() {
         </PageColumn>
         <PageColumn>
           <button
-            disabled={!name || name.length === 0}
+            disabled={!canSubmit()}
             className="btn btn-accent text-accent-content"
             onClick={sumbitNewCharacter}
           >
@@ -104,7 +104,15 @@ export default function Creator() {
     </>
   );
 
+  function canSubmit() {
+    name && name.length === 0 && selectedRace && SelectedCharacterClass;
+  }
+
   function sumbitNewCharacter() {
+    if (!canSubmit()) {
+      return;
+    }
+
     const characterData = {
       name,
       description,
