@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import PageColumn from "../pageColumn";
+import PageColumn from "../PageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { StatsView } from "./StatsView";
