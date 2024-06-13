@@ -1,10 +1,10 @@
 import React from "react";
-import Creator from "../creator/Creator";
+import CharacterCreator from "../editor/CharacterCreator";
 
 export default function Home() {
   return (
     <>
-      <Creator />
+      <CharacterCreator />
     </>
   );
 }

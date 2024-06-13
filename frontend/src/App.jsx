@@ -1,6 +1,6 @@
 import Navbar from "./components/navbar/Navbar";
 import Home from "./components/home/Home";
-import Creator from "./components/creator/Creator";
+import CharacterCreator from "./components/editor/CharacterCreator";
 import Characters from "./components/characters/Characters";
 import CharacterDisplay from "./components/characterDisplay/CharacterDisplay";
 
@@ -14,7 +14,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/creator" element={<Creator />} />
+          <Route path="/creator" element={<CharacterCreator />} />
           <Route path="/characters" element={<Characters />} />
           <Route path="/characters/:id" element={<CharacterDisplay />} />
         </Routes>
