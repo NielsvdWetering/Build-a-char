@@ -37,8 +37,6 @@ export default function CharacterEditor({
     initialValues.description ?? "",
   );
 
-  console.log(initialValues);
-
   const [weapons, setWeapons] = useState([]);
   const [selectedWeapon, setSelectedWeapon] = useState(initialValues.weapon);
 
