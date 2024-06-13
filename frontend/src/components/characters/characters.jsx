@@ -9,7 +9,6 @@ export default function Characters() {
 
   useEffect(() => {
     fetchCharacters();
-    console.log(characters);
   }, []);
 
   const fetchCharacters = () => {
@@ -17,7 +16,6 @@ export default function Characters() {
       .get("http://localhost:8080/api/v1/characters")
       .then((response) => {
         setCharacters(response.data);
-        console.log(characters);
       })
       .catch((error) => {
         console.error("There was an error fetching the characters!", error);
