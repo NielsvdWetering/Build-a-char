@@ -1,7 +1,6 @@
-import { Card } from "./Card";
+import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "../characterDispay/StatsView";
 import { useNavigate } from "react-router-dom";
 
 export default function Characters() {
@@ -28,7 +27,7 @@ export default function Characters() {
   return (
     <>
       <div>
-        <ul className="grid grid-cols-3 gap-2">
+        <ul className="grid grid-cols-3 gap-2 p-3">
           {characters.map((character) => (
             <Card
               character={character}

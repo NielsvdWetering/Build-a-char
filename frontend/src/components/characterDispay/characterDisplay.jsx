@@ -2,7 +2,12 @@ import { useParams } from "react-router-dom";
 import PageColumn from "../pageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { StatsView } from "./StatsView";
+import { StatsView } from "./subcomponents/StatsView";
+import { ArmorView } from "./subcomponents/armorView";
+import { RingLoader } from "react-spinners";
+import { CharacterImage } from "./subcomponents/characterImage";
+import { CharacterDescription } from "./subcomponents/characterDescription";
+import { CharacterName } from "./subcomponents/characterName";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -15,29 +20,28 @@ export default function CharacterDisplay() {
   }, []);
 
   if (!character) {
-    return <div>loading</div>;
+    return (
+      <div className="flex flex-col items-center">
+        <RingLoader color="#403D3A" cssOverride={{}} size={200} />
+        <span>Loading</span>
+      </div>
+    );
   }
 
   return (
     <>
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
-          <div className="aspect-video w-full rounded-md bg-accent text-accent-content">
-            character picture
-          </div>
-          <div className="rounded-md">
-            <h1 className="text-3xl">{character.name}</h1>
-          </div>
+          <CharacterImage />
+          <CharacterName name={character.name} />
           <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
-          <div className="h-full w-full rounded-md bg-primary p-4">
-            <span className="text-primary-content">
-              {character.description}
-            </span>
-          </div>
+          <CharacterDescription description={character.description} />
         </PageColumn>
-        <PageColumn></PageColumn>
+        <PageColumn>
+          <ArmorView armorList={character.armorList} />
+        </PageColumn>
       </div>
     </>
   );

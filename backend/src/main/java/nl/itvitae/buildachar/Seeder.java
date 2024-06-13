@@ -1,6 +1,8 @@
 package nl.itvitae.buildachar;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
@@ -49,9 +51,12 @@ public class Seeder implements CommandLineRunner {
     Weapon weapon = weaponService.getAll().stream().findFirst().orElseThrow();
     Tool tool = toolService.getAll().stream().findFirst().orElseThrow();
     Race race = raceService.getAll().stream().findFirst().orElseThrow();
+    List<Armor> armors = armorService.getAll();
+
+    List<Armor> armorList = armors.subList(0, 5);
 
     NewCharacterValues values =
-        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, null);
+        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList);
     Result<PlayerCharacter> newCharacter = playerCharacterService.save(values);
   }
 
