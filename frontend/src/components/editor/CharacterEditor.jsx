@@ -15,7 +15,6 @@ export default function CharacterEditor({
   initialValues,
 }) {
   initialValues ??= {};
-
   const [name, setName] = useState(initialValues.name ?? "");
 
   const [races, setRaces] = useState();
@@ -27,14 +26,18 @@ export default function CharacterEditor({
   );
   const [sortedArmorPieces, setSortedArmorPieces] = useState();
   const [selectedArmorPieces, setSelectedArmorPieces] = useState({
-    head: initialValues.armors?.head,
-    torso: initialValues.armors?.torso,
-    leg: initialValues.armors?.leg,
-    hand: initialValues.armors?.hand,
-    feet: initialValues.armors?.feet,
+    head: initialValues.armorList?.find((armor) => armor.type === "HEAD"),
+    torso: initialValues.armorList?.find((armor) => armor.type === "TORSO"),
+    leg: initialValues.armorList?.find((armor) => armor.type === "LEGS"),
+    hand: initialValues.armorList?.find((armor) => armor.type === "HANDS"),
+    feet: initialValues.armorList?.find((armor) => armor.type === "FEET"),
   });
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    initialValues.description ?? "",
+  );
+
+  console.log(initialValues);
 
   const [weapons, setWeapons] = useState([]);
   const [selectedWeapon, setSelectedWeapon] = useState(initialValues.weapon);
@@ -78,8 +81,13 @@ export default function CharacterEditor({
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
           <NameInput name={name} setName={setName} />
-          <RaceSelect races={races} setSelectedRace={setSelectedRace} />
+          <RaceSelect
+            defaultValue={selectedRace}
+            races={races}
+            setSelectedRace={setSelectedRace}
+          />
           <ClassSelect
+            defaultValue={SelectedCharacterClass}
             characterClasses={characterClasses}
             setSelectedCharacterClass={setSelectedCharacterClass}
           />
@@ -95,10 +103,15 @@ export default function CharacterEditor({
             selectedArmorPieces={selectedArmorPieces}
           />
           <WeaponSelect
+            defaultValue={selectedWeapon}
             weapons={weapons}
             setSelectedWeapon={setSelectedWeapon}
           />
-          <ToolSelect tools={tools} setSelectedTool={setSelectedTool} />
+          <ToolSelect
+            defaultValue={selectedTool}
+            tools={tools}
+            setSelectedTool={setSelectedTool}
+          />
         </PageColumn>
         <PageColumn>
           <button
