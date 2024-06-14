@@ -13,7 +13,7 @@ export default {
   daisyui: {
     themes: [
       {
-        buildachar: {
+        buildachardark: {
           primary: "#989E80",
           "primary-content": "#403D3A",
           secondary: "DCE4C8",
