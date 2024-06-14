@@ -23,6 +23,17 @@ export default {
           "base-100": "#605B56",
         },
       },
+      {
+        buildacharlight: {
+          primary: "#989E80",
+          "primary-content": "#403D3A",
+          secondary: "DCE4C8",
+          "secondary-content": "#605B56",
+          accent: "#C13E3C",
+          neutral: "#918a81",
+          "base-100": "#ffffff",
+        },
+      },
     ],
   },
 };

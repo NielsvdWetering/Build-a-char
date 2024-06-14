@@ -17,6 +17,11 @@ export default function Navbar({}) {
           title="Characters"
           onClick={() => navigate("/characters")}
         />
+        <input
+          type="checkbox"
+          value="buildacharlight"
+          className="theme-controller checkbox"
+        />
       </div>
     </>
   );
