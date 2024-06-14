@@ -1,4 +1,4 @@
-import InventoryItem from "./inventoryItem";
+import CharacterItem from "./characterItem";
 import { renderToStaticMarkup } from "react-dom/server";
 import WeaponTooltip from "./weaponTooltip";
 import ToolTooltip from "./toolTooltip";
@@ -11,9 +11,9 @@ export default function Inventory({ weapons, tools }) {
           Inventory:
         </h1>
         {weapons.map((item) => (
-          <InventoryItem
+          <CharacterItem
             key={item.id}
-            inventoryItem={item.name}
+            item={item.name}
             tooltip={renderToStaticMarkup(
               <WeaponTooltip
                 type={item.weaponType}
@@ -23,9 +23,9 @@ export default function Inventory({ weapons, tools }) {
           />
         ))}
         {tools.map((item) => (
-          <InventoryItem
+          <CharacterItem
             key={item.id}
-            inventoryItem={item.name}
+            item={item.name}
             tooltip={renderToStaticMarkup(
               <ToolTooltip description={item.description} />,
             )}
