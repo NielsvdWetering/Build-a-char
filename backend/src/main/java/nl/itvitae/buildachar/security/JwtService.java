@@ -40,14 +40,15 @@ public class JwtService {
         .compact();
   }
 
-  public Optional<Claims> readToken(String token) {
+  public Optional<Claims> readClaimsFromToken(String token) {
     try {
       Claims claims =
           Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
 
       return Optional.of(claims);
     } catch (RuntimeException ex) {
-      logger.atDebug().log(
+      System.out.println(
+          //      logger.atDebug().log(
           "invalid bearer token detected: "
               + ex.getClass().getSimpleName()
               + " '"
