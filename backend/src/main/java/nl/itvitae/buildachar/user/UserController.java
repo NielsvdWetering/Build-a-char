@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ControllerRoutes.USER_ROUTE)
 @RequiredArgsConstructor
+@CrossOrigin("${app-cors}")
 public class UserController {
   private final UserService userService;
   private final PasswordValidator passwordValidator;
