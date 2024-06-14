@@ -46,7 +46,10 @@ export default function CharacterDisplay() {
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
-          <button className="btn btn-primary" onClick={() => navigate("edit")}>
+          <button
+            className="btn btn-primary mt-2 shadow-custom-dark"
+            onClick={() => navigate("edit")}
+          >
             Edit
           </button>
         </PageColumn>
