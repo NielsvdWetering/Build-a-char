@@ -15,16 +15,19 @@ export default function AuthForm({
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         placeholder="username"
+        onKeyUp={inputFieldKeyUp}
       />
       <InputField
         className="w-1/4"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         placeholder="password"
+        type="password"
+        onKeyUp={inputFieldKeyUp}
       />
       <button
         className="btn btn-primary"
-        onClick={() => onSubmit?.({ username, password })}
+        onClick={submit}
         disabled={
           !username ||
           username.length === 0 ||
@@ -36,4 +39,14 @@ export default function AuthForm({
       </button>
     </div>
   );
+
+  function inputFieldKeyUp(event) {
+    if (event.key === "Enter") {
+      submit();
+    }
+  }
+
+  function submit() {
+    onSubmit?.({ username, password });
+  }
 }
