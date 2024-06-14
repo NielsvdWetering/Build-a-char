@@ -23,6 +23,13 @@ export default function Register() {
     axios
       .post("http://localhost:8080/api/v1/auth/register", registerData)
       .then((response) => navigate("/"))
-      .catch(console.error);
+      .catch((error) =>
+        alert(
+          error.response.data.detail
+            .split(";")
+            .map((s) => `- ${s}`)
+            .join("\n"),
+        ),
+      );
   }
 }
