@@ -58,4 +58,8 @@ public class UserService implements UserDetailsService {
                         new RuntimeException(
                             "UserService.save: UserRole '" + role.name() + "' does not exist"))));
   }
+
+  public boolean isCorrectPasswordForUser(User user, String password) {
+    return passwordEncoder.matches(password, user.getPassword());
+  }
 }
