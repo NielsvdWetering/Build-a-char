@@ -17,6 +17,9 @@ public class UserController {
   private final UserService userService;
   private final PasswordValidator passwordValidator;
 
+  private static final String INVALID_USERNAME_PASSWORD_ERROR_MESSAGE =
+      "username or password is invalid";
+
   @PostMapping("register")
   public ResponseEntity<UserDTO> register(@RequestBody AuthDTO authDTO) {
     if (authDTO.username() == null || authDTO.username().isBlank()) {
@@ -24,6 +27,10 @@ public class UserController {
     }
     if (authDTO.password() == null || authDTO.password().isBlank()) {
       throw new RestException(HttpStatus.BAD_REQUEST, "password is required");
+    }
+
+    if (userService.findUserByUsername(authDTO.username()).isPresent()) {
+      throw new RestException(HttpStatus.BAD_REQUEST, INVALID_USERNAME_PASSWORD_ERROR_MESSAGE);
     }
 
     PasswordValidationResult result = passwordValidator.validate(authDTO.password());

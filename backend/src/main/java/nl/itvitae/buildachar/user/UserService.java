@@ -37,6 +37,10 @@ public class UserService implements UserDetailsService {
   }
 
   public User save(String username, String password, RoleName role) {
+    if (userRepository.findByUsername(username).isPresent()) {
+      throw new RuntimeException("user with username already exists");
+    }
+
     PasswordValidationResult result = passwordValidator.validate(password);
     if (!result.isValid()) {
       throw new RuntimeException("password is invalid");
