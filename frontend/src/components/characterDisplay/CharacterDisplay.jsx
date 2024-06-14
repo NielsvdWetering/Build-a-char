@@ -5,8 +5,8 @@ import axios from "axios";
 import { StatsView } from "./subcomponents/StatsView";
 import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
-import { CharacterImage } from "./subcomponents/characterImage";
-import { CharacterDescription } from "./subcomponents/characterDescription";
+import { CharacterImage } from "./subcomponents/CharacterImage";
+import { CharacterDescription } from "./subcomponents/CharacterDescription";
 import Inventory from "./subcomponents/inventory";
 import { CharacterInfo } from "./CharacterInfo";
 
