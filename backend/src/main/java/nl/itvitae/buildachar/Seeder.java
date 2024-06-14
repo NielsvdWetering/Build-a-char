@@ -83,11 +83,36 @@ public class Seeder implements CommandLineRunner {
       return;
     }
 
-    armorService.save("Steel Helmet", "", 4.2, ArmorType.HEAD, ArmorClass.HEAVY);
-    armorService.save("Steel Chestplate", "", 4.2, ArmorType.TORSO, ArmorClass.HEAVY);
-    armorService.save("Steel Leggins", "", 4.2, ArmorType.LEGS, ArmorClass.HEAVY);
-    armorService.save("Steel Gauntlets", "", 4.2, ArmorType.HANDS, ArmorClass.HEAVY);
-    armorService.save("Steel Boots", "", 4.2, ArmorType.FEET, ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Helmet",
+        "A fierce looking dark helmet, should protect the wearer fairly good",
+        4.2,
+        ArmorType.HEAD,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Chestplate",
+        "A polished silvery chestplate that protects the user while being quite fashionable",
+        4.2,
+        ArmorType.TORSO,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Leggins",
+        "A pair of leggings made out of steel, nothing fashionable but is practical",
+        4.2,
+        ArmorType.LEGS,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Gauntlets",
+        "A pair of slightly dented steel gauntlets, they clearly have seen some stuff",
+        4.2,
+        ArmorType.HANDS,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Boots",
+        "A pair of muddied steel boots, I should make sure the squire learns how to clean them properly",
+        4.2,
+        ArmorType.FEET,
+        ArmorClass.HEAVY);
 
     armorService.save("Leather Cap", "", 4.2, ArmorType.HEAD, ArmorClass.MEDIUM);
     armorService.save("Leather Coat", "", 4.2, ArmorType.TORSO, ArmorClass.MEDIUM);
