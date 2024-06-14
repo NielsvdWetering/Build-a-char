@@ -1,9 +1,10 @@
 package nl.itvitae.buildachar.security;
 
+import io.jsonwebtoken.Jwts;
+import javax.crypto.SecretKey;
 import nl.itvitae.buildachar.ControllerRoutes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,5 +31,10 @@ public class SecurityConfig {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
+
+  @Bean
+    public SecretKey secretKey(){
+      return Jwts.SIG.HS256.key().build();
   }
 }
