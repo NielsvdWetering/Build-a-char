@@ -16,6 +16,8 @@ export default function CharacterCreator() {
     axios
       .post("http://localhost:8080/api/v1/characters", characterData)
       .catch(console.error)
-      .then((response) => navigate(`/characters/${response.data.id}`));
+      .then((response) => {
+        console.log(response), navigate(`/characters/${response.data.id}`);
+      });
   }
 }
