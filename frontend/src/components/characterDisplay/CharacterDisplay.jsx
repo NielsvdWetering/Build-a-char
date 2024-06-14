@@ -1,18 +1,20 @@
-import { useParams } from "react-router-dom";
-import PageColumn from "../pageColumn";
+import { useNavigate, useParams } from "react-router-dom";
+import PageColumn from "../PageColumn";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { StatsView } from "./subcomponents/StatsView";
-import { ArmorView } from "./subcomponents/armorView";
+import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
 import { CharacterImage } from "./subcomponents/characterImage";
 import { CharacterDescription } from "./subcomponents/characterDescription";
-import { CharacterName } from "./subcomponents/characterName";
 import Inventory from "./subcomponents/inventory";
+import { CharacterInfo } from "./CharacterInfo";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/characters/" + id)
@@ -34,7 +36,11 @@ export default function CharacterDisplay() {
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
           <CharacterImage />
-          <CharacterName name={character.name} />
+          <CharacterInfo
+            name={character.name}
+            race={character.race.name}
+            characterClass={character.characterClass.name}
+          />
           <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
@@ -43,6 +49,9 @@ export default function CharacterDisplay() {
         <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
+          <button className="btn btn-primary" onClick={() => navigate("edit")}>
+            Edit
+          </button>
         </PageColumn>
       </div>
     </>

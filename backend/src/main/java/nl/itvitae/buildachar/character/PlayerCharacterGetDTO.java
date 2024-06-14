@@ -1,9 +1,10 @@
 package nl.itvitae.buildachar.character;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import nl.itvitae.buildachar.armor.Armor;
+import nl.itvitae.buildachar.armor.ArmorDTO;
+import nl.itvitae.buildachar.characterclass.CharacterClassDTO;
+import nl.itvitae.buildachar.race.BasicRaceDTO;
 import nl.itvitae.buildachar.race.Stats;
 import nl.itvitae.buildachar.tool.ToolDTO;
 import nl.itvitae.buildachar.weapon.WeaponDTO;
@@ -13,9 +14,11 @@ public record PlayerCharacterGetDTO(
     String name,
     String description,
     Stats stats,
-    Set<Armor> armorList,
     List<WeaponDTO> weapons,
-    List<ToolDTO> tools) {
+    List<ToolDTO> tools,
+    List<ArmorDTO> armorList,
+    BasicRaceDTO race,
+    CharacterClassDTO characterClass) {
 
   static PlayerCharacterGetDTO from(PlayerCharacter playerCharacter) {
     return new PlayerCharacterGetDTO(
@@ -23,8 +26,10 @@ public record PlayerCharacterGetDTO(
         playerCharacter.getName(),
         playerCharacter.getDescription(),
         playerCharacter.getRace().getStats(),
-        playerCharacter.getArmors(),
         List.of(WeaponDTO.from(playerCharacter.getWeapon())),
-        List.of(ToolDTO.from(playerCharacter.getTool())));
+        List.of(ToolDTO.from(playerCharacter.getTool())),
+        playerCharacter.getArmors().stream().map(ArmorDTO::from).toList(),
+        BasicRaceDTO.from(playerCharacter.getRace()),
+        CharacterClassDTO.from(playerCharacter.getCharacterClass()));
   }
 }

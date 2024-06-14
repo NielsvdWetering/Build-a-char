@@ -1,8 +1,9 @@
-import Navbar from "./components/navbar/navbar";
-import Home from "./components/home/home";
-import Creator from "./components/creator/creator";
-import Characters from "./components/characters/characters";
-import CharacterDisplay from "./components/characterDispay/characterDisplay";
+import Navbar from "./components/navbar/Navbar";
+import Home from "./components/home/Home";
+import CharacterCreator from "./components/editor/CharacterCreator";
+import Characters from "./components/characters/Characters";
+import CharacterDisplay from "./components/characterDisplay/CharacterDisplay";
+import CharacterPatcher from "./components/editor/CharacterPatcher";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -14,9 +15,10 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/creator" element={<Creator />} />
+          <Route path="/creator" element={<CharacterCreator />} />
           <Route path="/characters" element={<Characters />} />
           <Route path="/characters/:id" element={<CharacterDisplay />} />
+          <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
         </Routes>
       </div>
     </>

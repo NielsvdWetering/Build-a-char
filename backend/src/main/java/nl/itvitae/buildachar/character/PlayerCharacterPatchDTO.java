@@ -5,8 +5,8 @@ import java.util.List;
 public record PlayerCharacterPatchDTO(
     String name,
     String description,
-    String race,
-    String characterClass,
-    String weapon,
-    List<String> armors,
-    String tool) {}
+    String raceId,
+    String characterClassId,
+    String weaponId,
+    List<String> armorIds,
+    String toolId) {}

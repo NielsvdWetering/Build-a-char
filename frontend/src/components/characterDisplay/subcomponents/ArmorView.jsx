@@ -1,12 +1,12 @@
 import React from "react";
-import { Error } from "../../generic/error";
+import { Error } from "../../generic/Error";
 
 export const ArmorView = ({ armorList }) => {
   const armorOrder = ["HEAD", "TORSO", "HANDS", "LEGS", "FEET"];
 
   if (!armorList) return <Error msg={"Could not retrieve armor pieces"} />;
   return (
-    <ul className="shadow-custom-dark aspect-video rounded-md bg-secondary p-5">
+    <ul className="aspect-video rounded-md bg-secondary p-5 shadow-custom-dark">
       {armorList
         .sort((a, b) => {
           return (
@@ -19,7 +19,7 @@ export const ArmorView = ({ armorList }) => {
             className="grid-rows grid h-1/5 grid-cols-3 items-center gap-2 font-bold capitalize text-secondary-content"
           >
             <div className="grid grid-cols-2">
-              <span>{armor.armorType.toLowerCase()}</span>
+              <span>{armor.type.toLowerCase()}</span>
               <span>{armor.armorClass.toLowerCase()}</span>
             </div>
             <span>{armor.name}</span>
