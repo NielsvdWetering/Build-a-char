@@ -7,7 +7,7 @@ import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
 import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
-import Inventory from "./subcomponents/inventory";
+import Inventory from "./subcomponents/Inventory";
 import { CharacterInfo } from "./CharacterInfo";
 
 export default function CharacterDisplay() {
@@ -49,7 +49,10 @@ export default function CharacterDisplay() {
         <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
-          <button className="btn btn-primary  mt-2 shadow-custom-dark" onClick={() => navigate("edit")}>
+          <button
+            className="btn btn-primary mt-2 shadow-custom-dark"
+            onClick={() => navigate("edit")}
+          >
             Edit
           </button>
         </PageColumn>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Error } from "../../generic/Error";
-import CharacterItem from "./characterItem";
-import ArmorTooltip from "./armorTooltip";
+import CharacterItem from "./CharacterItem";
+import ArmorTooltip from "./ArmorTooltip";
 import { renderToStaticMarkup } from "react-dom/server";
 
 export const ArmorView = ({ armorList }) => {
