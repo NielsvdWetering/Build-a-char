@@ -21,7 +21,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             httpRequest -> {
               httpRequest.requestMatchers(ControllerRoutes.USER_ROUTE + "/**").permitAll();
-              httpRequest.requestMatchers(HttpMethod.GET, "/**").permitAll();
+              httpRequest.requestMatchers(/*HttpMethod.GET, */ "/**").permitAll();
               httpRequest.anyRequest().authenticated();
             })
         .build();
