@@ -3,7 +3,7 @@ import { Error } from "../generic/Error";
 
 export const CharacterInfo = ({ name, race, characterClass }) => {
   return (
-    <div className="aspect-video w-full p-4">
+    <div className="w-full p-4">
       {name ? (
         <h1 className="m-2 text-center text-6xl">{name}</h1>
       ) : (
