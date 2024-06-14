@@ -7,12 +7,14 @@ import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
 import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
+import Inventory from "./subcomponents/inventory";
 import { CharacterInfo } from "./CharacterInfo";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/v1/characters/" + id)
@@ -46,10 +48,8 @@ export default function CharacterDisplay() {
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
-          <button
-            className="btn btn-primary mt-2 shadow-custom-dark"
-            onClick={() => navigate("edit")}
-          >
+          <Inventory weapons={character.weapons} tools={character.tools} />
+          <button className="btn btn-primary  mt-2 shadow-custom-dark" onClick={() => navigate("edit")}>
             Edit
           </button>
         </PageColumn>
