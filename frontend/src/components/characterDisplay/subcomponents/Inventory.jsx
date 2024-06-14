@@ -1,7 +1,7 @@
-import CharacterItem from "./characterItem";
+import CharacterItem from "./CharacterItem";
 import { renderToStaticMarkup } from "react-dom/server";
-import WeaponTooltip from "./weaponTooltip";
-import ToolTooltip from "./toolTooltip";
+import WeaponTooltip from "./WeaponTooltip";
+import ToolTooltip from "./ToolTooltip";
 
 export default function Inventory({ weapons, tools }) {
   return (
