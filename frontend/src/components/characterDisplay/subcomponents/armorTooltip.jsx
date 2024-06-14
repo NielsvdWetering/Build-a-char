@@ -10,7 +10,7 @@ export default function WeaponTooltip({ armor }) {
         <span className="mx-2">{armor.armorClass}</span>
       </div>
       <div className="flex justify-between">
-        <span className="m2-4">Defence:</span>{" "}
+        <span className="mr-4">Defence:</span>{" "}
         <span className="mx-2">{armor.defence}</span>
       </div>
       <span className="my-2 flex flex-wrap">{armor.description}</span>
