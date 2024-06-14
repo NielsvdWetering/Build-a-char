@@ -17,6 +17,7 @@ export default function Navbar({}) {
           title="Characters"
           onClick={() => navigate("/characters")}
         />
+        <NavbarButton title="Register" onClick={() => navigate("/register")} />
       </div>
     </>
   );

@@ -15,6 +15,9 @@ import nl.itvitae.buildachar.helpers.Result;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.race.Stats;
+import nl.itvitae.buildachar.role.RoleName;
+import nl.itvitae.buildachar.role.RoleRepository;
+import nl.itvitae.buildachar.role.UserRole;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.weapon.Weapon;
@@ -32,6 +35,7 @@ public class Seeder implements CommandLineRunner {
   private final ArmorService armorService;
   private final WeaponService weaponService;
   private final PlayerCharacterService playerCharacterService;
+  private final RoleRepository roleRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -41,6 +45,7 @@ public class Seeder implements CommandLineRunner {
     seedWeapons();
     seedRace();
     seedPlayerCharacters();
+    seedRoles();
   }
 
   private void seedPlayerCharacters() {
@@ -78,11 +83,36 @@ public class Seeder implements CommandLineRunner {
       return;
     }
 
-    armorService.save("Steel Helmet", "", 4.2, ArmorType.HEAD, ArmorClass.HEAVY);
-    armorService.save("Steel Chestplate", "", 4.2, ArmorType.TORSO, ArmorClass.HEAVY);
-    armorService.save("Steel Leggins", "", 4.2, ArmorType.LEGS, ArmorClass.HEAVY);
-    armorService.save("Steel Gauntlets", "", 4.2, ArmorType.HANDS, ArmorClass.HEAVY);
-    armorService.save("Steel Boots", "", 4.2, ArmorType.FEET, ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Helmet",
+        "A fierce looking dark helmet, should protect the wearer fairly good",
+        4.2,
+        ArmorType.HEAD,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Chestplate",
+        "A polished silvery chestplate that protects the user while being quite fashionable",
+        4.2,
+        ArmorType.TORSO,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Leggins",
+        "A pair of leggings made out of steel, nothing fashionable but is practical",
+        4.2,
+        ArmorType.LEGS,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Gauntlets",
+        "A pair of slightly dented steel gauntlets, they clearly have seen some stuff",
+        4.2,
+        ArmorType.HANDS,
+        ArmorClass.HEAVY);
+    armorService.save(
+        "Steel Boots",
+        "A pair of muddied steel boots, I should make sure the squire learns how to clean them properly",
+        4.2,
+        ArmorType.FEET,
+        ArmorClass.HEAVY);
 
     armorService.save("Leather Cap", "", 4.2, ArmorType.HEAD, ArmorClass.MEDIUM);
     armorService.save("Leather Coat", "", 4.2, ArmorType.TORSO, ArmorClass.MEDIUM);
@@ -132,5 +162,16 @@ public class Seeder implements CommandLineRunner {
     weaponService.save("bow", "ranged", WeaponType.PIERCING, 35.);
     weaponService.save("spear", "weapon", WeaponType.BLUNT, 50.);
     weaponService.save("mace", "weapon", WeaponType.SLASHING, 55.);
+  }
+
+  private void seedRoles() {
+    List<String> persistedRoleNames =
+        roleRepository.findAll().stream().map(UserRole::getName).toList();
+
+    for (RoleName roleName : RoleName.values()) {
+      if (!persistedRoleNames.contains(roleName.name())) {
+        roleRepository.save(new UserRole(roleName));
+      }
+    }
   }
 }
