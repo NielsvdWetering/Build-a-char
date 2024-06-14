@@ -6,7 +6,7 @@ export default function WeaponTooltip({ type, attackPower }) {
         <span className="mx-2">{type}</span>
       </div>
       <div className="flex justify-between">
-        <span className="m2-4">Attack Power:</span>{" "}
+        <span className="mr-4">Attack Power:</span>{" "}
         <span className="mx-2">{attackPower}</span>
       </div>
     </div>
