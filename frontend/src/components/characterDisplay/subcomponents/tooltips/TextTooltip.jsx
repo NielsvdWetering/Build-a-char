@@ -1,3 +1,3 @@
 export default function TextTooltip({ text }) {
-  return <span className="my-2 flex flex-wrap">{text}</span>;
+  return <span className="flex flex-wrap">{text}</span>;
 }
