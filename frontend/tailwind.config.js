@@ -20,7 +20,7 @@ export default {
           "secondary-content": "#605B56",
           accent: "#C13E3C",
           neutral: "#918a81",
-          "base-100": "#605B56",
+          "base-100": "#ffffff",
         },
       },
     ],
