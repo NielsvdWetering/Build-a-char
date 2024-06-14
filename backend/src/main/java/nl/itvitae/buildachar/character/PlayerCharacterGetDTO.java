@@ -26,8 +26,8 @@ public record PlayerCharacterGetDTO(
         playerCharacter.getName(),
         playerCharacter.getDescription(),
         playerCharacter.getRace().getStats(),
-        playerCharacter.getWeapon().map(WeaponDTO::from).map(List::of).orElse(null),
-        playerCharacter.getTool().map(ToolDTO::from).map(List::of).orElse(null),
+        playerCharacter.getWeapon().map(WeaponDTO::from).map(List::of).orElseGet(List::of),
+        playerCharacter.getTool().map(ToolDTO::from).map(List::of).orElseGet(List::of),
         playerCharacter.getArmors().stream().map(ArmorDTO::from).toList(),
         BasicRaceDTO.from(playerCharacter.getRace()),
         CharacterClassDTO.from(playerCharacter.getCharacterClass()));
