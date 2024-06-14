@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import nl.itvitae.buildachar.exceptions.RestException;
 import nl.itvitae.buildachar.role.RoleName;
+import nl.itvitae.buildachar.security.PasswordValidationResult;
+import nl.itvitae.buildachar.security.PasswordValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
   private final UserService userService;
+  private final PasswordValidator passwordValidator;
 
   @PostMapping("register")
   public ResponseEntity<UserDTO> register(@RequestBody AuthDTO authDTO) {
@@ -21,6 +24,11 @@ public class UserController {
     }
     if (authDTO.password() == null || authDTO.password().isBlank()) {
       throw new RestException(HttpStatus.BAD_REQUEST, "password is required");
+    }
+
+    PasswordValidationResult result = passwordValidator.validate(authDTO.password());
+    if (!result.isValid()) {
+      throw new RestException(HttpStatus.BAD_REQUEST, String.join(";", result.errors()));
     }
 
     User user = userService.save(authDTO.username(), authDTO.password(), RoleName.USER);

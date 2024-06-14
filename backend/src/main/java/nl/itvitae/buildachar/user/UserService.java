@@ -5,6 +5,8 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.role.RoleName;
 import nl.itvitae.buildachar.role.RoleRepository;
+import nl.itvitae.buildachar.security.PasswordValidationResult;
+import nl.itvitae.buildachar.security.PasswordValidator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,7 @@ public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
+  private final PasswordValidator passwordValidator;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,6 +37,11 @@ public class UserService implements UserDetailsService {
   }
 
   public User save(String username, String password, RoleName role) {
+    PasswordValidationResult result = passwordValidator.validate(password);
+    if (!result.isValid()) {
+      throw new RuntimeException("password is invalid");
+    }
+
     return userRepository.save(
         new User(
             username,
