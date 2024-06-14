@@ -2,6 +2,7 @@ package nl.itvitae.buildachar.character;
 
 import jakarta.persistence.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -65,5 +66,13 @@ public class PlayerCharacter {
     this.race = race;
     this.tool = tool;
     this.weapon = weapon;
+  }
+
+  public Optional<Weapon> getWeapon() {
+    return Optional.ofNullable(weapon);
+  }
+
+  public Optional<Tool> getTool() {
+    return Optional.ofNullable(tool);
   }
 }
