@@ -1,13 +1,16 @@
 import React from "react";
-import { Error } from "../../generic/Error";
+import Placeholder from "../../../../public/img-placeholder.png";
 
 export const CharacterImage = ({ image }) => {
-  // This is commented out temporarily so you can still see the layout while we work on it.
-  // Should be uncommented after implementen either an image or a placeholder image
-  //   if (!image) return <Error msg={"Could not retrieve image"} />;
   return (
-    <div className="aspect-video w-full rounded-md bg-accent text-accent-content shadow-custom-dark">
-      CharacterImage
+    <div className="flex aspect-video w-full items-center justify-center rounded-md bg-accent p-3 text-accent-content shadow-custom-dark">
+      <div>
+        <img
+          src={image ? image : Placeholder}
+          alt="profile"
+          className="max-h-60"
+        />
+      </div>
     </div>
   );
 };
