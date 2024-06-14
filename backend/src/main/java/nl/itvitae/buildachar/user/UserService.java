@@ -8,6 +8,7 @@ import nl.itvitae.buildachar.role.RoleRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,7 +37,7 @@ public class UserService implements UserDetailsService {
     return userRepository.save(
         new User(
             username,
-            password,
+            passwordEncoder.encode(password),
             roleRepository
                 .findById(role.name())
                 .orElseThrow(
