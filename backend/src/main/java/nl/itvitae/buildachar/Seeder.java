@@ -20,6 +20,7 @@ import nl.itvitae.buildachar.role.RoleRepository;
 import nl.itvitae.buildachar.role.UserRole;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
+import nl.itvitae.buildachar.user.UserService;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
 import nl.itvitae.buildachar.weapon.WeaponType;
@@ -36,6 +37,7 @@ public class Seeder implements CommandLineRunner {
   private final WeaponService weaponService;
   private final PlayerCharacterService playerCharacterService;
   private final RoleRepository roleRepository;
+  private final UserService userService;
 
   @Override
   public void run(String... args) throws Exception {
@@ -46,6 +48,7 @@ public class Seeder implements CommandLineRunner {
     seedRace();
     seedPlayerCharacters();
     seedRoles();
+    seedUsers();
   }
 
   private void seedPlayerCharacters() {
@@ -173,5 +176,16 @@ public class Seeder implements CommandLineRunner {
         roleRepository.save(new UserRole(roleName));
       }
     }
+  }
+
+  private void seedUsers() {
+    String username = "TestUser";
+    String password = "Password_1";
+
+    if (userService.getAll().stream().anyMatch(user -> user.getUsername().equals(username))) {
+      return;
+    }
+
+    userService.save(username, password, RoleName.USER);
   }
 }
