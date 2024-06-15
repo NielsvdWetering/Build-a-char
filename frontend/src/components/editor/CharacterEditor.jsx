@@ -3,11 +3,11 @@ import PageColumn from "../PageColumn";
 import RaceSelect from "./subcomponents/RaceSelect";
 import ClassSelect from "./subcomponents/ClassSelect";
 import DescriptionInput from "./subcomponents/DescriptionInput";
-import axios from "axios";
 import NameInput from "./subcomponents/NameInput";
 import ArmorSelect from "./subcomponents/ArmorSelect";
 import WeaponSelect from "./subcomponents/WeaponSelect";
 import ToolSelect from "./subcomponents/ToolSelect";
+import { useApi } from "../../hooks";
 
 export default function CharacterEditor({
   onSubmit,
@@ -43,31 +43,18 @@ export default function CharacterEditor({
   const [tools, setTools] = useState([]);
   const [selectedTool, setSelectedTool] = useState(initialValues.tool);
 
+  const { get } = useApi();
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/races")
-      .then((response) => setRaces(response.data))
-      .catch(console.error);
+    get("races").then(setRaces).catch(console.error);
 
-    axios
-      .get("http://localhost:8080/api/v1/classes")
-      .then((response) => setCharacterClasses(response.data))
-      .catch(console.error);
+    get("classes").then(setCharacterClasses).catch(console.error);
 
-    axios
-      .get("http://localhost:8080/api/v1/armors/sortedByType")
-      .then((response) => setSortedArmorPieces(response.data))
-      .catch(console.error);
+    get("armors/sortedByType").then(setSortedArmorPieces).catch(console.error);
 
-    axios
-      .get("http://localhost:8080/api/v1/weapons")
-      .then((response) => setWeapons(response.data))
-      .catch(console.error);
+    get("weapons").then(setWeapons).catch(console.error);
 
-    axios
-      .get("http://localhost:8080/api/v1/tools")
-      .then((response) => setTools(response.data))
-      .catch(console.error);
+    get("tools").then(setTools).catch(console.error);
   }, []);
 
   if (!races || !characterClasses || !sortedArmorPieces) {

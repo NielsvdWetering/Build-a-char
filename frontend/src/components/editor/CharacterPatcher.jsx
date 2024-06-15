@@ -1,18 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import CharacterEditor from "./CharacterEditor";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { RingLoader } from "react-spinners";
+import { useApi } from "../../hooks";
 
 export default function CharacterPatcher() {
   const { id } = useParams();
   const [character, setCharacter] = useState(null);
   const navigate = useNavigate();
+  const { get, patch } = useApi();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/v1/characters/${id}`)
-      .then((response) => setCharacter(response.data))
+    get(`characters/${id}`)
+      .then(setCharacter)
       .catch(() => navigate("/"));
   }, []);
 
@@ -27,11 +27,10 @@ export default function CharacterPatcher() {
   );
 
   function patchCharacter(characterData) {
-    axios
-      .patch(`http://localhost:8080/api/v1/characters/${id}`, {
-        ...characterData,
-        characterClassId: characterData.classId,
-      })
+    patch(`characters/${id}`, {
+      ...characterData,
+      characterClassId: characterData.classId,
+    })
       .then((response) => navigate(`/characters/${id}`))
       .catch(console.error);
   }

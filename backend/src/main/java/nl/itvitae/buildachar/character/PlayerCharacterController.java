@@ -17,10 +17,12 @@ import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolService;
+import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,7 +40,10 @@ public class PlayerCharacterController {
 
   @PostMapping
   public ResponseEntity<CreatedCharacterDTO> create(
-      @RequestBody CreatePlayerCharacterDTO characterDTO, UriComponentsBuilder ucb) {
+      @RequestBody CreatePlayerCharacterDTO characterDTO,
+      UriComponentsBuilder ucb,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
     Result<PlayerCharacter> saveCharacterResult =
         playerCharacterService.save(getNewCharacterValues(characterDTO));
 

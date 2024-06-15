@@ -1,40 +1,34 @@
-import axios from "axios";
-
-const JWT_STORAGE_LOCATION = "JWT";
+import useApi from "./useApi";
+import useAccessToken from "./useAccessToken";
 
 export default function useAuthentication() {
+  const { post } = useApi();
+  const { getToken, setToken, removeToken } = useAccessToken();
+
   const login = (loginData) => {
-    return axios
-      .post("http://localhost:8080/api/v1/auth/login", loginData)
-      .then((response) => {
-        sessionStorage.setItem(JWT_STORAGE_LOCATION, response.data.token);
-        return response;
-      });
+    return post("auth/login", loginData).then((response) => {
+      setToken(response.token);
+      return response;
+    });
   };
 
   const register = (registerData) => {
-    return axios.post(
-      "http://localhost:8080/api/v1/auth/register",
-      registerData,
-    );
+    return post("auth/register", registerData);
   };
 
   const logout = () => {
-    sessionStorage.removeItem(JWT_STORAGE_LOCATION);
+    removeToken();
   };
 
-  const getAccessToken = () => {
-    return sessionStorage.getItem(JWT_STORAGE_LOCATION);
+  const isLoggedIn = () => {
+    const token = getToken();
+    return token !== undefined && token !== null;
   };
-
-  const isLoggedIn = () =>
-    getAccessToken() !== undefined && getAccessToken() !== null;
 
   return {
     login,
     register,
     logout,
-    getAccessToken,
     isLoggedIn,
   };
 }

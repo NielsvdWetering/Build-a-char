@@ -1,22 +1,20 @@
 import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useApi } from "../../hooks";
 
 export default function Characters() {
   const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
+  const { get } = useApi();
 
   useEffect(() => {
     fetchCharacters();
   }, []);
 
   const fetchCharacters = () => {
-    axios
-      .get("http://localhost:8080/api/v1/characters")
-      .then((response) => {
-        setCharacters(response.data);
-      })
+    get("characters")
+      .then(setCharacters)
       .catch((error) => {
         console.error("There was an error fetching the characters!", error);
       });
