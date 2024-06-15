@@ -2,27 +2,43 @@ import { useState } from "react";
 import AuthForm from "./AuthForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthentication } from "../../hooks";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    password: "",
+  });
   const navigate = useNavigate();
+  const { register } = useAuthentication();
 
   return (
     <AuthForm
-      username={username}
-      setUsername={setUsername}
-      password={password}
-      setPassword={setPassword}
+      username={registerData.username}
+      setUsername={(newUsername) =>
+        setRegisterData((registerData) => ({
+          ...registerData,
+          username: newUsername ?? "",
+        }))
+      }
+      password={registerData.password}
+      setPassword={(newPassword) =>
+        setRegisterData((registerData) => ({
+          ...registerData,
+          password: newPassword ?? "",
+        }))
+      }
       onSubmit={handleSubmit}
       submitTitle="Register"
+      redirectTitle="or login if your already have an account"
+      redirectURL="/login"
     />
   );
 
-  function handleSubmit(registerData) {
-    axios
-      .post("http://localhost:8080/api/v1/auth/register", registerData)
-      .then((response) => navigate("/"))
+  function handleSubmit() {
+    console.log(registerData);
+    register(registerData)
+      .then((_) => navigate("/"))
       .catch((error) =>
         alert(
           error.response.data.detail
