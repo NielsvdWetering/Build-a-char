@@ -6,7 +6,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 export const ArmorView = ({ armorList }) => {
   const armorOrder = ["HEAD", "TORSO", "HANDS", "LEGS", "FEET"];
+  const sortedArmorList = [...armorList].sort((a, b) => {
+    return armorOrder.indexOf(a.type) - armorOrder.indexOf(b.type);
+  });
 
+  console.log(armorList);
   if (!armorList) return <Error msg={"Could not retrieve armor pieces"} />;
   return (
     <>
@@ -14,19 +18,13 @@ export const ArmorView = ({ armorList }) => {
         <h1 className="mb-2 border-b-2 border-primary-content text-xl font-semibold text-primary-content">
           Armor:
         </h1>
-        {armorList
-          .sort((a, b) => {
-            return (
-              armorOrder.indexOf(a.armorType) - armorOrder.indexOf(b.armorType)
-            );
-          })
-          .map((armor) => (
-            <CharacterItem
-              key={armor.id}
-              item={armor.name}
-              tooltip={renderToStaticMarkup(<ArmorTooltip armor={armor} />)}
-            />
-          ))}
+        {sortedArmorList.map((armor) => (
+          <CharacterItem
+            key={armor.id}
+            item={armor.name}
+            tooltip={renderToStaticMarkup(<ArmorTooltip armor={armor} />)}
+          />
+        ))}
       </div>
     </>
   );
