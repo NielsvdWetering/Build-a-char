@@ -9,8 +9,6 @@ export const ArmorView = ({ armorList }) => {
   const sortedArmorList = [...armorList].sort((a, b) => {
     return armorOrder.indexOf(a.type) - armorOrder.indexOf(b.type);
   });
-
-  console.log(armorList);
   if (!armorList) return <Error msg={"Could not retrieve armor pieces"} />;
   return (
     <>
