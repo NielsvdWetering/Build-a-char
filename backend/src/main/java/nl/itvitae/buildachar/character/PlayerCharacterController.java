@@ -31,6 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @CrossOrigin(origins = {"${app-cors}"})
 @AllArgsConstructor
 public class PlayerCharacterController {
+
   private final PlayerCharacterService playerCharacterService;
   private final RaceService raceService;
   private final CharacterClassService characterClassService;
@@ -42,10 +43,10 @@ public class PlayerCharacterController {
   public ResponseEntity<CreatedCharacterDTO> create(
       @RequestBody CreatePlayerCharacterDTO characterDTO,
       UriComponentsBuilder ucb,
-      Authentication authentication) {
-    User user = (User) authentication.getPrincipal();
+      Authentication authentication) { // Authentication details of the current user
+    User user = (User) authentication.getPrincipal(); // Retrieves the current user
     Result<PlayerCharacter> saveCharacterResult =
-        playerCharacterService.save(getNewCharacterValues(characterDTO));
+        playerCharacterService.save(getNewCharacterValues(characterDTO), user);
 
     if (!saveCharacterResult.succeeded()) {
       throw new RestException(HttpStatus.BAD_REQUEST, saveCharacterResult.error());
