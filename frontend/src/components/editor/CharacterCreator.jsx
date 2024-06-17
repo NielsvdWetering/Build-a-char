@@ -1,9 +1,10 @@
-import axios from "axios";
 import CharacterEditor from "./CharacterEditor";
 import { useNavigate } from "react-router-dom";
+import { useApi } from "../../hooks";
 
 export default function CharacterCreator() {
   const navigate = useNavigate();
+  const { post } = useApi();
 
   return (
     <CharacterEditor
@@ -13,9 +14,8 @@ export default function CharacterCreator() {
   );
 
   function createCharacter(characterData) {
-    axios
-      .post("http://localhost:8080/api/v1/characters", characterData)
-      .catch(console.error)
-      .then((response) => navigate(`/characters/${response.data.id}`));
+    post("characters", characterData)
+      .then((response) => navigate(`/characters/${response.id}`))
+      .catch(console.error);
   }
 }

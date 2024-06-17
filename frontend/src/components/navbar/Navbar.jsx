@@ -1,9 +1,11 @@
 import React from "react";
 import NavbarButton from "./NavbarButton";
 import { useNavigate } from "react-router-dom";
+import { useAuthentication } from "../../hooks";
 
 export default function Navbar({}) {
   const navigate = useNavigate();
+  const { logout, isLoggedIn } = useAuthentication();
 
   return (
     <>
@@ -56,8 +58,16 @@ export default function Navbar({}) {
             </svg>
           </label>
           <NavbarButton
-            title="Register"
-            onClick={() => navigate("/register")}
+            title={isLoggedIn() ? "Log out" : "Log in"}
+            onClick={() => {
+              if (isLoggedIn()) {
+                navigate("/");
+                logout();
+                return;
+              }
+
+              navigate("/login");
+            }}
           />
         </div>
       </div>

@@ -3,41 +3,40 @@ import AuthForm from "./AuthForm";
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../../hooks";
 
-export default function Register() {
-  const [registerData, setRegisterData] = useState({
-    username: "",
-    password: "",
-  });
+export default function Login() {
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
-  const { register } = useAuthentication();
+
+  const { login } = useAuthentication();
 
   return (
     <AuthForm
-      username={registerData.username}
+      onSubmit={handleSubmit}
+      submitTitle="Login"
+      username={loginData.username}
       setUsername={(newUsername) =>
-        setRegisterData((registerData) => ({
-          ...registerData,
+        setLoginData((loginData) => ({
+          ...loginData,
           username: newUsername ?? "",
         }))
       }
-      password={registerData.password}
+      password={loginData.password}
       setPassword={(newPassword) =>
-        setRegisterData((registerData) => ({
-          ...registerData,
+        setLoginData((loginData) => ({
+          ...loginData,
           password: newPassword ?? "",
         }))
       }
-      onSubmit={handleSubmit}
-      submitTitle="Register"
-      redirectTitle="or login if your already have an account"
-      redirectURL="/login"
+      redirectTitle="or register if you do not yet have an account"
+      redirectURL="/register"
     />
   );
 
   function handleSubmit() {
-    console.log(registerData);
-    register(registerData)
-      .then((_) => navigate("/"))
+    login(loginData)
+      .then((_) => {
+        navigate("/");
+      })
       .catch((error) =>
         alert(
           error.response.data.detail

@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PageColumn from "../PageColumn";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { StatsView } from "./subcomponents/StatsView";
 import { ArmorView } from "./subcomponents/ArmorView";
 import { RingLoader } from "react-spinners";
@@ -9,16 +8,17 @@ import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
 import Inventory from "./subcomponents/Inventory";
 import { CharacterInfo } from "./CharacterInfo";
+import { useApi } from "../../hooks";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { get } = useApi();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/characters/" + id)
-      .then((response) => setCharacter(response.data))
+    get("characters/" + id)
+      .then(setCharacter)
       .catch(console.error);
   }, []);
 

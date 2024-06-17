@@ -25,7 +25,8 @@ public class UserService implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userRepository
         .findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        .orElseThrow(
+            () -> new UsernameNotFoundException("UserService.loadUserByUsername: user not found"));
   }
 
   public Optional<User> findUserByUsername(String username) {
@@ -38,7 +39,7 @@ public class UserService implements UserDetailsService {
 
   public User save(String username, String password, RoleName role) {
     if (userRepository.findByUsername(username).isPresent()) {
-      throw new RuntimeException("user with username already exists");
+      throw new RuntimeException("UserService.save: user with username already exists");
     }
 
     PasswordValidationResult result = passwordValidator.validate(password);
@@ -53,6 +54,12 @@ public class UserService implements UserDetailsService {
             roleRepository
                 .findById(role.name())
                 .orElseThrow(
-                    () -> new RuntimeException("UserRole '" + role.name() + "' does not exist"))));
+                    () ->
+                        new RuntimeException(
+                            "UserService.save: UserRole '" + role.name() + "' does not exist"))));
+  }
+
+  public boolean isCorrectPasswordForUser(User user, String password) {
+    return passwordEncoder.matches(password, user.getPassword());
   }
 }
