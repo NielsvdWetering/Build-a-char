@@ -136,52 +136,14 @@ public class PlayerCharacterController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PlayerCharacterPostDTO>> getAll() {
+  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll() {
     List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
     if (playerCharacters.isEmpty()) {
       return ResponseEntity.notFound().build();
     } else {
-      return ResponseEntity.ok(toCharacterDto(playerCharacters));
+      return ResponseEntity.ok(
+          playerCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
     }
-  }
-
-  public List<PlayerCharacterPostDTO> toCharacterDto(List<PlayerCharacter> playerCharacters) {
-    return playerCharacters.stream().map(this::convertToDto).toList();
-  }
-
-  private PlayerCharacterPostDTO convertToDto(PlayerCharacter playerCharacter) {
-    String armorHead = null;
-    String armorTorso = null;
-    String armorLegs = null;
-    String armorHands = null;
-    String armorFeet = null;
-
-    for (Armor armor : playerCharacter.getArmors()) {
-      switch (armor.getArmorType()) {
-        case HEAD -> armorHead = armor.getName();
-        case TORSO -> armorTorso = armor.getName();
-        case LEGS -> armorLegs = armor.getName();
-        case HANDS -> armorHands = armor.getName();
-        case FEET -> armorFeet = armor.getName();
-      }
-    }
-
-    return new PlayerCharacterPostDTO(
-        playerCharacter.getId(),
-        playerCharacter.getName(),
-        playerCharacter.getDescription(),
-        playerCharacter.getCharacterClass() == null
-            ? "unknown"
-            : playerCharacter.getCharacterClass().getName(),
-        playerCharacter.getRace() == null ? "unknown" : playerCharacter.getRace().getName(),
-        playerCharacter.getRace() != null ? playerCharacter.getRace().getStats() : null,
-        playerCharacter.getTool().map(Tool::getName).orElse("unknown"),
-        playerCharacter.getWeapon().map(Weapon::getName).orElse("unknown"),
-        armorHead,
-        armorTorso,
-        armorLegs,
-        armorHands,
-        armorFeet);
   }
 
   @PatchMapping("/{id}")
