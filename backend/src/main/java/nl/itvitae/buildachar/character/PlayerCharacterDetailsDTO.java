@@ -1,11 +1,13 @@
 package nl.itvitae.buildachar.character;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.armor.ArmorType;
 import nl.itvitae.buildachar.race.Stats;
+import nl.itvitae.buildachar.tool.Tool;
+import nl.itvitae.buildachar.weapon.Weapon;
 
 public record PlayerCharacterDetailsDTO(
     UUID id,
@@ -22,6 +24,8 @@ public record PlayerCharacterDetailsDTO(
     String armorHands,
     String armorFeet) {
   static PlayerCharacterDetailsDTO from(PlayerCharacter playerCharacter) {
+    Optional<Weapon> weapon = playerCharacter.getWeapon();
+    Optional<Tool> tool = playerCharacter.getTool();
     return new PlayerCharacterDetailsDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
@@ -29,8 +33,8 @@ public record PlayerCharacterDetailsDTO(
         playerCharacter.getCharacterClass().getName(),
         playerCharacter.getRace().getName(),
         playerCharacter.getRace().getStats(),
-        playerCharacter.getTool().orElseThrow(EntityNotFoundException::new).getName(),
-        playerCharacter.getWeapon().orElseThrow(EntityNotFoundException::new).getName(),
+        tool.map(Tool::getName).orElse(null),
+        weapon.map(Weapon::getName).orElse(null),
         getArmorByType(playerCharacter.getArmors(), ArmorType.HEAD),
         getArmorByType(playerCharacter.getArmors(), ArmorType.TORSO),
         getArmorByType(playerCharacter.getArmors(), ArmorType.LEGS),
