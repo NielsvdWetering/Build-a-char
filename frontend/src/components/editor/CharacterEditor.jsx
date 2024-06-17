@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PageColumn from "../PageColumn";
-import RaceSelect from "./subcomponents/RaceSelect";
-import ClassSelect from "./subcomponents/ClassSelect";
 import DescriptionInput from "./subcomponents/DescriptionInput";
 import NameInput from "./subcomponents/NameInput";
 import ArmorSelect from "./subcomponents/ArmorSelect";
-import WeaponSelect from "./subcomponents/WeaponSelect";
-import ToolSelect from "./subcomponents/ToolSelect";
 import { useApi } from "../../hooks";
+import DropdownSelect from "./subcomponents/DropdownSelect";
 
 export default function CharacterEditor({
   onSubmit,
@@ -66,15 +63,17 @@ export default function CharacterEditor({
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
           <NameInput name={name} setName={setName} />
-          <RaceSelect
+          <DropdownSelect
             defaultValue={selectedRace}
-            races={races}
-            setSelectedRace={setSelectedRace}
+            description={"Select a race"}
+            options={races}
+            handleChange={setSelectedRace}
           />
-          <ClassSelect
+          <DropdownSelect
             defaultValue={SelectedCharacterClass}
-            characterClasses={characterClasses}
-            setSelectedCharacterClass={setSelectedCharacterClass}
+            description={"Select a class"}
+            options={characterClasses}
+            handleChange={setSelectedCharacterClass}
           />
           <DescriptionInput
             description={description}
@@ -87,15 +86,17 @@ export default function CharacterEditor({
             setSelectedArmorPieces={setSelectedArmorPieces}
             selectedArmorPieces={selectedArmorPieces}
           />
-          <WeaponSelect
+          <DropdownSelect
             defaultValue={selectedWeapon}
-            weapons={weapons}
-            setSelectedWeapon={setSelectedWeapon}
+            description={"Select a weapon"}
+            options={weapons}
+            handleChange={setSelectedWeapon}
           />
-          <ToolSelect
+          <DropdownSelect
             defaultValue={selectedTool}
-            tools={tools}
-            setSelectedTool={setSelectedTool}
+            description={"Select a tool"}
+            options={tools}
+            handleChange={setSelectedTool}
           />
         </PageColumn>
         <PageColumn>

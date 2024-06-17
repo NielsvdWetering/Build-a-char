@@ -1,5 +1,5 @@
 import React from "react";
-import Placeholder from "../../../../public/img-placeholder.png";
+import Placeholder from "/img-placeholder.png";
 
 export const CharacterImage = ({ image }) => {
   return (
