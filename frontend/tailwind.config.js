@@ -14,13 +14,13 @@ export default {
     themes: [
       {
         buildachardark: {
-          primary: "#989E80",
-          "primary-content": "#403D3A",
+          primary: "#6E735D",
+          "primary-content": "#DDDDDD",
           secondary: "DCE4C8",
           "secondary-content": "#605B56",
           accent: "#C13E3C",
           neutral: "#918a81",
-          "base-100": "#605B56",
+          "base-100": "#45413e",
         },
       },
       {
