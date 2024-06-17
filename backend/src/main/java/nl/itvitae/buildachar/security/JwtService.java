@@ -47,8 +47,7 @@ public class JwtService {
 
       return Optional.of(claims);
     } catch (RuntimeException ex) {
-      System.out.println(
-          //      logger.atDebug().log(
+      logger.atDebug().log(
           "invalid bearer token detected: "
               + ex.getClass().getSimpleName()
               + " '"
