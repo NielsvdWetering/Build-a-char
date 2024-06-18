@@ -10,15 +10,13 @@ export default function DropdownSelect({
   return (
     <>
       <select
-        className="select select-primary w-full"
+        className="select select-primary select-sm w-full"
         onChange={(event) =>
           handleChange(
             options.find((option) => option.id === event.target.value),
           )
         }
-        defaultValue={
-          selectedOption ? JSON.stringify(selectedOption) : description
-        }
+        value={selectedOption ? selectedOption.id : description}
       >
         <option disabled value={description}>
           {description}
