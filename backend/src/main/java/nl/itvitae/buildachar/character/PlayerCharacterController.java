@@ -3,7 +3,6 @@ package nl.itvitae.buildachar.character;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
@@ -154,12 +153,13 @@ public class PlayerCharacterController {
       @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO,
       Authentication authentication) {
     User user = (User) authentication.getPrincipal();
-    // get the player character.
-    Optional<PlayerCharacter> playerCharacter = playerCharacterService.getById(id);
-    if (playerCharacter.isPresent()) {
-      if (!playerCharacter.get().getUser().getId().equals(user.getId())) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-      }
+    PlayerCharacter playerCharacter =
+        playerCharacterService
+            .getById(id)
+            .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+
+    if (!playerCharacter.getUser().getId().equals(user.getId())) {
+      throw new RestException(HttpStatus.FORBIDDEN, "You can only edit characters you own");
     }
     return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
   }
