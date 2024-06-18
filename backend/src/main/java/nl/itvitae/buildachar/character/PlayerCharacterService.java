@@ -18,6 +18,7 @@ import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceRepository;
 import nl.itvitae.buildachar.tool.Tool;
 import nl.itvitae.buildachar.tool.ToolRepository;
+import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class PlayerCharacterService {
     return playerCharacterRepository.findById(id);
   }
 
-  public Result<PlayerCharacter> save(NewCharacterValues values) {
+  public Result<PlayerCharacter> save(NewCharacterValues values, User user) {
     if (values.name() == null || values.name().isBlank()) {
       return Result.errorResult("name is required");
     }
@@ -65,6 +66,12 @@ public class PlayerCharacterService {
 
     if (values.armors() != null && !values.armors().isEmpty()) {
       values.armors().forEach(armor -> newPlayerCharacter.getArmors().add(armor));
+    }
+
+    if (user != null) {
+      newPlayerCharacter.setUser(user);
+    } else {
+      throw new RuntimeException("PlayerCharacterService.save: The user is null");
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));

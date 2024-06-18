@@ -12,6 +12,7 @@ import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.tool.Tool;
+import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 
 @Entity
@@ -37,6 +38,8 @@ public class PlayerCharacter {
   @Setter @ManyToOne private Tool tool;
 
   @Setter @ManyToOne private Weapon weapon;
+
+  @Setter @ManyToOne private User user;
 
   public PlayerCharacter(
       String name, String description, Race race, CharacterClass characterClass) {

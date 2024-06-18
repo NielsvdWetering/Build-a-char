@@ -12,6 +12,7 @@ import nl.itvitae.buildachar.weapon.Weapon;
 public record PlayerCharacterDetailsDTO(
     UUID id,
     String name,
+    String user,
     String description,
     String characterClass,
     String race,
@@ -20,8 +21,8 @@ public record PlayerCharacterDetailsDTO(
     String weapon,
     String armorHead,
     String armorTorso,
-    String armorLegs,
     String armorHands,
+    String armorLegs,
     String armorFeet) {
   static PlayerCharacterDetailsDTO from(PlayerCharacter playerCharacter) {
     Optional<Weapon> weapon = playerCharacter.getWeapon();
@@ -29,6 +30,7 @@ public record PlayerCharacterDetailsDTO(
     return new PlayerCharacterDetailsDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
+        playerCharacter.getUser().getUsername(),
         playerCharacter.getDescription(),
         playerCharacter.getCharacterClass().getName(),
         playerCharacter.getRace().getName(),
