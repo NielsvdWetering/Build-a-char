@@ -2,7 +2,7 @@ import useApi from "./useApi";
 import useAccessToken from "./useAccessToken";
 
 export default function useAuthentication() {
-  const { post } = useApi();
+  const { get, post } = useApi();
   const { getToken, setToken, removeToken } = useAccessToken();
 
   const login = (loginData) => {
@@ -22,7 +22,16 @@ export default function useAuthentication() {
 
   const isLoggedIn = () => {
     const token = getToken();
-    return token !== undefined && token !== null;
+
+    if (token === undefined || token === null) {
+      return Promise.resolve(false);
+    }
+
+    get("auth/validate-token", { token: token })
+      .then((response) => response.data)
+      .catch((error) => false);
+
+    return Promise.resolve(true);
   };
 
   return {

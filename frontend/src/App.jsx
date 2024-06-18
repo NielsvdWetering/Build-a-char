@@ -19,6 +19,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/creator" element={<CharacterCreator />} />
           <Route path="/characters" element={<Characters />} />
+          <Route path="/my-characters" element={<Characters ownedOnly />} />
           <Route path="/characters/:id" element={<CharacterDisplay />} />
           <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
           <Route path="/register" element={<Register />} />

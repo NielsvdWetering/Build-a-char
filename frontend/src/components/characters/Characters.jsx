@@ -1,24 +1,42 @@
 import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApi } from "../../hooks";
+import { useApi, useAuthentication } from "../../hooks";
+import { ClipLoader } from "react-spinners";
 
-export default function Characters() {
-  const [characters, setCharacters] = useState([]);
+export default function Characters({ ownedOnly }) {
+  const { isLoggedIn } = useAuthentication();
+  const [loggedIn, setLoggedIn] = useState(null);
   const navigate = useNavigate();
+  const [characters, setCharacters] = useState([]);
   const { get } = useApi();
-
   useEffect(() => {
-    fetchCharacters();
-  }, []);
+    if (ownedOnly && loggedIn === false) {
+      navigate("/");
+    }
 
-  const fetchCharacters = () => {
-    get("characters")
-      .then(setCharacters)
-      .catch((error) => {
-        console.error("There was an error fetching the characters!", error);
-      });
-  };
+    fetchCharacters();
+  }, [loggedIn]);
+
+  if (ownedOnly) {
+    isLoggedIn().then((response) => {
+      if (loggedIn === response) {
+        return;
+      }
+
+      setLoggedIn(response);
+    });
+
+    if (loggedIn === null) {
+      return (
+        <div className="flex h-full w-full items-center justify-center">
+          <ClipLoader size="500px" />
+        </div>
+      );
+    }
+  } else if (loggedIn !== null) {
+    setLoggedIn(null);
+  }
 
   return (
     <>
@@ -35,4 +53,16 @@ export default function Characters() {
       </div>
     </>
   );
+
+  function fetchCharacters() {
+    if (ownedOnly && !loggedIn) {
+      return;
+    }
+
+    get("characters", { ownedOnly })
+      .then(setCharacters)
+      .catch((error) => {
+        console.error("There was an error fetching the characters!", error);
+      });
+  }
 }
