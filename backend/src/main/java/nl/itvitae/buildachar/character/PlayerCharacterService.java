@@ -3,10 +3,7 @@ package nl.itvitae.buildachar.character;
 import static nl.itvitae.buildachar.armor.ArmorType.*;
 
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.Armor;
@@ -33,8 +30,16 @@ public class PlayerCharacterService {
   private final RaceRepository raceRepository;
   private final PlayerCharacterRepository playerCharacterRepository;
 
-  public List<PlayerCharacter> getAll() {
-    return playerCharacterRepository.findAll();
+  public Set<PlayerCharacter> getAll() {
+    return new HashSet<>(playerCharacterRepository.findAll());
+  }
+
+  public Set<PlayerCharacter> getByUser(User user) {
+    if (user == null) {
+      throw new RuntimeException("PlayerCharacterService.getByUser: user is null");
+    }
+
+    return playerCharacterRepository.findByUser_id(user.getId());
   }
 
   public Optional<PlayerCharacter> getById(UUID id) {
