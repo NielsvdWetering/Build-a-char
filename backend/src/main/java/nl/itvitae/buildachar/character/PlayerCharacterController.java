@@ -1,5 +1,7 @@
 package nl.itvitae.buildachar.character;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 import lombok.AllArgsConstructor;
@@ -179,5 +181,14 @@ public class PlayerCharacterController {
     boolean isOwned =
         user.map(value -> value.getId().equals(character.getUser().getId())).orElse(false);
     return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
+  }
+
+  @GetMapping("/image")
+  public @ResponseBody byte[] getImage() throws IOException {
+    try (InputStream in =
+        getClass().getClassLoader().getResourceAsStream("characterImages/dndbear.jpg")) {
+
+      return in != null ? in.readAllBytes() : null;
+    }
   }
 }
