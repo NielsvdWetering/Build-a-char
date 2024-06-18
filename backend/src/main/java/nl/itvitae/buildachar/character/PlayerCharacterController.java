@@ -1,9 +1,7 @@
 package nl.itvitae.buildachar.character;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import nl.itvitae.buildachar.armor.Armor;
@@ -137,28 +135,49 @@ public class PlayerCharacterController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll() {
-    List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
-    if (playerCharacters.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    } else {
-      return ResponseEntity.ok(
-          playerCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
+  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll(
+      @RequestParam(required = false) boolean ownedOnly, Authentication authentication) {
+    if (ownedOnly && (authentication == null)) {
+      throw new RestException(
+          HttpStatus.UNAUTHORIZED, "must be authorized te view owned characters");
     }
+
+    Set<PlayerCharacter> characters =
+        ownedOnly
+            ? playerCharacterService.getByUser((User) authentication.getPrincipal())
+            : playerCharacterService.getAll();
+
+    return ResponseEntity.ok(characters.stream().map(PlayerCharacterDetailsDTO::from).toList());
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<PlayerCharacter> patch(
-      @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+      @PathVariable UUID id,
+      @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    PlayerCharacter playerCharacter =
+        playerCharacterService
+            .getById(id)
+            .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+
+    if (!playerCharacter.getUser().getId().equals(user.getId())) {
+      throw new RestException(HttpStatus.FORBIDDEN, "You can only edit characters you own");
+    }
     return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<PlayerCharacterGetDTO> getById(@PathVariable UUID id) {
-    return playerCharacterService
-        .getById(id)
-        .map(PlayerCharacterGetDTO::from)
-        .map(ResponseEntity::ok)
-        .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+  public ResponseEntity<PlayerCharacterGetDTO> getById(
+      @PathVariable UUID id, Authentication authentication) {
+    Optional<User> user =
+        Optional.ofNullable(authentication).map(auth -> (User) auth.getPrincipal());
+    PlayerCharacter character =
+        playerCharacterService
+            .getById(id)
+            .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+    boolean isOwned =
+        user.map(value -> value.getId().equals(character.getUser().getId())).orElse(false);
+    return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
   }
 }
