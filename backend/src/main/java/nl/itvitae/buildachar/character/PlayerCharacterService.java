@@ -68,7 +68,11 @@ public class PlayerCharacterService {
       values.armors().forEach(armor -> newPlayerCharacter.getArmors().add(armor));
     }
 
-    if (user != null) newPlayerCharacter.setUser(user) throw new RuntimeException("PlayerCharacterService.save: The user is null");
+    if (user != null) {
+      newPlayerCharacter.setUser(user);
+    } else {
+      throw new RuntimeException("PlayerCharacterService.save: The user is null");
+    }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));
   }
