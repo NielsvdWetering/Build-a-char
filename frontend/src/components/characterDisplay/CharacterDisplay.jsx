@@ -8,14 +8,13 @@ import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
 import Inventory from "./subcomponents/Inventory";
 import { CharacterInfo } from "./CharacterInfo";
-import { useApi, useAuthentication } from "../../hooks";
+import { useApi } from "../../hooks";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
   const { get } = useApi();
-  const { isLoggedIn } = useAuthentication();
 
   useEffect(() => {
     get("characters/" + id)

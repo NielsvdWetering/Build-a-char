@@ -3,7 +3,6 @@ import CharacterEditor from "./CharacterEditor";
 import { useEffect, useState } from "react";
 import { RingLoader } from "react-spinners";
 import { useApi } from "../../hooks";
-import { useAuthentication } from "../../hooks";
 import img from "/badbear.png";
 
 export default function CharacterPatcher() {
@@ -11,7 +10,6 @@ export default function CharacterPatcher() {
   const [character, setCharacter] = useState(null);
   const navigate = useNavigate();
   const { get, patch } = useApi();
-  const { isLoggedIn } = useAuthentication();
 
   useEffect(() => {
     get(`characters/${id}`)
