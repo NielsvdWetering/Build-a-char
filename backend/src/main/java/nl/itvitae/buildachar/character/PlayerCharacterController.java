@@ -152,16 +152,32 @@ public class PlayerCharacterController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<PlayerCharacter> patch(
-      @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+      @PathVariable UUID id,
+      @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    PlayerCharacter playerCharacter =
+        playerCharacterService
+            .getById(id)
+            .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+
+    if (!playerCharacter.getUser().getId().equals(user.getId())) {
+      throw new RestException(HttpStatus.FORBIDDEN, "You can only edit characters you own");
+    }
     return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<PlayerCharacterGetDTO> getById(@PathVariable UUID id) {
-    return playerCharacterService
-        .getById(id)
-        .map(PlayerCharacterGetDTO::from)
-        .map(ResponseEntity::ok)
-        .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+  public ResponseEntity<PlayerCharacterGetDTO> getById(
+      @PathVariable UUID id, Authentication authentication) {
+    Optional<User> user =
+        Optional.ofNullable(authentication).map(auth -> (User) auth.getPrincipal());
+    PlayerCharacter character =
+        playerCharacterService
+            .getById(id)
+            .orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND));
+    boolean isOwned =
+        user.map(value -> value.getId().equals(character.getUser().getId())).orElse(false);
+    return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
   }
 }
