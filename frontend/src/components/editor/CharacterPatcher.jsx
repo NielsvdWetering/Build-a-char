@@ -19,22 +19,21 @@ export default function CharacterPatcher() {
       .catch(() => navigate("/"));
   }, []);
 
-  if (!isLoggedIn())
+  if (!character) return <RingLoader />;
+
+  if (!character.isOwner)
     return (
       <div className="flex flex-col items-center p-6">
         <img src={img} className="w-40 rounded" />
         <p className="">You are not supposed to be here, you naughty Bear!</p>
       </div>
     );
-
-  return character ? (
+  return (
     <CharacterEditor
       onSubmit={patchCharacter}
       submitLabel="Save"
       initialValues={character}
     />
-  ) : (
-    <RingLoader />
   );
 
   function patchCharacter(characterData) {
