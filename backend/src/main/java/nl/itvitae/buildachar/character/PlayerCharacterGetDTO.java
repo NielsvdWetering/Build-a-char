@@ -18,10 +18,9 @@ public record PlayerCharacterGetDTO(
     List<ToolDTO> tools,
     List<ArmorDTO> armorList,
     BasicRaceDTO race,
-    CharacterClassDTO characterClass,
-    boolean isOwner) {
+    CharacterClassDTO characterClass) {
 
-  static PlayerCharacterGetDTO from(PlayerCharacter playerCharacter, boolean isOwner) {
+  static PlayerCharacterGetDTO from(PlayerCharacter playerCharacter) {
     return new PlayerCharacterGetDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
@@ -31,7 +30,6 @@ public record PlayerCharacterGetDTO(
         playerCharacter.getTool().map(ToolDTO::from).map(List::of).orElseGet(List::of),
         playerCharacter.getArmors().stream().map(ArmorDTO::from).toList(),
         BasicRaceDTO.from(playerCharacter.getRace()),
-        CharacterClassDTO.from(playerCharacter.getCharacterClass()),
-        isOwner);
+        CharacterClassDTO.from(playerCharacter.getCharacterClass()));
   }
 }

@@ -57,8 +57,4 @@ public class JwtService {
       return Optional.empty();
     }
   }
-
-  public boolean isValidToken(String token) {
-    return readClaimsFromToken(token).isPresent();
-  }
 }

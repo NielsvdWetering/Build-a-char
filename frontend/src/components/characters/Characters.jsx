@@ -1,42 +1,31 @@
 import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApi, useAuthentication } from "../../hooks";
-import { ClipLoader } from "react-spinners";
+import { useApi } from "../../hooks";
+import { Sort } from "./subcomponents/Sort";
+import { Filter } from "./subcomponents/Filter";
+import InputField from "../generic/InputField";
 
-export default function Characters({ ownedOnly }) {
-  const { isLoggedIn } = useAuthentication();
-  const [loggedIn, setLoggedIn] = useState(null);
-  const navigate = useNavigate();
+export default function Characters() {
   const [characters, setCharacters] = useState([]);
+  const [races, setRaces] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const navigate = useNavigate();
   const { get } = useApi();
+
   useEffect(() => {
-    if (ownedOnly && loggedIn === false) {
-      navigate("/");
-    }
-
     fetchCharacters();
-  }, [loggedIn]);
+    fetchRaces();
+    fetchClasses();
+  }, []);
 
-  if (ownedOnly) {
-    isLoggedIn().then((response) => {
-      if (loggedIn === response) {
-        return;
-      }
-
-      setLoggedIn(response);
-    });
-
-    if (loggedIn === null) {
-      return (
-        <div className="flex h-full w-full items-center justify-center">
-          <ClipLoader size="500px" />
-        </div>
-      );
-    }
-  } else if (loggedIn !== null) {
-    setLoggedIn(null);
-  }
+  const fetchCharacters = () => {
+    get("characters")
+      .then(setCharacters)
+      .catch((error) => {
+        console.error("There was an error fetching the characters!", error);
+      });
+  };
 
   const fetchRaces = () => {
     get("races")
@@ -98,16 +87,4 @@ export default function Characters({ ownedOnly }) {
       </div>
     </>
   );
-
-  function fetchCharacters() {
-    if (ownedOnly && !loggedIn) {
-      return;
-    }
-
-    get("characters", { ownedOnly })
-      .then(setCharacters)
-      .catch((error) => {
-        console.error("There was an error fetching the characters!", error);
-      });
-  }
 }

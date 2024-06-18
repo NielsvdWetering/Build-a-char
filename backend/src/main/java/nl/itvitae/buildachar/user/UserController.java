@@ -66,9 +66,4 @@ public class UserController {
 
     return ResponseEntity.ok(UserDTO.from(user));
   }
-
-  @GetMapping("validate-token")
-  ResponseEntity<Boolean> validateToken(@RequestParam() String token) {
-    return ResponseEntity.ok(jwtService.isValidToken(token));
-  }
 }
