@@ -29,10 +29,12 @@ export default function Navbar({}) {
             title="Characters"
             onClick={() => navigate("/characters")}
           />
-          <NavbarButton
-            title="My Characters"
-            onClick={() => navigate("/my-characters")}
-          />
+          {loggedIn && (
+            <NavbarButton
+              title="My Characters"
+              onClick={() => navigate("/my-characters")}
+            />
+          )}
         </NavbarItemsContainer>
 
         <NavbarItemsContainer className="navbar-end mr-4">
