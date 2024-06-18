@@ -8,13 +8,14 @@ import { CharacterImage } from "./subcomponents/CharacterImage";
 import { CharacterDescription } from "./subcomponents/CharacterDescription";
 import Inventory from "./subcomponents/Inventory";
 import { CharacterInfo } from "./CharacterInfo";
-import { useApi } from "../../hooks";
+import { useApi, useAuthentication } from "../../hooks";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
   const { get } = useApi();
+  const { isLoggedIn } = useAuthentication();
 
   useEffect(() => {
     get("characters/" + id)
@@ -49,12 +50,14 @@ export default function CharacterDisplay() {
         <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
-          <button
-            className="btn btn-primary mt-2 shadow-custom-dark"
-            onClick={() => navigate("edit")}
-          >
-            Edit
-          </button>
+          {isLoggedIn() && (
+            <button
+              className="btn btn-primary mt-2 shadow-custom-dark"
+              onClick={() => navigate("edit")}
+            >
+              Edit
+            </button>
+          )}
         </PageColumn>
       </div>
     </>

@@ -3,6 +3,7 @@ package nl.itvitae.buildachar.character;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
@@ -149,7 +150,17 @@ public class PlayerCharacterController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<PlayerCharacter> patch(
-      @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {
+      @PathVariable UUID id,
+      @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO,
+      Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    // get the player character.
+    Optional<PlayerCharacter> playerCharacter = playerCharacterService.getById(id);
+    if (playerCharacter.isPresent()) {
+      if (!playerCharacter.get().getUser().getId().equals(user.getId())) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      }
+    }
     return ResponseEntity.ok(playerCharacterService.patch(id, playerCharacterPatchDTO));
   }
 
