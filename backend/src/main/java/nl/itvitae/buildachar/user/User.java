@@ -3,12 +3,9 @@ package nl.itvitae.buildachar.user;
 import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.role.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,10 +24,6 @@ public class User implements UserDetails {
   private String password;
 
   @ManyToOne private UserRole role;
-
-  @Setter
-  @OneToMany(mappedBy = "user")
-  private Set<PlayerCharacter> characters;
 
   public User(String username, String password, UserRole role) {
     this.username = username;
