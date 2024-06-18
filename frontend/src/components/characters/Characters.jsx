@@ -27,12 +27,13 @@ export default function Characters({ ownedOnly }) {
       setLoggedIn(response);
     });
 
-    if (loggedIn === null)
+    if (loggedIn === null) {
       return (
         <div className="flex h-full w-full items-center justify-center">
           <ClipLoader size="500px" />
         </div>
       );
+    }
   } else if (loggedIn !== null) {
     setLoggedIn(null);
   }
