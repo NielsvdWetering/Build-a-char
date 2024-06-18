@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../hooks";
 
-export default function Characters() {
+export default function Characters({ ownedOnly }) {
   const [characters, setCharacters] = useState([]);
   const navigate = useNavigate();
   const { get } = useApi();
