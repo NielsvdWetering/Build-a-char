@@ -23,7 +23,7 @@ export default function CharacterPatcher() {
     return (
       <div className="flex flex-col items-center p-6">
         <img src={img} className="w-40 rounded" />
-        <p className="">You are not suposed to be here, you naughty Bear!</p>
+        <p className="">You are not supposed to be here, you naughty Bear!</p>
       </div>
     );
 
