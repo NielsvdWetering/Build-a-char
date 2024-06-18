@@ -16,9 +16,7 @@ export default function DropdownSelect({
             options.find((option) => option.id === event.target.value),
           )
         }
-        defaultValue={
-          selectedOption ? JSON.stringify(selectedOption) : description
-        }
+        value={selectedOption ? selectedOption.id : description}
       >
         <option disabled value={description}>
           {description}

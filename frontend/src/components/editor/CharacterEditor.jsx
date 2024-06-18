@@ -36,10 +36,12 @@ export default function CharacterEditor({
   );
 
   const [weapons, setWeapons] = useState([]);
-  const [selectedWeapon, setSelectedWeapon] = useState(initialValues.weapon);
+  const [selectedWeapon, setSelectedWeapon] = useState(
+    initialValues.weapons?.[0],
+  );
 
   const [tools, setTools] = useState([]);
-  const [selectedTool, setSelectedTool] = useState(initialValues.tool);
+  const [selectedTool, setSelectedTool] = useState(initialValues.tools?.[0]);
 
   const { get } = useApi();
 
