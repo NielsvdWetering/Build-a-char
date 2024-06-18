@@ -5,6 +5,7 @@ import NameInput from "./subcomponents/NameInput";
 import ArmorSelect from "./subcomponents/ArmorSelect";
 import { useApi } from "../../hooks";
 import DropdownSelect from "./subcomponents/DropdownSelect";
+import InputGroup from "./subcomponents/InputGroup";
 
 export default function CharacterEditor({
   onSubmit,
@@ -60,25 +61,27 @@ export default function CharacterEditor({
 
   return (
     <>
-      <div id="page" className="flex h-full justify-around">
+      <div id="page" className="flex h-full max-h-full justify-around">
         <PageColumn>
-          <NameInput name={name} setName={setName} />
-          <DropdownSelect
-            defaultValue={selectedRace}
-            description={"Select a race"}
-            options={races}
-            handleChange={setSelectedRace}
-          />
-          <DropdownSelect
-            defaultValue={SelectedCharacterClass}
-            description={"Select a class"}
-            options={characterClasses}
-            handleChange={setSelectedCharacterClass}
-          />
-          <DescriptionInput
-            description={description}
-            setDescription={setDescription}
-          />
+          <InputGroup title="Character">
+            <NameInput name={name} setName={setName} />
+            <DropdownSelect
+              defaultValue={selectedRace}
+              description={"Select a race"}
+              options={races}
+              handleChange={setSelectedRace}
+            />
+            <DropdownSelect
+              defaultValue={SelectedCharacterClass}
+              description={"Select a class"}
+              options={characterClasses}
+              handleChange={setSelectedCharacterClass}
+            />
+            <DescriptionInput
+              description={description}
+              setDescription={setDescription}
+            />
+          </InputGroup>
         </PageColumn>
         <PageColumn>
           <ArmorSelect
@@ -86,20 +89,27 @@ export default function CharacterEditor({
             setSelectedArmorPieces={setSelectedArmorPieces}
             selectedArmorPieces={selectedArmorPieces}
           />
-          <DropdownSelect
-            defaultValue={selectedWeapon}
-            description={"Select a weapon"}
-            options={weapons}
-            handleChange={setSelectedWeapon}
-          />
-          <DropdownSelect
-            defaultValue={selectedTool}
-            description={"Select a tool"}
-            options={tools}
-            handleChange={setSelectedTool}
-          />
+          <InputGroup title="Inventory">
+            <DropdownSelect
+              defaultValue={selectedWeapon}
+              description={"Select a weapon"}
+              options={weapons}
+              handleChange={setSelectedWeapon}
+            />
+            <DropdownSelect
+              defaultValue={selectedTool}
+              description={"Select a tool"}
+              options={tools}
+              handleChange={setSelectedTool}
+            />
+          </InputGroup>
         </PageColumn>
-        <PageColumn>
+        <PageColumn className="justify-between">
+          <input
+            type="file"
+            accept="image/*"
+            className="file-input file-input-primary"
+          />
           <button
             disabled={!canSubmit()}
             className="btn btn-accent text-accent-content"
