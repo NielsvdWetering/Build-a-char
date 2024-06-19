@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
   const [searchParams, setSearchParams] = useState("");
-  const [characters, setCharacters] = useState(null);
+  const [characters, setCharacters] = useState([]);
   const [url, setUrl] = useState("characters");
   const { get } = useApi();
   const navigate = useNavigate();
@@ -18,26 +18,30 @@ export const SearchBar = () => {
   };
 
   useEffect(() => {
-    if (searchParams) {
-      setUrl(`characters/find?search=${searchParams}`);
-      fetchCharacters();
-    }
-  }, [searchParams]);
+    fetchCharacters();
+  }, [url]);
 
-  const showSearchResults = () => {};
+  const showSearchResults = (searchValue) => {
+    setSearchParams(searchValue);
+    if (searchValue !== "") {
+      setUrl(`characters/find?search=${searchValue}`);
+    } else {
+      setUrl("characters");
+    }
+  };
 
   return (
     <div className="relative w-2/3">
       <input
         className={"input input-primary w-full text-center"}
         onChange={(e) => {
-          setSearchParams(e.target.value);
+          showSearchResults(e.target.value);
         }}
         placeholder={"Search..."}
       />
       <div className={`absolute w-full border-2 bg-white`}>
         {characters && (
-          <ul>
+          <ul className={searchParams === "" ? "hidden" : ""}>
             {characters.map((character) => (
               <li
                 className="m-2 cursor-pointer border-b-2 pt-2 font-bold hover:bg-slate-50"

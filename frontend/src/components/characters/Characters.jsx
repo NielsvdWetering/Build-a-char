@@ -87,6 +87,10 @@ export default function Characters() {
     }
   };
 
+  const handleOnCheck = (target) => {
+    console.log("Filter by: ", target);
+  };
+
   return (
     <div className="grid h-full grid-flow-col">
       <div
@@ -99,7 +103,11 @@ export default function Characters() {
           categoryItems={races}
           handleCharacterFilter={handleCharacterFilter}
         />
-        <FilterByCategory category={"Class"} categoryItems={classes} />
+        <FilterByCategory
+          category={"Class"}
+          categoryItems={classes}
+          handleCharacterFilter={handleCharacterFilter}
+        />
       </div>
 
       <div id="right-panel" className="col-span-3 grid-cols-subgrid p-8">
