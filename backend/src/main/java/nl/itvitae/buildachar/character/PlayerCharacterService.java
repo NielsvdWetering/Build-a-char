@@ -51,6 +51,14 @@ public class PlayerCharacterService {
     return playerCharacterRepository.findByCharacterClass(characterClass);
   }
 
+  // TODO DO ME!
+  public List<PlayerCharacter> getByClassAndRace(List<Race> races, List<CharacterClass> classes) {
+    logger.info(
+        "Returning from service getbyclassandname: {}",
+        playerCharacterRepository.findByRaceAndClass(races, classes));
+    return playerCharacterRepository.findByRaceAndClass(races, classes);
+  }
+
   public Result<PlayerCharacter> save(NewCharacterValues values, User user) {
     if (values.name() == null || values.name().isBlank()) {
       return Result.errorResult("name is required");

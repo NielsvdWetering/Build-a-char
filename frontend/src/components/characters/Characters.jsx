@@ -10,6 +10,9 @@ export default function Characters() {
   const [characters, setCharacters] = useState([]);
   const [races, setRaces] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [url, setUrl] = useState("characters");
+  const [raceParams, setRaceParams] = useState([]);
+  const [classParams, setClassParams] = useState([]);
   const navigate = useNavigate();
   const { get } = useApi();
 
@@ -19,8 +22,30 @@ export default function Characters() {
     fetchClasses();
   }, []);
 
+  useEffect(() => {
+    fetchCharacters();
+  }, [url]);
+
+  useEffect(() => {
+    const queryParams = [];
+
+    if (raceParams.length > 0) {
+      queryParams.push(`race=${raceParams}`);
+    }
+
+    if (classParams.length > 0) {
+      queryParams.push(`class=${classParams}`);
+    }
+
+    if (queryParams.length > 0) {
+      setUrl(`characters?${queryParams.join("&")}`);
+    } else {
+      setUrl("characters");
+    }
+  }, [raceParams, classParams]);
+
   const fetchCharacters = () => {
-    get("characters")
+    get(url)
       .then(setCharacters)
       .catch((error) => {
         console.error("There was an error fetching the characters!", error);
@@ -43,12 +68,32 @@ export default function Characters() {
       });
   };
 
-  const handleOnCheck = (target) => {
-    console.log("We are going to sort by: ", target);
+  const handleOnCheck = (target, isChecked) => {
+    if (isChecked) {
+      // add to
+    } else {
+      // delete from
+    }
   };
 
-  const handleCharacterFilter = (target) => {
-    console.log("We are going to filter by: ", target);
+  const handleCharacterFilter = (category, target, isChecked) => {
+    if (isChecked) {
+      if (category.toLowerCase() === "race") {
+        setRaceParams((prev) => [...prev, target.toLowerCase()]);
+      } else if (category.toLowerCase() === "class") {
+        setClassParams((prev) => [...prev, target.toLowerCase()]);
+      }
+    } else {
+      if (category.toLowerCase() === "race") {
+        setRaceParams((prev) =>
+          prev.filter((item) => item.toLowerCase() !== target.toLowerCase()),
+        );
+      } else if (category.toLowerCase() === "class") {
+        setClassParams((prev) =>
+          prev.filter((item) => item.toLowerCase() !== target.toLowerCase()),
+        );
+      }
+    }
   };
 
   return (
@@ -64,7 +109,11 @@ export default function Characters() {
             categoryItems={races}
             handleCharacterFilter={handleCharacterFilter}
           />
-          <FilterByCategory category={"Class"} categoryItems={classes} />
+          <FilterByCategory
+            category={"Class"}
+            categoryItems={classes}
+            handleCharacterFilter={handleCharacterFilter}
+          />
         </div>
 
         <div className="col-span-3 grid-cols-subgrid">

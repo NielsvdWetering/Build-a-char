@@ -2,7 +2,6 @@ package nl.itvitae.buildachar.character;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -154,22 +153,29 @@ public class PlayerCharacterController {
             playerCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
       }
     }
-    if (race != null && !race.isEmpty()) {
+    if (race != null && !race.isEmpty() && characterClass != null && !characterClass.isEmpty()) {
+      List<Race> convertedRaces = raceService.getByName(race);
+      List<CharacterClass> convertedClasses = characterClassService.getByName(characterClass);
+      List<PlayerCharacter> filtered =
+          playerCharacterService.getByClassAndRace(convertedRaces, convertedClasses);
+      return ResponseEntity.ok(filtered.stream().map(PlayerCharacterDetailsDTO::from).toList());
+    }
+
+    if (race != null && !race.isEmpty() && characterClass == null) {
       raceService
           .getByName(race)
           .forEach(name -> filteredCharacters.addAll(playerCharacterService.getByRaceNames(name)));
     }
-    if (characterClass != null && !characterClass.isEmpty()) {
+    if (characterClass != null && !characterClass.isEmpty() && race == null) {
       characterClassService
           .getByName(characterClass)
           .forEach(
               name ->
                   filteredCharacters.addAll(playerCharacterService.getByCharacterClassNames(name)));
     }
-    // remove duplicates
-    LinkedHashSet<PlayerCharacter> removeDuplicates = new LinkedHashSet<>(filteredCharacters);
-    List<PlayerCharacter> finalList = new ArrayList<>(removeDuplicates);
-    return ResponseEntity.ok(finalList.stream().map(PlayerCharacterDetailsDTO::from).toList());
+
+    return ResponseEntity.ok(
+        filteredCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
   }
 
   @PatchMapping("/{id}")

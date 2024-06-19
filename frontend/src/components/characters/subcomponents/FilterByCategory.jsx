@@ -18,7 +18,7 @@ export const FilterByCategory = ({
               name={item.name}
               value={item.name}
               onChange={(e) => {
-                handleCharacterFilter(item.name);
+                handleCharacterFilter(category, item.name, e.target.checked);
               }}
             />
             <label htmlFor={item.name}>{item.name}</label>
