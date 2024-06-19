@@ -178,6 +178,15 @@ public class PlayerCharacterController {
         filteredCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
   }
 
+  @GetMapping("/find")
+  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getByNameContaining(
+      @RequestParam String search) {
+    return ResponseEntity.ok(
+        playerCharacterService.getByNameContaining(search).stream()
+            .map(PlayerCharacterDetailsDTO::from)
+            .toList());
+  }
+
   @PatchMapping("/{id}")
   public ResponseEntity<PlayerCharacter> patch(
       @PathVariable UUID id, @RequestBody PlayerCharacterPatchDTO playerCharacterPatchDTO) {

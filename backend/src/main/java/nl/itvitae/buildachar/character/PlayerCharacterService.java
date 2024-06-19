@@ -51,12 +51,14 @@ public class PlayerCharacterService {
     return playerCharacterRepository.findByCharacterClass(characterClass);
   }
 
-  // TODO DO ME!
   public List<PlayerCharacter> getByClassAndRace(List<Race> races, List<CharacterClass> classes) {
-    logger.info(
-        "Returning from service getbyclassandname: {}",
-        playerCharacterRepository.findByRaceAndClass(races, classes));
     return playerCharacterRepository.findByRaceAndClass(races, classes);
+  }
+
+  public List<PlayerCharacter> getByNameContaining(String param) {
+    logger.info(
+        "get by name conatin: {}", playerCharacterRepository.findByNameContainingIgnoreCase(param));
+    return playerCharacterRepository.findByNameContainingIgnoreCase(param);
   }
 
   public Result<PlayerCharacter> save(NewCharacterValues values, User user) {

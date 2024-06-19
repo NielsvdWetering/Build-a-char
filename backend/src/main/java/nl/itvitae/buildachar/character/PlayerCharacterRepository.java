@@ -17,4 +17,6 @@ public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter
       "SELECT pc FROM PlayerCharacter pc WHERE pc.race IN :races AND pc.characterClass IN :classes")
   List<PlayerCharacter> findByRaceAndClass(
       @Param("races") List<Race> races, @Param("classes") List<CharacterClass> classes);
+
+  List<PlayerCharacter> findByNameContainingIgnoreCase(String param);
 }
