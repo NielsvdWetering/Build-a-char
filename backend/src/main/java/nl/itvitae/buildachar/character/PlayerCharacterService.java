@@ -1,7 +1,5 @@
 package nl.itvitae.buildachar.character;
 
-import static nl.itvitae.buildachar.armor.ArmorType.*;
-
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +19,15 @@ import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class PlayerCharacterService {
+  private final Logger logger = LoggerFactory.getLogger(PlayerCharacterService.class);
+
   private final ArmorRepository armorRepository;
   private final WeaponRepository weaponRepository;
   private final ToolRepository toolRepository;
@@ -39,6 +41,14 @@ public class PlayerCharacterService {
 
   public Optional<PlayerCharacter> getById(UUID id) {
     return playerCharacterRepository.findById(id);
+  }
+
+  public List<PlayerCharacter> getByRaceNames(Race raceNames) {
+    return playerCharacterRepository.findByRace(raceNames);
+  }
+
+  public List<PlayerCharacter> getByCharacterClassNames(CharacterClass characterClass) {
+    return playerCharacterRepository.findByCharacterClass(characterClass);
   }
 
   public Result<PlayerCharacter> save(NewCharacterValues values, User user) {

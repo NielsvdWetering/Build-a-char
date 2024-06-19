@@ -1,11 +1,9 @@
 package nl.itvitae.buildachar.characterclass;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ControllerRoutes.CLASS_ROUTE)
@@ -17,5 +15,10 @@ public class CharacterClassController {
   @GetMapping
   public Iterable<CharacterClassDTO> getAll() {
     return characterClassService.getAll().stream().map(CharacterClassDTO::from).toList();
+  }
+
+  @GetMapping("/name")
+  public List<CharacterClass> getByName(@RequestParam List<String> classes) {
+    return characterClassService.getByName(classes);
   }
 }

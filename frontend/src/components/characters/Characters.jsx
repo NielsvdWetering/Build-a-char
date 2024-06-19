@@ -2,8 +2,8 @@ import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApi } from "../../hooks";
-import { Sort } from "./subcomponents/Sort";
 import { Filter } from "./subcomponents/Filter";
+import { FilterByCategory } from "./subcomponents/FilterByCategory";
 import InputField from "../generic/InputField";
 
 export default function Characters() {
@@ -58,13 +58,13 @@ export default function Characters() {
           id="left-panel"
           className="col-span-1 grid-cols-subgrid border-r-4 p-2"
         >
-          <Sort handleOnCheck={handleOnCheck} />
-          <Filter
+          <Filter handleOnCheck={handleOnCheck} />
+          <FilterByCategory
             category={"Race"}
             categoryItems={races}
             handleCharacterFilter={handleCharacterFilter}
           />
-          <Filter category={"Class"} categoryItems={classes} />
+          <FilterByCategory category={"Class"} categoryItems={classes} />
         </div>
 
         <div className="col-span-3 grid-cols-subgrid">

@@ -1,17 +1,17 @@
 package nl.itvitae.buildachar;
 
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
 import nl.itvitae.buildachar.character.NewCharacterValues;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.character.PlayerCharacterService;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
-import nl.itvitae.buildachar.helpers.Result;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.race.Stats;
@@ -55,20 +55,41 @@ public class Seeder implements CommandLineRunner {
   private void seedPlayerCharacters() {
     if (!playerCharacterService.getAll().isEmpty()) return;
 
-    CharacterClass characterClass =
-        characterClassService.getAll().stream().findFirst().orElseThrow();
-    Weapon weapon = weaponService.getAll().stream().findFirst().orElseThrow();
-    Tool tool = toolService.getAll().stream().findFirst().orElseThrow();
-    Race race = raceService.getAll().stream().findFirst().orElseThrow();
-    List<Armor> armors = armorService.getAll();
+    List<CharacterClass> allCharacterClasses = characterClassService.getAll();
+    List<Race> allRaces = raceService.getAll();
+    List<Weapon> allWeapons = weaponService.getAll();
+    List<Tool> allTools = toolService.getAll();
+    List<Armor> allArmors = armorService.getAll();
+    List<User> allUsers = userService.getAll();
 
-    List<Armor> armorList = armors.subList(0, 5);
+    if (allCharacterClasses.isEmpty() || allRaces.isEmpty() || allWeapons.isEmpty() || allTools.isEmpty() || allArmors.isEmpty() || allUsers.isEmpty()) {
+      throw new IllegalStateException("Required entities for seeding are missing.");
+    }
 
-    List<User> users = userService.getAll();
+    Random random = new Random();
 
-    NewCharacterValues values =
-        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList);
-    Result<PlayerCharacter> newCharacter = playerCharacterService.save(values, users.getFirst());
+    for (int i = 0; i < 20; i++) {
+      CharacterClass randomCharacterClass = allCharacterClasses.get(random.nextInt(allCharacterClasses.size()));
+      Race randomRace = allRaces.get(random.nextInt(allRaces.size()));
+      Weapon randomWeapon = allWeapons.get(random.nextInt(allWeapons.size()));
+      Tool randomTool = allTools.get(random.nextInt(allTools.size()));
+      List<Armor> randomArmors = random.ints(5, 0, allArmors.size())
+              .mapToObj(allArmors::get)
+              .collect(Collectors.toList());
+      User randomUser = allUsers.get(random.nextInt(allUsers.size()));
+
+      NewCharacterValues values = new NewCharacterValues(
+              "Character" + (i + 1),
+              "Description" + (i + 1),
+              randomRace,
+              randomCharacterClass,
+              randomWeapon,
+              randomTool,
+              randomArmors
+      );
+
+      playerCharacterService.save(values, randomUser);
+    }
   }
 
   private void seedClasses() {

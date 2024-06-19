@@ -2,6 +2,7 @@ package nl.itvitae.buildachar.character;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -31,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @CrossOrigin(origins = {"${app-cors}"})
 @AllArgsConstructor
 public class PlayerCharacterController {
+  private final Logger logger = LoggerFactory.getLogger(PlayerCharacterController.class);
 
   private final PlayerCharacterService playerCharacterService;
   private final RaceService raceService;
@@ -137,14 +141,35 @@ public class PlayerCharacterController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll() {
-    List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
-    if (playerCharacters.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    } else {
-      return ResponseEntity.ok(
-          playerCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
+  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll(
+      @RequestParam(required = false) List<String> race,
+      @RequestParam(required = false, name = "class") List<String> characterClass) {
+    List<PlayerCharacter> filteredCharacters = new ArrayList<>();
+    if (race == null && characterClass == null) {
+      List<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
+      if (playerCharacters.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      } else {
+        return ResponseEntity.ok(
+            playerCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
+      }
     }
+    if (race != null && !race.isEmpty()) {
+      raceService
+          .getByName(race)
+          .forEach(name -> filteredCharacters.addAll(playerCharacterService.getByRaceNames(name)));
+    }
+    if (characterClass != null && !characterClass.isEmpty()) {
+      characterClassService
+          .getByName(characterClass)
+          .forEach(
+              name ->
+                  filteredCharacters.addAll(playerCharacterService.getByCharacterClassNames(name)));
+    }
+    // remove duplicates
+    LinkedHashSet<PlayerCharacter> removeDuplicates = new LinkedHashSet<>(filteredCharacters);
+    List<PlayerCharacter> finalList = new ArrayList<>(removeDuplicates);
+    return ResponseEntity.ok(finalList.stream().map(PlayerCharacterDetailsDTO::from).toList());
   }
 
   @PatchMapping("/{id}")

@@ -27,7 +27,8 @@ public class PlayerCharacter {
   @Setter
   private String name;
 
-  @Lob @Setter private String description;
+  // @Lob weggehaald want dit zorgde voor problemen
+  @Setter private String description;
 
   @Setter @ManyToOne private CharacterClass characterClass;
 
