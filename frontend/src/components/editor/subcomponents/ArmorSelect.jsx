@@ -1,4 +1,5 @@
 import DropdownSelect from "./DropdownSelect";
+import InputGroup from "./InputGroup";
 
 export default function ArmorSelect({
   sortedArmorPieces,
@@ -11,7 +12,7 @@ export default function ArmorSelect({
 
   return (
     <>
-      <div>
+      <InputGroup title="Armor">
         <DropdownSelect
           defaultValue={selectedArmorPieces.head}
           description={"Select your head armor"}
@@ -42,7 +43,7 @@ export default function ArmorSelect({
           options={sortedArmorPieces.feetArmor}
           handleChange={(newValue) => handleSelectChange(newValue, "feet")}
         />
-      </div>
+      </InputGroup>
     </>
   );
 }
