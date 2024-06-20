@@ -5,10 +5,14 @@ import { useAuthentication } from "../../hooks";
 import { BeatLoader } from "react-spinners";
 import NavbarItemsContainer from "./subcomponents/NavbarItemsContainer";
 
+const THEME_PREFERENCES_STORAGE_LOCATION = "theme-preferences";
+const DARK_THEME_NAME = "buildachardark";
+
 export default function Navbar({}) {
   const navigate = useNavigate();
   const { logout, isLoggedIn } = useAuthentication();
   const [loggedIn, setLoggedIn] = useState(null);
+  const initialTheme = localStorage.getItem("theme-preferences");
 
   isLoggedIn().then((response) => {
     if (response !== loggedIn) {
@@ -55,8 +59,12 @@ export default function Navbar({}) {
             </svg>
             <input
               type="checkbox"
-              value="buildachardark"
+              value={DARK_THEME_NAME}
               className="theme-controller toggle"
+              defaultChecked={initialTheme === DARK_THEME_NAME}
+              onChange={(event) =>
+                handleThemeSwitch(event.target.checked, event.target.value)
+              }
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,4 +100,13 @@ export default function Navbar({}) {
       </div>
     </>
   );
+
+  function handleThemeSwitch(checked, themeName) {
+    if (!checked) {
+      localStorage.removeItem(THEME_PREFERENCES_STORAGE_LOCATION);
+      return;
+    }
+
+    localStorage.setItem(THEME_PREFERENCES_STORAGE_LOCATION, themeName);
+  }
 }
