@@ -32,4 +32,8 @@ public class RaceService {
 
     raceRepository.save(race);
   }
+
+  public List<Race> getByName(List<String> names) {
+    return raceRepository.findByNameIgnoreCaseIn(names);
+  }
 }

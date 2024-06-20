@@ -30,4 +30,8 @@ public class CharacterClassService {
 
     return characterClassRepository.save(characterClass);
   }
+
+  public List<CharacterClass> getByName(List<String> names) {
+    return characterClassRepository.findByNameIgnoreCaseIn(names);
+  }
 }
