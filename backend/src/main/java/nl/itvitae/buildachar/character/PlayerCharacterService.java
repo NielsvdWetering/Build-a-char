@@ -56,8 +56,6 @@ public class PlayerCharacterService {
   }
 
   public List<PlayerCharacter> getByNameContaining(String param) {
-    logger.info(
-        "get by name conatin: {}", playerCharacterRepository.findByNameContainingIgnoreCase(param));
     return playerCharacterRepository.findByNameContainingIgnoreCase(param);
   }
 
