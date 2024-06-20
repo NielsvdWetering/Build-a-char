@@ -6,8 +6,9 @@ import CharacterDisplay from "./components/characterDisplay/CharacterDisplay";
 import CharacterPatcher from "./components/editor/CharacterPatcher";
 
 import { Routes, Route } from "react-router-dom";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
+
+import RegisterPage from "./components/auth/register/RegisterPage";
+import LoginPage from "./components/auth/login/LoginPage";
 
 export default function App() {
   return (
@@ -22,8 +23,8 @@ export default function App() {
           <Route path="/my-characters" element={<Characters ownedOnly />} />
           <Route path="/characters/:id" element={<CharacterDisplay />} />
           <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </>

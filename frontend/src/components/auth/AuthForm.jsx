@@ -1,61 +1,93 @@
-import { useNavigate } from "react-router-dom";
 import InputField from "../generic/InputField";
+import { useState } from "react";
 
 export default function AuthForm({
-  username,
-  setUsername,
-  password,
-  setPassword,
   onSubmit,
-  submitTitle,
-  redirectTitle,
-  redirectURL,
+  submitText,
+  onRedirect,
+  redirectText,
+  onCompleted,
 }) {
-  const navigate = useNavigate();
+  const [authData, setAuthData] = useState({ username: "", password: "" });
 
   return (
     <div className="mt-20 flex flex-col items-center gap-5">
       <InputField
         className="w-1/4"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
+        value={authData.username}
+        onChange={(event) =>
+          setAuthData((data) => ({ ...data, username: event.target.value }))
+        }
         placeholder="username"
-        onKeyUp={inputFieldKeyUp}
+        onKeyUp={onInputFieldKeyUp}
       />
       <InputField
         className="w-1/4"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
+        value={authData.password}
+        onChange={(event) =>
+          setAuthData((data) => ({ ...data, password: event.target.value }))
+        }
         placeholder="password"
         type="password"
-        onKeyUp={inputFieldKeyUp}
+        onKeyUp={onInputFieldKeyUp}
       />
       <button
         className="btn btn-primary w-52"
-        onClick={onSubmit}
+        onClick={handleSubmit}
         disabled={
-          !username ||
-          username.length === 0 ||
-          !password ||
-          password.length === 0
+          authData.username.length === 0 || authData.password.length === 0
         }
       >
-        {submitTitle ?? "Submit"}
+        {submitText ?? "Submit"}
       </button>
-      {redirectTitle && redirectURL && (
-        <span
-          className="cursor-pointer text-blue-800 underline hover:text-purple-600"
-          onClick={() => navigate(redirectURL)}
-        >
-          {redirectTitle}
-        </span>
-      )}
+      <span
+        className="cursor-pointer text-blue-800 underline hover:text-purple-600"
+        onClick={handleRedirect}
+      >
+        {redirectText ?? "redirect"}
+      </span>
     </div>
   );
 
-  function inputFieldKeyUp(event) {
+  function onInputFieldKeyUp(event) {
     if (event.key === "Enter") {
-      onSubmit();
+      handleSubmit();
     }
+  }
+
+  function handleSubmit() {
+    if (!onSubmit) {
+      console.error("submit handler not found");
+      return;
+    }
+
+    onSubmit(authData)
+      .then(onCompleted)
+      .catch((error) =>
+        alert(
+          error.response.data.detail
+            .split(";")
+            .map((s) => `- ${s}`)
+            .join("\n"),
+        ),
+      );
+  }
+
+  function handleRedirect() {
+    if (!onRedirect) {
+      console.error("redirect handler not found");
+      return;
+    }
+
+    onRedirect();
+  }
+
+  function handleCompleted(response) {
+    if (!onCompleted) {
+      console.error("auth completed handler not found");
+      return;
+    }
+
+    onCompleted(response.data);
   }
 }
