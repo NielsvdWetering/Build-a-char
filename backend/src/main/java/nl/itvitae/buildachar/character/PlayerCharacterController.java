@@ -174,6 +174,8 @@ public class PlayerCharacterController {
                   filteredCharacters.addAll(playerCharacterService.getByCharacterClassNames(name)));
     }
 
+    if (filteredCharacters.isEmpty()) return ResponseEntity.notFound().build();
+
     return ResponseEntity.ok(
         filteredCharacters.stream().map(PlayerCharacterDetailsDTO::from).toList());
   }
@@ -181,6 +183,7 @@ public class PlayerCharacterController {
   @GetMapping("/find")
   public ResponseEntity<List<PlayerCharacterDetailsDTO>> getByNameContaining(
       @RequestParam String search) {
+    if (search.isEmpty()) return ResponseEntity.badRequest().build();
     return ResponseEntity.ok(
         playerCharacterService.getByNameContaining(search).stream()
             .map(PlayerCharacterDetailsDTO::from)

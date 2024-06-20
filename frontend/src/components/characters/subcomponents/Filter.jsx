@@ -6,10 +6,6 @@ export const Filter = ({ handleOnCheck }) => {
       <form>
         <RadioButton label={"All characters"} handleOnCheck={handleOnCheck} />
         <RadioButton label={"My characters"} handleOnCheck={handleOnCheck} />
-        <RadioButton
-          label={"My Favorite characters"}
-          handleOnCheck={handleOnCheck}
-        />
       </form>
     </div>
   );

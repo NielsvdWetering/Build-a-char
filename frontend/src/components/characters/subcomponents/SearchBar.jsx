@@ -39,7 +39,7 @@ export const SearchBar = () => {
         }}
         placeholder={"Search..."}
       />
-      <div className={`absolute w-full border-2 bg-white`}>
+      <div className={`absolute w-full bg-white`}>
         {characters && (
           <ul className={searchParams === "" ? "hidden" : ""}>
             {characters.map((character) => (

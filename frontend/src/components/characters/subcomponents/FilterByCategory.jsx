@@ -7,7 +7,7 @@ export const FilterByCategory = ({
 }) => {
   return (
     <div>
-      <h4 className="mt-4 w-2/3 border-b-2 border-double pb-4 font-bold">
+      <h4 className="mt-4 w-2/3 border-b-4 border-double border-primary pb-4 font-bold">
         {category}
       </h4>
       <ul>

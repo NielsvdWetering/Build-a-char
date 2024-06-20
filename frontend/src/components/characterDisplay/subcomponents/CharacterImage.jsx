@@ -1,14 +1,14 @@
 import React from "react";
-import Placeholder from "/img-placeholder.png";
+import Placeholder from "/cutebear.jpeg";
 
 export const CharacterImage = ({ image }) => {
   return (
-    <div className="flex aspect-video w-full items-center justify-center rounded-md bg-accent p-3 text-accent-content shadow-custom-dark">
+    <div className="rounded-mdp-3 flex aspect-video w-full items-center justify-center bg-accent text-accent-content shadow-custom-dark">
       <div>
         <img
           src={image ? image : Placeholder}
           alt="profile"
-          className="max-h-60"
+          className="h-72 rounded-lg"
         />
       </div>
     </div>
