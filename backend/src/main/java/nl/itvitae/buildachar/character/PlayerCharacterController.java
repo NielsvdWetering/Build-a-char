@@ -183,7 +183,6 @@ public class PlayerCharacterController {
   @GetMapping("/find")
   public ResponseEntity<List<PlayerCharacterDetailsDTO>> getByNameContaining(
       @RequestParam String search) {
-    if (search.isEmpty()) return ResponseEntity.badRequest().build();
     return ResponseEntity.ok(
         playerCharacterService.getByNameContaining(search).stream()
             .map(PlayerCharacterDetailsDTO::from)

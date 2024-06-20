@@ -97,7 +97,7 @@ export default function Characters() {
         id="left-panel"
         className="col-span-1 grid-cols-subgrid border-r-8 border-double border-secondary bg-secondary p-2"
       >
-        {/* <Filter handleOnCheck={handleOnCheck} /> */}
+        {/* <Filter handleOnCheck={handleOnCheck} />  */}
         <FilterByCategory
           category={"Race"}
           categoryItems={races}

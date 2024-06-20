@@ -6,6 +6,7 @@ export const SearchBar = () => {
   const [searchParams, setSearchParams] = useState("");
   const [characters, setCharacters] = useState([]);
   const [url, setUrl] = useState("characters");
+  const [resultOnDisplay, setResultOnDisplay] = useState(false);
   const { get } = useApi();
   const navigate = useNavigate();
 
@@ -33,15 +34,28 @@ export const SearchBar = () => {
   return (
     <div className="relative w-2/3">
       <input
-        className={"input input-primary w-full text-center"}
+        className={"input input-primary w-full"}
         onChange={(e) => {
-          showSearchResults(e.target.value);
+          if (e.target.value === "") {
+            setCharacters([]);
+          } else {
+            showSearchResults(e.target.value);
+          }
+        }}
+        onFocus={() => {
+          setCharacters([]);
+          setResultOnDisplay(true);
+        }}
+        onBlur={() => {
+          setResultOnDisplay(false);
         }}
         placeholder={"Search..."}
       />
-      <div className={`absolute w-full bg-white`}>
+      <div
+        className={`absolute w-full rounded-b-lg bg-white p-4 text-black ${resultOnDisplay ? "" : "hidden"}`}
+      >
         {characters && (
-          <ul className={searchParams === "" ? "hidden" : ""}>
+          <ul>
             {characters.map((character) => (
               <li
                 className="m-2 cursor-pointer border-b-2 pt-2 font-bold hover:bg-slate-50"
