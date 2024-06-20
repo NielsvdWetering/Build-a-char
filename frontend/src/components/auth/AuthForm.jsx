@@ -62,7 +62,7 @@ export default function AuthForm({
     }
 
     onSubmit(authData)
-      .then(onCompleted)
+      .then(handleCompleted)
       .catch((error) =>
         alert(
           error.response.data.detail
@@ -82,12 +82,12 @@ export default function AuthForm({
     onRedirect();
   }
 
-  function handleCompleted(response) {
+  function handleCompleted() {
     if (!onCompleted) {
       console.error("auth completed handler not found");
       return;
     }
 
-    onCompleted(response.data);
+    onCompleted();
   }
 }

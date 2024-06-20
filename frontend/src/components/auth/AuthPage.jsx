@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import AuthForm from "./AuthForm";
+import { useAccessToken } from "../../hooks";
 
 export default function AuthPage({
   name,
@@ -8,6 +9,7 @@ export default function AuthPage({
   onSubmit,
 }) {
   const navigate = useNavigate();
+  const { setToken } = useAccessToken();
 
   return (
     <AuthForm
@@ -15,7 +17,7 @@ export default function AuthPage({
       submitText={name}
       redirectText={redirectText}
       onRedirect={handleRedirect}
-      onCompleted={() => navigate("/")}
+      onCompleted={handleCompleted}
     />
   );
 
@@ -26,5 +28,9 @@ export default function AuthPage({
     }
 
     navigate(redirectURL);
+  }
+
+  function handleCompleted() {
+    navigate("/");
   }
 }
