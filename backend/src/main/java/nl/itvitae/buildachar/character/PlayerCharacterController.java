@@ -20,8 +20,6 @@ import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,8 +31,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @CrossOrigin(origins = {"${app-cors}"})
 @AllArgsConstructor
 public class PlayerCharacterController {
-  private final Logger logger = LoggerFactory.getLogger(PlayerCharacterController.class);
-
   private final PlayerCharacterService playerCharacterService;
   private final RaceService raceService;
   private final CharacterClassService characterClassService;
