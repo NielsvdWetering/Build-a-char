@@ -3,6 +3,7 @@ package nl.itvitae.buildachar.character;
 import static nl.itvitae.buildachar.armor.ArmorType.*;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,24 @@ public class PlayerCharacterService {
 
     if (values.armors() != null && !values.armors().isEmpty()) {
       values.armors().forEach(armor -> newPlayerCharacter.getArmors().add(armor));
+    }
+
+    if (values.characterPicture() != null) {
+      UUID pictureId = UUID.randomUUID();
+      File newPicture = new File("src/main/resources/characterImages/" + pictureId);
+
+      try {
+        newPicture.createNewFile();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      try (FileOutputStream fos = new FileOutputStream(newPicture)) {
+        fos.write(values.characterPicture());
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+      newPlayerCharacter.setCharacterPicture(pictureId);
     }
 
     if (user != null) {

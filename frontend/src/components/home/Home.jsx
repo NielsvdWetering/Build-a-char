@@ -1,6 +1,5 @@
 import React from "react";
 import CharacterCreator from "../editor/CharacterCreator";
-import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Home() {

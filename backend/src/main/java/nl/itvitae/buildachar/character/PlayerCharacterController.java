@@ -71,7 +71,20 @@ public class PlayerCharacterController {
         getClassFromId(characterDTO.classId()),
         getWeaponFromId(characterDTO.weaponId()),
         getToolFromId(characterDTO.toolId()),
-        getArmorsFromId(characterDTO.armorIds()));
+        getArmorsFromId(characterDTO.armorIds()),
+        toByteArray(characterDTO.characterPicture().values()));
+  }
+
+  private byte[] toByteArray(Collection<Byte> bytes) {
+    byte[] convertedBytes = new byte[bytes.size()];
+
+    int index = 0;
+    for (Byte b : bytes) {
+      convertedBytes[index] = b;
+      index++;
+    }
+
+    return convertedBytes;
   }
 
   private Race getRaceFromId(String raceId) {
@@ -183,10 +196,11 @@ public class PlayerCharacterController {
     return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
   }
 
-  @GetMapping("/image")
-  public @ResponseBody byte[] getImage() throws IOException {
+  // resources loading from https://mkyong.com/java/java-read-a-file-from-resources-folder/
+  @GetMapping("/{imageId}")
+  public @ResponseBody byte[] getImage(@PathVariable UUID imageId) throws IOException {
     try (InputStream in =
-        getClass().getClassLoader().getResourceAsStream("characterImages/dndbear.jpg")) {
+        getClass().getClassLoader().getResourceAsStream("characterImages/" + imageId)) {
 
       return in != null ? in.readAllBytes() : null;
     }
