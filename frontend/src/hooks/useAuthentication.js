@@ -13,7 +13,10 @@ export default function useAuthentication() {
   };
 
   const register = (registerData) => {
-    return post("auth/register", registerData);
+    return post("auth/register", registerData).then((response) => {
+      setToken(response.token);
+      return response;
+    });
   };
 
   const logout = () => {

@@ -25,7 +25,7 @@ public class UserController {
       "username or password is invalid";
 
   @PostMapping("login")
-  public JwtDTO login(@RequestBody AuthDTO authDTO) {
+  public ResponseEntity<JwtDTO> login(@RequestBody AuthDTO authDTO) {
     if (authDTO.username() == null || authDTO.username().isBlank()) {
       throw new RestException(HttpStatus.BAD_REQUEST, "username is required");
     }
@@ -41,11 +41,11 @@ public class UserController {
                 () ->
                     new RestException(HttpStatus.BAD_REQUEST, "username or password is incorrect"));
 
-    return new JwtDTO(jwtService.generateTokenForUser(authenticatedUser));
+    return ResponseEntity.ok(new JwtDTO(jwtService.generateTokenForUser(authenticatedUser)));
   }
 
   @PostMapping("register")
-  public ResponseEntity<UserDTO> register(@RequestBody AuthDTO authDTO) {
+  public ResponseEntity<JwtDTO> register(@RequestBody AuthDTO authDTO) {
     if (authDTO.username() == null || authDTO.username().isBlank()) {
       throw new RestException(HttpStatus.BAD_REQUEST, "username is required");
     }
@@ -63,8 +63,9 @@ public class UserController {
     }
 
     User user = userService.save(authDTO.username(), authDTO.password(), RoleName.USER);
+    String token = jwtService.generateTokenForUser(user);
 
-    return ResponseEntity.ok(UserDTO.from(user));
+    return ResponseEntity.ok(new JwtDTO(token));
   }
 
   @GetMapping("validate-token")

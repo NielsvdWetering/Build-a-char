@@ -3,9 +3,12 @@ import PageColumn from "../PageColumn";
 import DescriptionInput from "./subcomponents/DescriptionInput";
 import NameInput from "./subcomponents/NameInput";
 import ArmorSelect from "./subcomponents/ArmorSelect";
-import { useApi } from "../../hooks";
+import { useApi, useAuthentication } from "../../hooks";
 import DropdownSelect from "./subcomponents/DropdownSelect";
 import InputGroup from "./subcomponents/InputGroup";
+import AuthModal from "../auth/AuthModal";
+
+const AUTH_DIALOG_ID = "authDialog";
 
 export default function CharacterEditor({
   onSubmit,
@@ -46,6 +49,7 @@ export default function CharacterEditor({
   const [characterPicture, setCharacterPicture] = useState();
 
   const { get } = useApi();
+  const { isLoggedIn } = useAuthentication();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -138,6 +142,7 @@ export default function CharacterEditor({
             {submitLabel ?? "Submit"}
           </button>
         </PageColumn>
+        <AuthModal id={AUTH_DIALOG_ID} onCompleted={handleAuthCompleted} />
       </div>
     </>
   );
@@ -151,6 +156,25 @@ export default function CharacterEditor({
       return;
     }
 
+    isLoggedIn().then((loggedIn) => {
+      if (!loggedIn) {
+        showAuthModal();
+        return;
+      }
+
+      submitCharacter();
+    });
+  }
+
+  function showAuthModal() {
+    document.getElementById(AUTH_DIALOG_ID).showModal();
+  }
+
+  function handleAuthCompleted() {
+    submitCharacter();
+  }
+
+  function submitCharacter() {
     onSubmit({
       name,
       description,
