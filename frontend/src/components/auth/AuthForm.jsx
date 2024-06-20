@@ -9,7 +9,7 @@ export default function AuthForm({
   onCompleted,
   ...props
 }) {
-  const [authData, setAuthData] = useState({ username: "", password: "" });
+  const [authData, setAuthData] = useState(getDefaultAuthData());
 
   return (
     <div className={"flex flex-col items-center gap-5 " + props.className}>
@@ -80,6 +80,8 @@ export default function AuthForm({
       return;
     }
 
+    setAuthData(getDefaultAuthData());
+
     onRedirect();
   }
 
@@ -90,5 +92,9 @@ export default function AuthForm({
     }
 
     onCompleted();
+  }
+
+  function getDefaultAuthData() {
+    return { username: "", password: "" };
   }
 }
