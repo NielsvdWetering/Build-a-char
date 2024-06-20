@@ -1,5 +1,5 @@
 import { DisplayField } from "./DisplayField";
-import img from "/cutebear.jpeg";
+import img from "/cutebear.png";
 export const Card = ({ character, onClick }) => {
   return (
     <div

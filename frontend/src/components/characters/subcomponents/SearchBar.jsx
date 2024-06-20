@@ -60,7 +60,7 @@ export const SearchBar = ({ detectClick }) => {
           <ul>
             {characters.map((character) => (
               <li
-                className="m-2 cursor-pointer border-b-2 pt-2 font-bold"
+                className="m-2 cursor-pointer pt-2 font-bold"
                 key={character.id}
                 onClick={() => {
                   navigate("/characters/" + character.id);

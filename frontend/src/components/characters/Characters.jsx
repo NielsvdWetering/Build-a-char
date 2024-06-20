@@ -2,11 +2,10 @@ import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
-import { Filter } from "./subcomponents/Filter";
 import { FilterByCategory } from "./subcomponents/FilterByCategory";
 import { SearchBar } from "./subcomponents/SearchBar";
 
-export default function Characters() {
+export default function Characters({ myCharacters }) {
   const navigate = useNavigate();
   const { get } = useApi();
 
@@ -89,10 +88,6 @@ export default function Characters() {
     }
   };
 
-  const handleOnCheck = (target) => {
-    console.log("Filter by: ", target);
-  };
-
   return (
     <div
       className="grid h-full grid-flow-col"
@@ -104,7 +99,6 @@ export default function Characters() {
         id="left-panel"
         className="col-span-1 grid-cols-subgrid border-r-8 border-double border-secondary bg-secondary p-2"
       >
-        {/* <Filter handleOnCheck={handleOnCheck} />  */}
         <FilterByCategory
           category={"Race"}
           categoryItems={races}
@@ -118,7 +112,8 @@ export default function Characters() {
       </div>
 
       <div id="right-panel" className="col-span-3 grid-cols-subgrid p-8">
-        <div className="flex items-center justify-center p-2">
+        <div className="rounded-lg bg-primary p-4 text-center text-xl font-bold text-primary-content">{`${myCharacters ? "My Characters" : "All Characters"}`}</div>
+        <div className="mt-4 flex items-center justify-center p-2">
           <SearchBar detectClick={detectClick} />
         </div>
         <ul className="grid grid-cols-3 gap-12 p-3">
