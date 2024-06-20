@@ -1,6 +1,6 @@
 package nl.itvitae.buildachar.characterclass;
 
-import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class CharacterClassController {
   }
 
   @GetMapping("/name")
-  public List<CharacterClass> getByName(@RequestParam List<String> classes) {
+  public Set<CharacterClass> getByName(@RequestParam Set<String> classes) {
     return characterClassService.getByName(classes);
   }
 }

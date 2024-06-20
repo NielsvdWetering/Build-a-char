@@ -2,6 +2,7 @@ package nl.itvitae.buildachar.character;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import nl.itvitae.buildachar.armor.Armor;
@@ -179,5 +180,61 @@ public class PlayerCharacterController {
     boolean isOwned =
         user.map(value -> value.getId().equals(character.getUser().getId())).orElse(false);
     return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
+  }
+
+  // van laila
+  @GetMapping("/search")
+  public ResponseEntity<Set<PlayerCharacterDetailsDTO>> getAll(
+      @RequestParam(required = false) Set<String> race,
+      @RequestParam(required = false, name = "class") Set<String> characterClass) {
+    Set<PlayerCharacter> filteredCharacters = new HashSet<>();
+    if (race == null && characterClass == null) {
+      Set<PlayerCharacter> playerCharacters = playerCharacterService.getAll();
+      if (playerCharacters.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      } else {
+        return ResponseEntity.ok(
+            playerCharacters.stream()
+                .map(PlayerCharacterDetailsDTO::from)
+                .collect(Collectors.toSet()));
+      }
+    }
+    if (race != null && !race.isEmpty() && characterClass != null && !characterClass.isEmpty()) {
+      Set<Race> convertedRaces = raceService.getByName(race);
+      Set<CharacterClass> convertedClasses = characterClassService.getByName(characterClass);
+      Set<PlayerCharacter> filtered =
+          playerCharacterService.getByClassAndRace(convertedRaces, convertedClasses);
+      return ResponseEntity.ok(
+          filtered.stream().map(PlayerCharacterDetailsDTO::from).collect(Collectors.toSet()));
+    }
+
+    if (race != null && !race.isEmpty() && characterClass == null) {
+      raceService
+          .getByName(race)
+          .forEach(name -> filteredCharacters.addAll(playerCharacterService.getByRaceNames(name)));
+    }
+    if (characterClass != null && !characterClass.isEmpty() && race == null) {
+      characterClassService
+          .getByName(characterClass)
+          .forEach(
+              name ->
+                  filteredCharacters.addAll(playerCharacterService.getByCharacterClassNames(name)));
+    }
+
+    if (filteredCharacters.isEmpty()) return ResponseEntity.notFound().build();
+
+    return ResponseEntity.ok(
+        filteredCharacters.stream()
+            .map(PlayerCharacterDetailsDTO::from)
+            .collect(Collectors.toSet()));
+  }
+
+  @GetMapping("/find")
+  public ResponseEntity<Set<PlayerCharacterDetailsDTO>> getByNameContaining(
+      @RequestParam String search) {
+    return ResponseEntity.ok(
+        playerCharacterService.getByNameContaining(search).stream()
+            .map(PlayerCharacterDetailsDTO::from)
+            .collect(Collectors.toSet()));
   }
 }

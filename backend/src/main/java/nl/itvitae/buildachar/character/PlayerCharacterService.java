@@ -130,4 +130,21 @@ public class PlayerCharacterService {
   public PlayerCharacter update(PlayerCharacter newCharacter) {
     return playerCharacterRepository.save(newCharacter);
   }
+
+  // van laila
+  public Set<PlayerCharacter> getByRaceNames(Race raceNames) {
+    return playerCharacterRepository.findByRace(raceNames);
+  }
+
+  public Set<PlayerCharacter> getByCharacterClassNames(CharacterClass characterClass) {
+    return playerCharacterRepository.findByCharacterClass(characterClass);
+  }
+
+  public Set<PlayerCharacter> getByClassAndRace(Set<Race> races, Set<CharacterClass> classes) {
+    return playerCharacterRepository.findByRaceAndClass(races, classes);
+  }
+
+  public Set<PlayerCharacter> getByNameContaining(String param) {
+    return playerCharacterRepository.findByNameContainingIgnoreCase(param);
+  }
 }

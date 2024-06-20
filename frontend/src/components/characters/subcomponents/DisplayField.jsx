@@ -1,11 +1,10 @@
 import React from "react";
 
-export const DisplayField = ({ label, content }) => {
+export const DisplayField = ({ content }) => {
   return (
     <>
-      <div className="grid grid-cols-2 capitalize text-secondary-content">
-        <span className="font-bold">{label}</span>
-        <span>{content}</span>
+      <div className="rounded bg-secondary p-2 capitalize text-secondary-content">
+        <span className="p-2 font-bold">{content}</span>
       </div>
     </>
   );

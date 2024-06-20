@@ -1,6 +1,7 @@
 package nl.itvitae.buildachar.race;
 
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class RaceController {
 
   // query param = GET ?races=Gnome,elf
   @GetMapping("/name")
-  public List<Race> getByName(@RequestParam List<String> races) {
+  public Set<Race> getByName(@RequestParam Set<String> races) {
     return raceService.getByName(races);
   }
 }
