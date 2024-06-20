@@ -18,6 +18,8 @@ export default function Characters() {
   const [raceParams, setRaceParams] = useState([]);
   const [classParams, setClassParams] = useState([]);
 
+  const [detectClick, setDetectClick] = useState([]);
+
   useEffect(() => {
     const queryParams = [];
     if (raceParams.length > 0) {
@@ -92,7 +94,12 @@ export default function Characters() {
   };
 
   return (
-    <div className="grid h-full grid-flow-col">
+    <div
+      className="grid h-full grid-flow-col"
+      onClick={() => {
+        setDetectClick(!detectClick);
+      }}
+    >
       <div
         id="left-panel"
         className="col-span-1 grid-cols-subgrid border-r-8 border-double border-secondary bg-secondary p-2"
@@ -112,7 +119,7 @@ export default function Characters() {
 
       <div id="right-panel" className="col-span-3 grid-cols-subgrid p-8">
         <div className="flex items-center justify-center p-2">
-          <SearchBar />
+          <SearchBar detectClick={detectClick} />
         </div>
         <ul className="grid grid-cols-3 gap-12 p-3">
           {characters.map((character) => (

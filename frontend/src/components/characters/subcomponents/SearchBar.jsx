@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../../../hooks/useApi";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export const SearchBar = () => {
+export const SearchBar = ({ detectClick }) => {
   const [searchParams, setSearchParams] = useState("");
   const [characters, setCharacters] = useState([]);
   const [url, setUrl] = useState("characters");
-  const [resultOnDisplay, setResultOnDisplay] = useState(false);
+
   const { get } = useApi();
-  const navigate = useNavigate();
 
   const fetchCharacters = () => {
     get(url)
@@ -17,6 +16,11 @@ export const SearchBar = () => {
         console.error("There was an error fetching the characters!", error);
       });
   };
+
+  useEffect(() => {
+    // if a click outside of the component was detected, reset searchParams so that the box will be set to hidden
+    setSearchParams("");
+  }, [detectClick]);
 
   useEffect(() => {
     fetchCharacters();
@@ -34,6 +38,7 @@ export const SearchBar = () => {
   return (
     <div className="relative w-2/3">
       <input
+        id="search-bar"
         className={"input input-primary w-full"}
         onChange={(e) => {
           if (e.target.value === "") {
@@ -44,25 +49,21 @@ export const SearchBar = () => {
         }}
         onFocus={() => {
           setCharacters([]);
-          setResultOnDisplay(true);
-        }}
-        onBlur={() => {
-          setResultOnDisplay(false);
         }}
         placeholder={"Search..."}
       />
       <div
-        className={`absolute w-full rounded-b-lg bg-white p-4 text-black ${resultOnDisplay ? "" : "hidden"}`}
+        id="result-box"
+        className={`absolute w-full rounded-b-lg bg-base-100 p-4 text-primary-content ${searchParams !== "" ? "" : "hidden"}`}
       >
         {characters && (
           <ul>
             {characters.map((character) => (
               <li
-                className="m-2 cursor-pointer border-b-2 pt-2 font-bold hover:bg-slate-50"
+                className="m-2 cursor-pointer border-b-2 pt-2 font-bold"
                 key={character.id}
-                onClick={() => navigate("/characters/" + character.id)}
               >
-                {character.name}
+                <Link to={`/characters/${character.id}`}>{character.name}</Link>
               </li>
             ))}
           </ul>
