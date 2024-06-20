@@ -7,13 +7,14 @@ export default function AuthForm({
   onRedirect,
   redirectText,
   onCompleted,
+  ...props
 }) {
   const [authData, setAuthData] = useState({ username: "", password: "" });
 
   return (
-    <div className="mt-20 flex flex-col items-center gap-5">
+    <div className={"flex flex-col items-center gap-5 " + props.className}>
       <InputField
-        className="w-1/4"
+        className="w-full"
         value={authData.username}
         onChange={(event) =>
           setAuthData((data) => ({ ...data, username: event.target.value }))
@@ -22,7 +23,7 @@ export default function AuthForm({
         onKeyUp={onInputFieldKeyUp}
       />
       <InputField
-        className="w-1/4"
+        className="w-full"
         value={authData.password}
         onChange={(event) =>
           setAuthData((data) => ({ ...data, password: event.target.value }))

@@ -12,13 +12,16 @@ export default function AuthPage({
   const { setToken } = useAccessToken();
 
   return (
-    <AuthForm
-      onSubmit={onSubmit}
-      submitText={name}
-      redirectText={redirectText}
-      onRedirect={handleRedirect}
-      onCompleted={handleCompleted}
-    />
+    <div className="flex justify-center">
+      <AuthForm
+        onSubmit={onSubmit}
+        submitText={name}
+        redirectText={redirectText}
+        onRedirect={handleRedirect}
+        onCompleted={handleCompleted}
+        className="mt-10 w-1/4"
+      />
+    </div>
   );
 
   function handleRedirect() {
