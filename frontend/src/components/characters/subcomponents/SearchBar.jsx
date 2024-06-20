@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../../../hooks/useApi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const SearchBar = ({ detectClick }) => {
   const [searchParams, setSearchParams] = useState("");
   const [characters, setCharacters] = useState([]);
   const [url, setUrl] = useState("characters");
-
+  const navigate = useNavigate();
   const { get } = useApi();
 
   const fetchCharacters = () => {
@@ -29,7 +29,7 @@ export const SearchBar = ({ detectClick }) => {
   const showSearchResults = (searchValue) => {
     setSearchParams(searchValue);
     if (searchValue !== "") {
-      setUrl(`characters/find?search=${searchValue}`);
+      setUrl(`characters?search=${searchValue}`);
     } else {
       setUrl("characters");
     }
@@ -62,8 +62,11 @@ export const SearchBar = ({ detectClick }) => {
               <li
                 className="m-2 cursor-pointer border-b-2 pt-2 font-bold"
                 key={character.id}
+                onClick={() => {
+                  navigate("/characters/" + character.id);
+                }}
               >
-                <Link to={`/characters/${character.id}`}>{character.name}</Link>
+                {character.name}
               </li>
             ))}
           </ul>

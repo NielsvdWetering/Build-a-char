@@ -2,7 +2,6 @@ package nl.itvitae.buildachar.characterclass;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,9 +29,5 @@ public class CharacterClassService {
     }
 
     return characterClassRepository.save(characterClass);
-  }
-
-  public Set<CharacterClass> getByName(Set<String> names) {
-    return characterClassRepository.findByNameIgnoreCaseIn(names);
   }
 }

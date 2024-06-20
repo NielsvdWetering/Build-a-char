@@ -29,7 +29,7 @@ export default function Characters() {
       queryParams.push(`class=${classParams.join(",")}`);
     }
     if (queryParams.length > 0) {
-      setUrl(`characters/search?${queryParams.join("&")}`);
+      setUrl(`characters?${queryParams.join("&")}`);
     } else {
       setUrl("characters");
     }

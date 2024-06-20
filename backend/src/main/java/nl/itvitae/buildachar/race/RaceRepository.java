@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RaceRepository extends JpaRepository<Race, UUID> {
   Set<Race> findByNameIgnoreCaseIn(Set<String> names);
+
+  Race findByNameIgnoreCase(String name);
 }

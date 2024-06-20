@@ -1,16 +1,23 @@
 package nl.itvitae.buildachar.character;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.race.Race;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+// TODO add pageable!
+
 @Transactional
-public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter, UUID> {
+public interface PlayerCharacterRepository
+    extends JpaRepository<PlayerCharacter, UUID>, JpaSpecificationExecutor<PlayerCharacter> {
+
   Set<PlayerCharacter> findByUser_id(UUID id);
 
   Set<PlayerCharacter> findByRace(Race race);
@@ -23,4 +30,7 @@ public interface PlayerCharacterRepository extends JpaRepository<PlayerCharacter
       @Param("races") Set<Race> races, @Param("classes") Set<CharacterClass> classes);
 
   Set<PlayerCharacter> findByNameContainingIgnoreCase(String param);
+
+  // moet list zijn.
+  List<PlayerCharacter> findAll(Specification<PlayerCharacter> specification);
 }

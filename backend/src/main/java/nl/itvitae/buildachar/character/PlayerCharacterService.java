@@ -18,6 +18,7 @@ import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -39,7 +40,8 @@ public class PlayerCharacterService {
       throw new RuntimeException("PlayerCharacterService.getByUser: user is null");
     }
 
-    return playerCharacterRepository.findByUser_id(user.getId());
+    return new HashSet<>(
+        playerCharacterRepository.findAll(PlayerCharacterSpecification.hasUserId(user.getId())));
   }
 
   public Optional<PlayerCharacter> getById(UUID id) {
@@ -131,20 +133,50 @@ public class PlayerCharacterService {
     return playerCharacterRepository.save(newCharacter);
   }
 
-  // van laila
   public Set<PlayerCharacter> getByRaceNames(Race raceNames) {
     return playerCharacterRepository.findByRace(raceNames);
   }
 
   public Set<PlayerCharacter> getByCharacterClassNames(CharacterClass characterClass) {
-    return playerCharacterRepository.findByCharacterClass(characterClass);
+    return new HashSet<>(
+        playerCharacterRepository.findAll(PlayerCharacterSpecification.hasClass(characterClass)));
   }
 
   public Set<PlayerCharacter> getByClassAndRace(Set<Race> races, Set<CharacterClass> classes) {
-    return playerCharacterRepository.findByRaceAndClass(races, classes);
+    return new HashSet<>(
+        playerCharacterRepository.findAll(
+            Specification.where(PlayerCharacterSpecification.hasRaceIn(races))
+                .and(PlayerCharacterSpecification.hasClassIn(classes))));
   }
 
   public Set<PlayerCharacter> getByNameContaining(String param) {
     return playerCharacterRepository.findByNameContainingIgnoreCase(param);
+  }
+
+  public Set<PlayerCharacter> getCharactersDynamic(
+      String raceName, String className, String name, UUID userId) {
+    Specification<PlayerCharacter> spec =
+        Specification.where(null); // soort van startpunt voor specification om op verder te bouwen
+
+    if (raceName != null && !raceName.isEmpty()) {
+      Race race = raceRepository.findByNameIgnoreCase(raceName);
+      spec =
+          spec.and(
+              PlayerCharacterSpecification.hasRace(
+                  race)); // de .and() zorgt ervoor dat je huidige spec(ificatie) word toegevoegd
+      // aan de al bestaande specificaties. Het bouwt erop voort
+    }
+    if (className != null && !className.isEmpty()) {
+      CharacterClass characterClass = characterClassRepository.findByNameIgnoreCase(className);
+      spec = spec.and(PlayerCharacterSpecification.hasClass(characterClass));
+    }
+    if (name != null && !name.isEmpty()) {
+      spec = spec.and(PlayerCharacterSpecification.hasNameContainingIgnoreCase(name));
+    }
+
+    if (userId != null) {
+      spec = spec.and(PlayerCharacterSpecification.hasUserId(userId));
+    }
+    return new HashSet<>(playerCharacterRepository.findAll(spec));
   }
 }
