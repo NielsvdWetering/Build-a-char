@@ -1,6 +1,5 @@
 package nl.itvitae.buildachar.character;
 
-// TODO
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Optional;
