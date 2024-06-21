@@ -53,16 +53,18 @@ export default function CharacterEditor({
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file !== null) {
       const reader = new FileReader();
       reader.onload = (event) => {
         const arrayBuffer = event.target.result;
         const byteArray = new Uint8Array(arrayBuffer);
-        setCharacterPicture(byteArray);
+        if (byteArray.length > 10) {
+          setCharacterPicture(byteArray);
+        } else {
+          setCharacterPicture(null);
+        }
       };
       reader.readAsArrayBuffer(file);
-    } else {
-      setCharacterPicture(null);
     }
   };
 

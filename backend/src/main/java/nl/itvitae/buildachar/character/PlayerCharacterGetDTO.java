@@ -23,6 +23,12 @@ public record PlayerCharacterGetDTO(
     String characterPicture) {
 
   static PlayerCharacterGetDTO from(PlayerCharacter playerCharacter, boolean isOwner) {
+
+    String characterPicture =
+        (playerCharacter.getCharacterPicture() != null)
+            ? playerCharacter.getCharacterPicture().toString()
+            : null;
+
     return new PlayerCharacterGetDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
@@ -34,6 +40,6 @@ public record PlayerCharacterGetDTO(
         BasicRaceDTO.from(playerCharacter.getRace()),
         CharacterClassDTO.from(playerCharacter.getCharacterClass()),
         isOwner,
-        playerCharacter.getCharacterPicture().toString());
+        characterPicture);
   }
 }
