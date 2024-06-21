@@ -40,10 +40,10 @@ export default function CharacterDisplay() {
             name={character.name}
             race={character.race.name}
             characterClass={character.characterClass.name}
-            canEdit
+            canEdit={character.isOwner}
           />
         </PageColumn>
-        <PageColumn className="justify-between">
+        <PageColumn>
           <StatsView stats={character.stats} />
           <CharacterDescription
             description={character.description}
@@ -53,14 +53,6 @@ export default function CharacterDisplay() {
         <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
-          {character.isOwner && (
-            <button
-              className="btn btn-primary mt-2 shadow-custom-dark"
-              onClick={() => navigate("edit")}
-            >
-              Edit
-            </button>
-          )}
         </PageColumn>
       </div>
     </>
