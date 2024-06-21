@@ -33,20 +33,23 @@ export default function CharacterDisplay() {
 
   return (
     <>
-        <PageColumn>
       <div className="flex h-full justify-around">
+        <PageColumn className="justify-between">
           <CharacterImage />
           <CharacterInfo
             name={character.name}
             race={character.race.name}
             characterClass={character.characterClass.name}
           />
+        </PageColumn>
+        <PageColumn>
           <StatsView stats={character.stats} />
+          <CharacterDescription
+            description={character.description}
+            className="h-1/2 overflow-scroll"
+          />
         </PageColumn>
-        <PageColumn>
-          <CharacterDescription description={character.description} />
-        </PageColumn>
-        <PageColumn>
+        <PageColumn className="justify-between">
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
           {character.isOwner && (
