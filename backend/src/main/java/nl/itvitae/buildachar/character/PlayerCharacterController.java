@@ -74,20 +74,7 @@ public class PlayerCharacterController {
         getWeaponFromId(characterDTO.weaponId()),
         getToolFromId(characterDTO.toolId()),
         getArmorsFromId(characterDTO.armorIds()),
-        toByteArray(characterDTO.characterPicture().values()));
-  }
-
-  // make a imageService and move this function into it
-  private byte[] toByteArray(Collection<Byte> bytes) {
-    byte[] convertedBytes = new byte[bytes.size()];
-
-    int index = 0;
-    for (Byte b : bytes) {
-      convertedBytes[index] = b;
-      index++;
-    }
-
-    return convertedBytes;
+        playerCharacterService.toByteArray(characterDTO.characterPicture().values()));
   }
 
   private Race getRaceFromId(String raceId) {

@@ -151,4 +151,16 @@ public class PlayerCharacterService {
   public PlayerCharacter update(PlayerCharacter newCharacter) {
     return playerCharacterRepository.save(newCharacter);
   }
+
+  public byte[] toByteArray(Collection<Byte> bytes) {
+    byte[] convertedBytes = new byte[bytes.size()];
+
+    int index = 0;
+    for (Byte b : bytes) {
+      convertedBytes[index] = b;
+      index++;
+    }
+
+    return convertedBytes;
+  }
 }
