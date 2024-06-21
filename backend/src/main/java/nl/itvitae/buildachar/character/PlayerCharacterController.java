@@ -77,6 +77,7 @@ public class PlayerCharacterController {
         toByteArray(characterDTO.characterPicture().values()));
   }
 
+  // make a imageService and move this function into it
   private byte[] toByteArray(Collection<Byte> bytes) {
     byte[] convertedBytes = new byte[bytes.size()];
 

@@ -60,8 +60,6 @@ export default function CharacterEditor({
         const byteArray = new Uint8Array(arrayBuffer);
         if (byteArray.length > 10) {
           setCharacterPicture(byteArray);
-        } else {
-          setCharacterPicture(null);
         }
       };
       reader.readAsArrayBuffer(file);
