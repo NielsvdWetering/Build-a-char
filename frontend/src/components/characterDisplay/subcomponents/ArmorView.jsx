@@ -12,7 +12,7 @@ export const ArmorView = ({ armorList }) => {
   if (!armorList) return <Error msg={"Could not retrieve armor pieces"} />;
   return (
     <>
-      <div className="mb-5 flex w-full flex-col rounded-md bg-primary p-3">
+      <div className="flex w-full flex-col rounded-md bg-primary p-3">
         <h1 className="mb-2 border-b-2 border-primary-content text-xl font-semibold text-primary-content">
           Armor:
         </h1>

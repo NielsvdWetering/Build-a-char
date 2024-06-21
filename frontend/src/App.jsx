@@ -11,21 +11,30 @@ import RegisterPage from "./components/auth/register/RegisterPage";
 import LoginPage from "./components/auth/login/LoginPage";
 
 export default function App() {
+  document.querySelector(":root").style.setProperty("--navbar-height", "64px");
+  console.log(
+    getComputedStyle(document.querySelector(":root")).getPropertyValue(
+      "--navbar-height",
+    ),
+  );
+
   return (
     <>
       <div id="page" className="flex h-screen w-screen flex-col">
         <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/creator" element={<CharacterCreator />} />
-          <Route path="/characters" element={<Characters />} />
-          <Route path="/my-characters" element={<Characters ownedOnly />} />
-          <Route path="/characters/:id" element={<CharacterDisplay />} />
-          <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
+        <div className={`h-[calc(100%_-_var(--navbar-height))]`}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/creator" element={<CharacterCreator />} />
+            <Route path="/characters" element={<Characters />} />
+            <Route path="/my-characters" element={<Characters ownedOnly />} />
+            <Route path="/characters/:id" element={<CharacterDisplay />} />
+            <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </div>
       </div>
     </>
   );

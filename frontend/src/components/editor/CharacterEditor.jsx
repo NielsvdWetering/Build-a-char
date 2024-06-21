@@ -67,7 +67,7 @@ export default function CharacterEditor({
 
   return (
     <>
-      <div id="page" className="flex h-full max-h-full justify-around">
+      <div className="flex h-full max-h-full justify-around">
         <PageColumn>
           <InputGroup title="Character">
             <NameInput name={name} setName={setName} />
