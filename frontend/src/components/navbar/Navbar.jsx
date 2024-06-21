@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NavbarButton from "./NavbarButton";
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../../hooks";
@@ -22,7 +22,9 @@ export default function Navbar({}) {
 
   return (
     <>
-      <div className="navbar flex justify-between bg-primary">
+      <div
+        className={`navbar flex min-h-[var(--navbar-height)] justify-between bg-primary`}
+      >
         <NavbarItemsContainer id="buttons" className="navbar-start">
           <h1 className="px-6 text-2xl font-semibold text-primary-content">
             Build-a-char

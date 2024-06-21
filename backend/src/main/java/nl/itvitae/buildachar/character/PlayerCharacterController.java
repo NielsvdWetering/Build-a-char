@@ -1,5 +1,9 @@
 package nl.itvitae.buildachar.character;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,7 +74,8 @@ public class PlayerCharacterController {
         getClassFromId(characterDTO.classId()),
         getWeaponFromId(characterDTO.weaponId()),
         getToolFromId(characterDTO.toolId()),
-        getArmorsFromId(characterDTO.armorIds()));
+        getArmorsFromId(characterDTO.armorIds()),
+        playerCharacterService.toByteArray(characterDTO.characterPicture().values()));
   }
 
   private Race getRaceFromId(String raceId) {
@@ -186,5 +191,26 @@ public class PlayerCharacterController {
 
     return ResponseEntity.ok(
         result.stream().map(PlayerCharacterDetailsDTO::from).collect(Collectors.toSet()));
+  }
+
+  // resources loading from https://mkyong.com/java/java-read-a-file-from-resources-folder/
+  @GetMapping("/image/{imageId}")
+  public @ResponseBody byte[] getImage(@PathVariable UUID imageId) throws IOException {
+
+    // Define the directory where uploaded images are stored
+    String uploadDir = "../characterImages/";
+
+    // Construct the full file path
+    File file = new File(uploadDir + imageId.toString());
+
+    // Check if the file exists and is readable
+    if (file.exists() && file.isFile()) {
+      try (InputStream in = new FileInputStream(file)) {
+        return in.readAllBytes();
+      }
+    } else {
+      // Return an appropriate response if the file is not found
+      return null;
+    }
   }
 }

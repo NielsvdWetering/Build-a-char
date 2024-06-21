@@ -46,8 +46,25 @@ export default function CharacterEditor({
   const [tools, setTools] = useState([]);
   const [selectedTool, setSelectedTool] = useState(initialValues.tools?.[0]);
 
+  const [characterPicture, setCharacterPicture] = useState();
+
   const { get } = useApi();
   const { isLoggedIn } = useAuthentication();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file !== null) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const arrayBuffer = event.target.result;
+        const byteArray = new Uint8Array(arrayBuffer);
+        if (byteArray.length > 10) {
+          setCharacterPicture(byteArray);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
 
   useEffect(() => {
     get("races").then(setRaces).catch(console.error);
@@ -67,7 +84,7 @@ export default function CharacterEditor({
 
   return (
     <>
-      <div id="page" className="flex h-full max-h-full justify-around">
+      <div className="flex h-full max-h-full justify-around">
         <PageColumn>
           <InputGroup title="Character">
             <NameInput name={name} setName={setName} />
@@ -114,6 +131,9 @@ export default function CharacterEditor({
           <input
             type="file"
             accept="image/*"
+            onChange={(e) => {
+              handleFileChange(e);
+            }}
             className="file-input file-input-primary"
           />
           <button
@@ -167,6 +187,7 @@ export default function CharacterEditor({
       armorIds: Object.values(selectedArmorPieces)
         .filter((armorPiece) => armorPiece && armorPiece.id)
         .map((armorPiece) => armorPiece.id),
+      characterPicture: characterPicture ?? {},
     });
   }
 }

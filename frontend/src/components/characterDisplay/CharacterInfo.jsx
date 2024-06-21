@@ -1,21 +1,21 @@
 import React from "react";
 import { Error } from "../generic/Error";
 
-export const CharacterInfo = ({ name, race, characterClass }) => {
+export const CharacterInfo = ({ name, race, characterClass, canEdit }) => {
   return (
     <div className="w-full p-4">
       {name ? (
-        <h1 className="m-2 text-center text-6xl">{name}</h1>
+        <h1 className="m-2 text-center text-4xl">{name}</h1>
       ) : (
         <Error msg={"Name could not be loaded"} />
       )}
       {race ? (
-        <p className="border-b-2 border-primary p-4 text-4xl">{race}</p>
+        <p className="border-b-2 border-primary p-4 text-xl">{race}</p>
       ) : (
         <Error msg={"Race could not be loaded"} />
       )}
       {characterClass ? (
-        <p className="border-b-2 border-primary p-4 text-4xl">
+        <p className="border-b-2 border-primary p-4 text-xl">
           {characterClass}
         </p>
       ) : (

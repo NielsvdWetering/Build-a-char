@@ -91,7 +91,8 @@ public class Seeder implements CommandLineRunner {
               randomCharacterClass,
               randomWeapon,
               randomTool,
-              randomArmors);
+              randomArmors,
+              null);
 
       playerCharacterService.save(values, randomUser);
     }

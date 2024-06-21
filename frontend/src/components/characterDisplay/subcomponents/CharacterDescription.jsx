@@ -1,9 +1,11 @@
 import React from "react";
-import { Error } from "../../generic/Error";
 
-export const CharacterDescription = ({ description }) => {
+export const CharacterDescription = ({ description, className }) => {
   return (
-    <div className="h-full w-full rounded-md bg-primary p-4 shadow-custom-dark">
+    <div
+      className={`body card w-full rounded-md bg-primary p-4 shadow-custom-dark ${className}`}
+    >
+      {description && <div className="card-title">Description</div>}
       <span className="text-primary-content">
         {description ? description : "No description"}
       </span>
