@@ -40,9 +40,10 @@ export default function CharacterDisplay() {
             name={character.name}
             race={character.race.name}
             characterClass={character.characterClass.name}
+            canEdit
           />
         </PageColumn>
-        <PageColumn>
+        <PageColumn className="justify-between">
           <StatsView stats={character.stats} />
           <CharacterDescription
             description={character.description}
