@@ -1,11 +1,11 @@
 import { Card } from "./subcomponents/Card";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useApi from "../../hooks/useApi";
 import { FilterByCategory } from "./subcomponents/FilterByCategory";
 import { SearchBar } from "./subcomponents/SearchBar";
+import { useApi, useAuthentication } from "../../hooks";
 
-export default function Characters({ myCharacters }) {
+export default function Characters({ myCharacters, ownedOnly }) {
   const navigate = useNavigate();
   const { get } = useApi();
 
@@ -13,12 +13,40 @@ export default function Characters({ myCharacters }) {
   const [races, setRaces] = useState([]);
   const [classes, setClasses] = useState([]);
   const [url, setUrl] = useState("characters");
-
+  const { isLoggedIn } = useAuthentication();
+  const [loggedIn, setLoggedIn] = useState(null);
   const [raceParams, setRaceParams] = useState([]);
   const [classParams, setClassParams] = useState([]);
 
   const [detectClick, setDetectClick] = useState([]);
 
+  useEffect(() => {
+    if (ownedOnly && loggedIn === false) {
+      navigate("/");
+    }
+
+    fetchCharacters();
+  }, [loggedIn]);
+
+  if (ownedOnly) {
+    isLoggedIn().then((response) => {
+      if (loggedIn === response) {
+        return;
+      }
+
+      setLoggedIn(response);
+    });
+
+    if (loggedIn === null) {
+      return (
+        <div className="flex h-full w-full items-center justify-center">
+          <ClipLoader size="500px" />
+        </div>
+      );
+    }
+  } else if (loggedIn !== null) {
+    setLoggedIn(null);
+  }
   useEffect(() => {
     const queryParams = [];
     if (raceParams.length > 0) {
