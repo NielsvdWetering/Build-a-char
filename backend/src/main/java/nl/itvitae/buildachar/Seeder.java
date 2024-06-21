@@ -6,12 +6,9 @@ import nl.itvitae.buildachar.armor.Armor;
 import nl.itvitae.buildachar.armor.ArmorClass;
 import nl.itvitae.buildachar.armor.ArmorService;
 import nl.itvitae.buildachar.armor.ArmorType;
-import nl.itvitae.buildachar.character.NewCharacterValues;
-import nl.itvitae.buildachar.character.PlayerCharacter;
 import nl.itvitae.buildachar.character.PlayerCharacterService;
 import nl.itvitae.buildachar.characterclass.CharacterClass;
 import nl.itvitae.buildachar.characterclass.CharacterClassService;
-import nl.itvitae.buildachar.helpers.Result;
 import nl.itvitae.buildachar.race.Race;
 import nl.itvitae.buildachar.race.RaceService;
 import nl.itvitae.buildachar.race.Stats;
@@ -66,9 +63,10 @@ public class Seeder implements CommandLineRunner {
 
     List<User> users = userService.getAll();
 
-    NewCharacterValues values =
-        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList, null);
-    Result<PlayerCharacter> newCharacter = playerCharacterService.save(values, users.getFirst());
+    // NewCharacterValues values =
+    //    new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList,
+    // null);
+    //     Result<PlayerCharacter> newCharacter = playerCharacterService.save(values, users.getFirst());
   }
 
   private void seedClasses() {

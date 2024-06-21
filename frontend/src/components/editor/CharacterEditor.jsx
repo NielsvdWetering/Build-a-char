@@ -61,6 +61,8 @@ export default function CharacterEditor({
         setCharacterPicture(byteArray);
       };
       reader.readAsArrayBuffer(file);
+    } else {
+      setCharacterPicture(null);
     }
   };
 
@@ -185,7 +187,7 @@ export default function CharacterEditor({
       armorIds: Object.values(selectedArmorPieces)
         .filter((armorPiece) => armorPiece && armorPiece.id)
         .map((armorPiece) => armorPiece.id),
-      characterPicture,
+      characterPicture: characterPicture ?? {},
     });
   }
 }

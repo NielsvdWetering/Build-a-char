@@ -1,5 +1,7 @@
 package nl.itvitae.buildachar.character;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -197,12 +199,23 @@ public class PlayerCharacterController {
   }
 
   // resources loading from https://mkyong.com/java/java-read-a-file-from-resources-folder/
-  @GetMapping("/{imageId}")
+  @GetMapping("/image/{imageId}")
   public @ResponseBody byte[] getImage(@PathVariable UUID imageId) throws IOException {
-    try (InputStream in =
-        getClass().getClassLoader().getResourceAsStream("characterImages/" + imageId)) {
 
-      return in != null ? in.readAllBytes() : null;
+    // Define the directory where uploaded images are stored
+    String uploadDir = "../characterImages/";
+
+    // Construct the full file path
+    File file = new File(uploadDir + imageId.toString());
+
+    // Check if the file exists and is readable
+    if (file.exists() && file.isFile()) {
+      try (InputStream in = new FileInputStream(file)) {
+        return in.readAllBytes();
+      }
+    } else {
+      // Return an appropriate response if the file is not found
+      return null;
     }
   }
 }

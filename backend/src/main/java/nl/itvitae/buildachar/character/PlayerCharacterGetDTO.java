@@ -19,7 +19,8 @@ public record PlayerCharacterGetDTO(
     List<ArmorDTO> armorList,
     BasicRaceDTO race,
     CharacterClassDTO characterClass,
-    boolean isOwner) {
+    boolean isOwner,
+    String characterPicture) {
 
   static PlayerCharacterGetDTO from(PlayerCharacter playerCharacter, boolean isOwner) {
     return new PlayerCharacterGetDTO(
@@ -32,6 +33,7 @@ public record PlayerCharacterGetDTO(
         playerCharacter.getArmors().stream().map(ArmorDTO::from).toList(),
         BasicRaceDTO.from(playerCharacter.getRace()),
         CharacterClassDTO.from(playerCharacter.getCharacterClass()),
-        isOwner);
+        isOwner,
+        playerCharacter.getCharacterPicture().toString());
   }
 }

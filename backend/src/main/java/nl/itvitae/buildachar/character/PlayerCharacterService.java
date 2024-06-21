@@ -76,7 +76,7 @@ public class PlayerCharacterService {
 
     if (values.characterPicture() != null) {
       UUID pictureId = UUID.randomUUID();
-      File newPicture = new File("src/main/resources/characterImages/" + pictureId);
+      File newPicture = new File("../characterImages/" + pictureId);
 
       try {
         newPicture.createNewFile();

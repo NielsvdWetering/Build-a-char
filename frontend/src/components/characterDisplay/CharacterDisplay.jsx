@@ -35,7 +35,7 @@ export default function CharacterDisplay() {
     <>
       <div id="page" className="flex h-full justify-around">
         <PageColumn>
-          <CharacterImage />
+          <CharacterImage pictureId={character.characterPicture} />
           <CharacterInfo
             name={character.name}
             race={character.race.name}
