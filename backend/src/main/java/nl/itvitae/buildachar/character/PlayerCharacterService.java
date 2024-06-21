@@ -3,6 +3,7 @@ package nl.itvitae.buildachar.character;
 import static nl.itvitae.buildachar.armor.ArmorType.*;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,26 @@ public class PlayerCharacterService {
       values.armors().forEach(armor -> newPlayerCharacter.getArmors().add(armor));
     }
 
+    // it checks if the file really contains something, because if not the frontend sends null, but
+    // null is still some bytes
+    if (values.characterPicture() != null && values.characterPicture().length > 50) {
+      UUID pictureId = UUID.randomUUID();
+      File newPicture = new File("../characterImages/" + pictureId);
+
+      try {
+        newPicture.createNewFile();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+      try (FileOutputStream fos = new FileOutputStream(newPicture)) {
+        fos.write(values.characterPicture());
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+      newPlayerCharacter.setCharacterPicture(pictureId);
+    }
+
     if (user != null) {
       newPlayerCharacter.setUser(user);
     } else {
@@ -129,5 +150,17 @@ public class PlayerCharacterService {
 
   public PlayerCharacter update(PlayerCharacter newCharacter) {
     return playerCharacterRepository.save(newCharacter);
+  }
+
+  public byte[] toByteArray(Collection<Byte> bytes) {
+    byte[] convertedBytes = new byte[bytes.size()];
+
+    int index = 0;
+    for (Byte b : bytes) {
+      convertedBytes[index] = b;
+      index++;
+    }
+
+    return convertedBytes;
   }
 }

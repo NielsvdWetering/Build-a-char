@@ -67,7 +67,7 @@ public class Seeder implements CommandLineRunner {
     List<User> users = userService.getAll();
 
     NewCharacterValues values =
-        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList);
+        new NewCharacterValues("Sjaak", "idk", race, characterClass, weapon, tool, armorList, null);
     Result<PlayerCharacter> newCharacter = playerCharacterService.save(values, users.getFirst());
   }
 

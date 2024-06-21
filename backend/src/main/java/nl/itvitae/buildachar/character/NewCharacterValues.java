@@ -14,4 +14,5 @@ public record NewCharacterValues(
     CharacterClass characterClass,
     Weapon weapon,
     Tool tool,
-    List<Armor> armors) {}
+    List<Armor> armors,
+    byte[] characterPicture) {}

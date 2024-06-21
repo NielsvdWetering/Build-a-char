@@ -1,0 +1,5 @@
+# exclude everything
+characterImages/*
+
+# exception to the rule
+!characterImages/.gitkeep 

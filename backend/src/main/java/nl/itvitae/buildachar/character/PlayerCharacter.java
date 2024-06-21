@@ -39,6 +39,8 @@ public class PlayerCharacter {
 
   @Setter @ManyToOne private Weapon weapon;
 
+  @Setter private UUID characterPicture;
+
   @Setter @ManyToOne private User user;
 
   public PlayerCharacter(
@@ -61,7 +63,8 @@ public class PlayerCharacter {
       Set<Armor> armors,
       Race race,
       Tool tool,
-      Weapon weapon) {
+      Weapon weapon,
+      UUID characterPicture) {
     this.name = name;
     this.description = description;
     this.characterClass = characterClass;
@@ -69,6 +72,7 @@ public class PlayerCharacter {
     this.race = race;
     this.tool = tool;
     this.weapon = weapon;
+    this.characterPicture = characterPicture;
   }
 
   public Optional<Weapon> getWeapon() {

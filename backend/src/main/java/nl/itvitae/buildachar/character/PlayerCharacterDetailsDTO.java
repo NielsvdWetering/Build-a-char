@@ -23,10 +23,17 @@ public record PlayerCharacterDetailsDTO(
     String armorTorso,
     String armorHands,
     String armorLegs,
-    String armorFeet) {
+    String armorFeet,
+    String characterPictureId) {
   static PlayerCharacterDetailsDTO from(PlayerCharacter playerCharacter) {
     Optional<Weapon> weapon = playerCharacter.getWeapon();
     Optional<Tool> tool = playerCharacter.getTool();
+
+    String characterPicture =
+        (playerCharacter.getCharacterPicture() != null)
+            ? playerCharacter.getCharacterPicture().toString()
+            : null;
+
     return new PlayerCharacterDetailsDTO(
         playerCharacter.getId(),
         playerCharacter.getName(),
@@ -41,7 +48,8 @@ public record PlayerCharacterDetailsDTO(
         getArmorByType(playerCharacter.getArmors(), ArmorType.TORSO),
         getArmorByType(playerCharacter.getArmors(), ArmorType.LEGS),
         getArmorByType(playerCharacter.getArmors(), ArmorType.HANDS),
-        getArmorByType(playerCharacter.getArmors(), ArmorType.FEET));
+        getArmorByType(playerCharacter.getArmors(), ArmorType.FEET),
+        characterPicture);
   }
 
   private static String getArmorByType(Set<Armor> armorList, ArmorType type) {
