@@ -1,11 +1,9 @@
 package nl.itvitae.buildachar.character;
 
 import jakarta.transaction.Transactional;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import nl.itvitae.buildachar.race.Race;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -19,5 +17,5 @@ public interface PlayerCharacterRepository
 
   Set<PlayerCharacter> findByNameContainingIgnoreCase(String param);
   
-  List<PlayerCharacter> findAll(Specification<PlayerCharacter> specification);
+ 
 }
