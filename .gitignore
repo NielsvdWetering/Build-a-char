@@ -1,5 +1,5 @@
 # exclude everything
-somefolder/*
+characterImages/*
 
 # exception to the rule
-!somefolder/.gitkeep 
+!characterImages/.gitkeep 
