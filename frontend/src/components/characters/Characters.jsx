@@ -22,7 +22,11 @@ export default function Characters({ myCharacters, ownedOnly }) {
   const [detectClick, setDetectClick] = useState([]);
 
   const fetchCharacters = () => {
-    get(url, { ownedOnly })
+    get(url, {
+      ownedOnly,
+      race: raceParams.length > 0 ? raceParams.join(",") : undefined,
+      class: classParams.length > 0 ? classParams.join(",") : undefined,
+    })
       .then(setCharacters)
       .catch((error) => {
         console.error("There was an error fetching the characters!", error);
@@ -46,7 +50,6 @@ export default function Characters({ myCharacters, ownedOnly }) {
   };
 
   useEffect(() => {
-    console.log(loggedIn);
     if (!ownedOnly || loggedIn === true) {
       fetchCharacters();
       return;
@@ -55,31 +58,12 @@ export default function Characters({ myCharacters, ownedOnly }) {
     if (ownedOnly && loggedIn === false) {
       navigate("/");
     }
-  }, [url, loggedIn]);
+  }, [loggedIn, raceParams, classParams]);
 
   useEffect(() => {
     fetchRaces();
     fetchClasses();
   }, []);
-
-  useEffect(() => {
-    const queryParams = [];
-    if (raceParams.length > 0) {
-      queryParams.push(`race=${raceParams.join(",")}`);
-    }
-    if (classParams.length > 0) {
-      queryParams.push(`class=${classParams.join(",")}`);
-    }
-    if (ownedOnly) {
-      // queryParams.push("ownedOnly=true");
-    }
-    console.log(queryParams);
-    if (queryParams.length > 0) {
-      setUrl(`characters?${queryParams.join("&")}`);
-    } else {
-      setUrl("characters");
-    }
-  }, [raceParams, classParams, ownedOnly]);
 
   useEffect(() => {
     if (ownedOnly) {
