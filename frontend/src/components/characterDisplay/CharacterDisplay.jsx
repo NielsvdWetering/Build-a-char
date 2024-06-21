@@ -9,6 +9,7 @@ import { CharacterDescription } from "./subcomponents/CharacterDescription";
 import Inventory from "./subcomponents/Inventory";
 import { CharacterInfo } from "./CharacterInfo";
 import { useApi } from "../../hooks";
+import { AiFillEdit } from "react-icons/ai";
 
 export default function CharacterDisplay() {
   const [character, setCharacter] = useState();
@@ -33,7 +34,7 @@ export default function CharacterDisplay() {
 
   return (
     <>
-      <div id="page" className="flex h-full justify-around">
+      <div className="flex h-full justify-around">
         <PageColumn>
           <CharacterImage pictureId={character.characterPicture} />
           <CharacterInfo
@@ -41,20 +42,25 @@ export default function CharacterDisplay() {
             race={character.race.name}
             characterClass={character.characterClass.name}
           />
-          <StatsView stats={character.stats} />
         </PageColumn>
         <PageColumn>
-          <CharacterDescription description={character.description} />
+          <StatsView stats={character.stats} />
+          <CharacterDescription
+            description={character.description}
+            className="h-1/2 overflow-scroll"
+          />
         </PageColumn>
         <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
           {character.isOwner && (
             <button
-              className="btn btn-primary mt-2 shadow-custom-dark"
+              className="btn btn-accent mt-2 shadow-custom-dark"
               onClick={() => navigate("edit")}
             >
-              Edit
+              <div className="flex items-center gap-5">
+                <AiFillEdit size="1.5em" /> Edit
+              </div>
             </button>
           )}
         </PageColumn>
