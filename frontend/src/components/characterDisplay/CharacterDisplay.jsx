@@ -55,7 +55,7 @@ export default function CharacterDisplay() {
           <Inventory weapons={character.weapons} tools={character.tools} />
           {character.isOwner && (
             <button
-              className="btn btn-primary mt-2 shadow-custom-dark"
+              className="btn btn-accent mt-2 shadow-custom-dark"
               onClick={() => navigate("edit")}
             >
               <div className="flex items-center gap-5">
