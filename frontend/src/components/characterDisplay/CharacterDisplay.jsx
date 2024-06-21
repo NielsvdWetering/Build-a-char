@@ -33,8 +33,8 @@ export default function CharacterDisplay() {
 
   return (
     <>
-      <div id="page" className="flex h-full justify-around">
         <PageColumn>
+      <div className="flex h-full justify-around">
           <CharacterImage />
           <CharacterInfo
             name={character.name}

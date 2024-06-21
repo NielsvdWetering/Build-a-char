@@ -33,6 +33,7 @@ export default function App() {
             <Route path="/characters/:id/edit" element={<CharacterPatcher />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+          </Routes>
         </div>
       </div>
     </>
