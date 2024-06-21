@@ -117,43 +117,49 @@ export default function Characters({ myCharacters, ownedOnly }) {
   };
 
   return (
-    <div
-      className="grid h-full grid-flow-col"
-      onClick={() => {
-        setDetectClick(!detectClick);
-      }}
-    >
-      <div
-        id="left-panel"
-        className="col-span-1 grid-cols-subgrid border-r-8 border-double border-secondary bg-secondary p-2"
-      >
-        <FilterByCategory
-          category={"Race"}
-          categoryItems={races}
-          handleCharacterFilter={handleCharacterFilter}
-        />
-        <FilterByCategory
-          category={"Class"}
-          categoryItems={classes}
-          handleCharacterFilter={handleCharacterFilter}
-        />
-      </div>
-
-      <div id="right-panel" className="col-span-3 grid-cols-subgrid p-8">
-        <div className="rounded-lg bg-primary p-4 text-center text-xl font-bold text-primary-content">{`${myCharacters ? "My Characters" : "All Characters"}`}</div>
-        <div className="mt-4 flex items-center justify-center p-2">
-          <SearchBar detectClick={detectClick} />
-        </div>
-        <ul className="grid grid-cols-3 gap-12 p-3">
-          {characters.map((character) => (
-            <Card
-              character={character}
-              key={character.id}
-              onClick={() => navigate("/characters/" + character.id)}
+    <>
+      {ownedOnly ? (
+        <p>Not part of my feature</p>
+      ) : (
+        <div
+          className="grid h-full grid-flow-col"
+          onClick={() => {
+            setDetectClick(!detectClick);
+          }}
+        >
+          <div
+            id="left-panel"
+            className="col-span-1 grid-cols-subgrid border-r-8 border-double border-secondary bg-secondary p-2"
+          >
+            <FilterByCategory
+              category={"Race"}
+              categoryItems={races}
+              handleCharacterFilter={handleCharacterFilter}
             />
-          ))}
-        </ul>
-      </div>
-    </div>
+            <FilterByCategory
+              category={"Class"}
+              categoryItems={classes}
+              handleCharacterFilter={handleCharacterFilter}
+            />
+          </div>
+
+          <div id="right-panel" className="col-span-3 grid-cols-subgrid p-8">
+            <div className="rounded-lg bg-primary p-4 text-center text-xl font-bold text-primary-content">{`${myCharacters ? "My Characters" : "All Characters"}`}</div>
+            <div className="mt-4 flex items-center justify-center p-2">
+              <SearchBar detectClick={detectClick} />
+            </div>
+            <ul className="grid grid-cols-3 gap-12 p-3">
+              {characters.map((character) => (
+                <Card
+                  character={character}
+                  key={character.id}
+                  onClick={() => navigate("/characters/" + character.id)}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -121,26 +121,42 @@ public class PlayerCharacterService {
   }
 
   public Set<PlayerCharacter> getCharactersDynamic(
-      String raceName, String className, String name, UUID userId) {
-    Specification<PlayerCharacter> spec = Specification.where(null);
+      Set<String> raceNames, Set<String> classNames, String name) {
 
-    if (raceName != null && !raceName.isEmpty()) {
-      Optional<Race> race = raceRepository.findByNameIgnoreCase(raceName);
-      if (race.isPresent()) spec = spec.and(PlayerCharacterSpecification.hasRace(race.get()));
+    Specification<PlayerCharacter> spec = Specification.where(null);
+    if (raceNames != null && !raceNames.isEmpty()) {
+      Set<Race> races =
+          raceNames.stream()
+              .map(
+                  raceName ->
+                      raceRepository
+                          .findByNameIgnoreCase(raceName)
+                          .orElseThrow(EntityNotFoundException::new))
+              .collect(Collectors.toSet());
+      if (!races.isEmpty()) {
+        spec = spec.and(PlayerCharacterSpecification.hasRaceIn(races));
+      }
     }
-    if (className != null && !className.isEmpty()) {
-      Optional<CharacterClass> characterClass =
-          characterClassRepository.findByNameIgnoreCase(className);
-      if (characterClass.isPresent())
-        spec = spec.and(PlayerCharacterSpecification.hasClass(characterClass.get()));
+
+    if (classNames != null && !classNames.isEmpty()) {
+      Set<CharacterClass> characterClasses =
+          classNames.stream()
+              .map(
+                  className ->
+                      characterClassRepository
+                          .findByNameIgnoreCase(className)
+                          .orElseThrow(EntityNotFoundException::new))
+              .collect(Collectors.toSet());
+
+      if (!characterClasses.isEmpty()) {
+        spec = spec.and(PlayerCharacterSpecification.hasClassIn(characterClasses));
+      }
     }
+
     if (name != null && !name.isEmpty()) {
       spec = spec.and(PlayerCharacterSpecification.hasNameContainingIgnoreCase(name));
     }
 
-    if (userId != null) {
-      spec = spec.and(PlayerCharacterSpecification.hasUserId(userId));
-    }
     return new HashSet<>(playerCharacterRepository.findAll(spec));
   }
 }

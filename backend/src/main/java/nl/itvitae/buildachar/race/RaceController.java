@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = {"${app-cors}"})
 public class RaceController {
   private final RaceService raceService;
+  private final RaceRepository raceRepository;
 
   @GetMapping
   public List<BasicRaceDTO> getAll() {

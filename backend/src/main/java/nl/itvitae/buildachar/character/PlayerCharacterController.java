@@ -168,8 +168,8 @@ public class PlayerCharacterController {
 
   @GetMapping()
   public ResponseEntity<Set<PlayerCharacterDetailsDTO>> getAll(
-      @RequestParam(required = false) String race,
-      @RequestParam(required = false, name = "class") String characterClass,
+      @RequestParam(required = false, name = "race") Set<String> races,
+      @RequestParam(required = false, name = "class") Set<String> characterClasses,
       @RequestParam(required = false) String search,
       @RequestParam(required = false) boolean ownedOnly,
       Authentication authentication) {
@@ -181,7 +181,7 @@ public class PlayerCharacterController {
     UUID userId = authentication == null ? null : ((User) authentication.getPrincipal()).getId();
 
     Set<PlayerCharacter> result =
-        playerCharacterService.getCharactersDynamic(race, characterClass, search, userId);
+        playerCharacterService.getCharactersDynamic(races, characterClasses, search);
 
     return ResponseEntity.ok(
         result.stream().map(PlayerCharacterDetailsDTO::from).collect(Collectors.toSet()));
