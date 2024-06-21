@@ -35,15 +35,6 @@ public class PlayerCharacterService {
     return new HashSet<>(playerCharacterRepository.findAll());
   }
 
-  public Set<PlayerCharacter> getByUser(User user) {
-    if (user == null) {
-      throw new RuntimeException("PlayerCharacterService.getByUser: user is null");
-    }
-
-    return new HashSet<>(
-        playerCharacterRepository.findAll(PlayerCharacterSpecification.hasUserId(user.getId())));
-  }
-
   public Optional<PlayerCharacter> getById(UUID id) {
     return playerCharacterRepository.findById(id);
   }
@@ -129,46 +120,19 @@ public class PlayerCharacterService {
     return existingPlayerCharacter;
   }
 
-  public PlayerCharacter update(PlayerCharacter newCharacter) {
-    return playerCharacterRepository.save(newCharacter);
-  }
-
-  public Set<PlayerCharacter> getByRaceNames(Race raceNames) {
-    return playerCharacterRepository.findByRace(raceNames);
-  }
-
-  public Set<PlayerCharacter> getByCharacterClassNames(CharacterClass characterClass) {
-    return new HashSet<>(
-        playerCharacterRepository.findAll(PlayerCharacterSpecification.hasClass(characterClass)));
-  }
-
-  public Set<PlayerCharacter> getByClassAndRace(Set<Race> races, Set<CharacterClass> classes) {
-    return new HashSet<>(
-        playerCharacterRepository.findAll(
-            Specification.where(PlayerCharacterSpecification.hasRaceIn(races))
-                .and(PlayerCharacterSpecification.hasClassIn(classes))));
-  }
-
-  public Set<PlayerCharacter> getByNameContaining(String param) {
-    return playerCharacterRepository.findByNameContainingIgnoreCase(param);
-  }
-
   public Set<PlayerCharacter> getCharactersDynamic(
       String raceName, String className, String name, UUID userId) {
-    Specification<PlayerCharacter> spec =
-        Specification.where(null); // soort van startpunt voor specification om op verder te bouwen
+    Specification<PlayerCharacter> spec = Specification.where(null);
 
     if (raceName != null && !raceName.isEmpty()) {
-      Race race = raceRepository.findByNameIgnoreCase(raceName);
-      spec =
-          spec.and(
-              PlayerCharacterSpecification.hasRace(
-                  race)); // de .and() zorgt ervoor dat je huidige spec(ificatie) word toegevoegd
-      // aan de al bestaande specificaties. Het bouwt erop voort
+      Optional<Race> race = raceRepository.findByNameIgnoreCase(raceName);
+      if (race.isPresent()) spec = spec.and(PlayerCharacterSpecification.hasRace(race.get()));
     }
     if (className != null && !className.isEmpty()) {
-      CharacterClass characterClass = characterClassRepository.findByNameIgnoreCase(className);
-      spec = spec.and(PlayerCharacterSpecification.hasClass(characterClass));
+      Optional<CharacterClass> characterClass =
+          characterClassRepository.findByNameIgnoreCase(className);
+      if (characterClass.isPresent())
+        spec = spec.and(PlayerCharacterSpecification.hasClass(characterClass.get()));
     }
     if (name != null && !name.isEmpty()) {
       spec = spec.and(PlayerCharacterSpecification.hasNameContainingIgnoreCase(name));
