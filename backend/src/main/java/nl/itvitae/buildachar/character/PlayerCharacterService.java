@@ -76,7 +76,7 @@ public class PlayerCharacterService {
 
     // it checks if the file really contains something, because if not the frontend sends null, but
     // null is still some bytes
-    if (values.characterPicture().length > 50) {
+    if (values.characterPicture() != null && values.characterPicture().length > 50) {
       UUID pictureId = UUID.randomUUID();
       File newPicture = new File("../characterImages/" + pictureId);
 
