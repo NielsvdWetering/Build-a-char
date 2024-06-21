@@ -11,7 +11,7 @@ import RegisterPage from "./components/auth/register/RegisterPage";
 import LoginPage from "./components/auth/login/LoginPage";
 
 export default function App() {
-  document.querySelector(":root").style.setProperty("--navbar-height", "100px");
+  document.querySelector(":root").style.setProperty("--navbar-height", "64px");
   console.log(
     getComputedStyle(document.querySelector(":root")).getPropertyValue(
       "--navbar-height",
