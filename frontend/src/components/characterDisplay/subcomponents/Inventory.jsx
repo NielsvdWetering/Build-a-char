@@ -6,7 +6,7 @@ import ToolTooltip from "./tooltips/ToolTooltip";
 export default function Inventory({ weapons, tools }) {
   return (
     <>
-      <div className="my-5 flex w-full flex-col rounded-md bg-primary p-3">
+      <div className="flex w-full flex-col rounded-md bg-primary p-3">
         <h1 className="mb-2 border-b-2 border-primary-content text-xl font-semibold text-primary-content">
           Inventory:
         </h1>
