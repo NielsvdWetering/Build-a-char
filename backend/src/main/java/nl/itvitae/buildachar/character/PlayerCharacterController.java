@@ -178,10 +178,11 @@ public class PlayerCharacterController {
       throw new RestException(
           HttpStatus.UNAUTHORIZED, "must be authorized te view owned characters");
     }
-    UUID userId = authentication == null ? null : ((User) authentication.getPrincipal()).getId();
+
+    User user = ownedOnly ? ((User) authentication.getPrincipal()) : null;
 
     Set<PlayerCharacter> result =
-        playerCharacterService.getCharactersDynamic(races, characterClasses, search);
+        playerCharacterService.getCharactersDynamic(races, characterClasses, user, search);
 
     return ResponseEntity.ok(
         result.stream().map(PlayerCharacterDetailsDTO::from).collect(Collectors.toSet()));

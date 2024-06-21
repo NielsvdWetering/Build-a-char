@@ -121,7 +121,7 @@ public class PlayerCharacterService {
   }
 
   public Set<PlayerCharacter> getCharactersDynamic(
-      Set<String> raceNames, Set<String> classNames, String name) {
+      Set<String> raceNames, Set<String> classNames, User user, String name) {
 
     Specification<PlayerCharacter> spec = Specification.where(null);
     if (raceNames != null && !raceNames.isEmpty()) {
@@ -151,6 +151,10 @@ public class PlayerCharacterService {
       if (!characterClasses.isEmpty()) {
         spec = spec.and(PlayerCharacterSpecification.hasClassIn(characterClasses));
       }
+    }
+
+    if (user != null) {
+      spec = spec.and(PlayerCharacterSpecification.hasUserId(user.getId()));
     }
 
     if (name != null && !name.isEmpty()) {
