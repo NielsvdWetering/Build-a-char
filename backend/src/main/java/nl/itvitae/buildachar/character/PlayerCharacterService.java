@@ -19,6 +19,7 @@ import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -33,14 +34,6 @@ public class PlayerCharacterService {
 
   public Set<PlayerCharacter> getAll() {
     return new HashSet<>(playerCharacterRepository.findAll());
-  }
-
-  public Set<PlayerCharacter> getByUser(User user) {
-    if (user == null) {
-      throw new RuntimeException("PlayerCharacterService.getByUser: user is null");
-    }
-
-    return playerCharacterRepository.findByUser_id(user.getId());
   }
 
   public Optional<PlayerCharacter> getById(UUID id) {
@@ -148,8 +141,48 @@ public class PlayerCharacterService {
     return existingPlayerCharacter;
   }
 
-  public PlayerCharacter update(PlayerCharacter newCharacter) {
-    return playerCharacterRepository.save(newCharacter);
+  public Set<PlayerCharacter> getCharactersDynamic(
+      Set<String> raceNames, Set<String> classNames, User user, String name) {
+
+    Specification<PlayerCharacter> spec = Specification.where(null);
+    if (raceNames != null && !raceNames.isEmpty()) {
+      Set<Race> races =
+          raceNames.stream()
+              .map(
+                  raceName ->
+                      raceRepository
+                          .findByNameIgnoreCase(raceName)
+                          .orElseThrow(EntityNotFoundException::new))
+              .collect(Collectors.toSet());
+      if (!races.isEmpty()) {
+        spec = spec.and(PlayerCharacterSpecification.hasRaceIn(races));
+      }
+    }
+
+    if (classNames != null && !classNames.isEmpty()) {
+      Set<CharacterClass> characterClasses =
+          classNames.stream()
+              .map(
+                  className ->
+                      characterClassRepository
+                          .findByNameIgnoreCase(className)
+                          .orElseThrow(EntityNotFoundException::new))
+              .collect(Collectors.toSet());
+
+      if (!characterClasses.isEmpty()) {
+        spec = spec.and(PlayerCharacterSpecification.hasClassIn(characterClasses));
+      }
+    }
+
+    if (user != null) {
+      spec = spec.and(PlayerCharacterSpecification.hasUserId(user.getId()));
+    }
+
+    if (name != null && !name.isEmpty()) {
+      spec = spec.and(PlayerCharacterSpecification.hasNameContainingIgnoreCase(name));
+    }
+
+    return new HashSet<>(playerCharacterRepository.findAll(spec));
   }
 
   public byte[] toByteArray(Collection<Byte> bytes) {

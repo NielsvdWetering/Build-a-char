@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import nl.itvitae.buildachar.ControllerRoutes;
 import nl.itvitae.buildachar.armor.Armor;
@@ -139,22 +140,6 @@ public class PlayerCharacterController {
     return parsedArmors;
   }
 
-  @GetMapping
-  public ResponseEntity<List<PlayerCharacterDetailsDTO>> getAll(
-      @RequestParam(required = false) boolean ownedOnly, Authentication authentication) {
-    if (ownedOnly && (authentication == null)) {
-      throw new RestException(
-          HttpStatus.UNAUTHORIZED, "must be authorized te view owned characters");
-    }
-
-    Set<PlayerCharacter> characters =
-        ownedOnly
-            ? playerCharacterService.getByUser((User) authentication.getPrincipal())
-            : playerCharacterService.getAll();
-
-    return ResponseEntity.ok(characters.stream().map(PlayerCharacterDetailsDTO::from).toList());
-  }
-
   @PatchMapping("/{id}")
   public ResponseEntity<PlayerCharacter> patch(
       @PathVariable UUID id,
@@ -184,6 +169,28 @@ public class PlayerCharacterController {
     boolean isOwned =
         user.map(value -> value.getId().equals(character.getUser().getId())).orElse(false);
     return ResponseEntity.ok(PlayerCharacterGetDTO.from(character, isOwned));
+  }
+
+  @GetMapping()
+  public ResponseEntity<Set<PlayerCharacterDetailsDTO>> getAll(
+      @RequestParam(required = false, name = "race") Set<String> races,
+      @RequestParam(required = false, name = "class") Set<String> characterClasses,
+      @RequestParam(required = false) String search,
+      @RequestParam(required = false) boolean ownedOnly,
+      Authentication authentication) {
+
+    if (ownedOnly && (authentication == null)) {
+      throw new RestException(
+          HttpStatus.UNAUTHORIZED, "must be authorized te view owned characters");
+    }
+
+    User user = ownedOnly ? ((User) authentication.getPrincipal()) : null;
+
+    Set<PlayerCharacter> result =
+        playerCharacterService.getCharactersDynamic(races, characterClasses, user, search);
+
+    return ResponseEntity.ok(
+        result.stream().map(PlayerCharacterDetailsDTO::from).collect(Collectors.toSet()));
   }
 
   // resources loading from https://mkyong.com/java/java-read-a-file-from-resources-folder/
