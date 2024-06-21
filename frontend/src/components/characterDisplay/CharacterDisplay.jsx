@@ -34,7 +34,7 @@ export default function CharacterDisplay() {
   return (
     <>
       <div className="flex h-full justify-around">
-        <PageColumn className="justify-between">
+        <PageColumn>
           <CharacterImage />
           <CharacterInfo
             name={character.name}
@@ -49,7 +49,7 @@ export default function CharacterDisplay() {
             className="h-1/2 overflow-scroll"
           />
         </PageColumn>
-        <PageColumn className="justify-between">
+        <PageColumn>
           <ArmorView armorList={character.armorList} />
           <Inventory weapons={character.weapons} tools={character.tools} />
           {character.isOwner && (
