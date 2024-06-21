@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FilterByCategory } from "./subcomponents/FilterByCategory";
 import { SearchBar } from "./subcomponents/SearchBar";
 import { useApi, useAuthentication } from "../../hooks";
+import { ClipLoader } from "react-spinners";
 
 export default function Characters({ myCharacters, ownedOnly }) {
   const navigate = useNavigate();
@@ -20,48 +21,6 @@ export default function Characters({ myCharacters, ownedOnly }) {
 
   const [detectClick, setDetectClick] = useState([]);
 
-  useEffect(() => {
-    if (ownedOnly && loggedIn === false) {
-      navigate("/");
-    }
-
-    fetchCharacters();
-  }, [loggedIn]);
-
-  if (ownedOnly) {
-    isLoggedIn().then((response) => {
-      if (loggedIn === response) {
-        return;
-      }
-
-      setLoggedIn(response);
-    });
-
-    if (loggedIn === null) {
-      return (
-        <div className="flex h-full w-full items-center justify-center">
-          <ClipLoader size="500px" />
-        </div>
-      );
-    }
-  } else if (loggedIn !== null) {
-    setLoggedIn(null);
-  }
-  useEffect(() => {
-    const queryParams = [];
-    if (raceParams.length > 0) {
-      queryParams.push(`race=${raceParams.join(",")}`);
-    }
-    if (classParams.length > 0) {
-      queryParams.push(`class=${classParams.join(",")}`);
-    }
-    if (queryParams.length > 0) {
-      setUrl(`characters?${queryParams.join("&")}`);
-    } else {
-      setUrl("characters");
-    }
-  }, [raceParams, classParams]);
-
   const fetchCharacters = () => {
     get(url)
       .then(setCharacters)
@@ -69,16 +28,6 @@ export default function Characters({ myCharacters, ownedOnly }) {
         console.error("There was an error fetching the characters!", error);
       });
   };
-
-  useEffect(() => {
-    fetchCharacters();
-  }, [url]);
-
-  useEffect(() => {
-    fetchCharacters();
-    fetchRaces();
-    fetchClasses();
-  }, []);
 
   const fetchRaces = () => {
     get("races")
@@ -95,6 +44,57 @@ export default function Characters({ myCharacters, ownedOnly }) {
         console.error("There was an error fetching the classes!", error);
       });
   };
+
+  useEffect(() => {
+    fetchCharacters();
+  }, [url]);
+
+  useEffect(() => {
+    fetchCharacters();
+    fetchRaces();
+    fetchClasses();
+  }, []);
+
+  useEffect(() => {
+    const queryParams = [];
+    if (raceParams.length > 0) {
+      queryParams.push(`race=${raceParams.join(",")}`);
+    }
+    if (classParams.length > 0) {
+      queryParams.push(`class=${classParams.join(",")}`);
+    }
+    if (queryParams.length > 0) {
+      setUrl(`characters?${queryParams.join("&")}`);
+    } else {
+      setUrl("characters");
+    }
+  }, [raceParams, classParams]);
+
+  useEffect(() => {
+    if (ownedOnly) {
+      isLoggedIn().then((response) => {
+        if (loggedIn !== response) {
+          setLoggedIn(response);
+        }
+      });
+    }
+  }, [ownedOnly, isLoggedIn, loggedIn]);
+
+  useEffect(() => {
+    if (ownedOnly && loggedIn === false) {
+      navigate("/");
+    } else if (loggedIn !== null) {
+      fetchCharacters();
+    }
+  }, [loggedIn, ownedOnly, navigate]);
+
+  if (ownedOnly && loggedIn === null) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <ClipLoader size="500px" />
+      </div>
+    );
+  }
 
   const handleCharacterFilter = (category, target, isChecked) => {
     if (isChecked) {
