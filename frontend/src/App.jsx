@@ -25,7 +25,6 @@ export default function App() {
 
         <div className={`h-[calc(100%_-_var(--navbar-height))]`}>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/creator" element={<CharacterCreator />} />
             <Route path="/characters" element={<Characters />} />
             <Route
