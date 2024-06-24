@@ -5,7 +5,7 @@ import Characters from "./components/characters/Characters";
 import CharacterDisplay from "./components/characterDisplay/CharacterDisplay";
 import CharacterPatcher from "./components/editor/CharacterPatcher";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import RegisterPage from "./components/auth/register/RegisterPage";
 import LoginPage from "./components/auth/login/LoginPage";
@@ -25,7 +25,7 @@ export default function App() {
 
         <div className={`h-[calc(100%_-_var(--navbar-height))]`}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Navigate to={"/creator"} />} />
             <Route path="/creator" element={<CharacterCreator />} />
             <Route path="/characters" element={<Characters />} />
             <Route

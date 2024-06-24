@@ -29,7 +29,6 @@ export default function Navbar({}) {
           <h1 className="px-6 text-2xl font-semibold text-primary-content">
             Build-a-char
           </h1>
-          <NavbarButton title="Home" onClick={() => navigate("/")} />
           <NavbarButton title="Creator" onClick={() => navigate("/creator")} />
           <NavbarButton
             title="Characters"
