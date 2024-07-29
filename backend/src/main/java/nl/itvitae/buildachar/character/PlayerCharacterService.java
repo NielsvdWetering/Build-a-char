@@ -19,6 +19,8 @@ import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ public class PlayerCharacterService {
   private final CharacterClassRepository characterClassRepository;
   private final RaceRepository raceRepository;
   private final PlayerCharacterRepository playerCharacterRepository;
+  @Autowired private Environment environment;
 
   public Set<PlayerCharacter> getAll() {
     return new HashSet<>(playerCharacterRepository.findAll());
@@ -71,18 +74,12 @@ public class PlayerCharacterService {
     // null is still some bytes
     if (values.characterPicture() != null && values.characterPicture().length > 50) {
       UUID pictureId = UUID.randomUUID();
-      File newPicture = new File("../characterImages/" + pictureId);
-
-      try {
-        newPicture.createNewFile();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+      File newPicture = new File(environment.getProperty("image_path") + pictureId);
 
       try (FileOutputStream fos = new FileOutputStream(newPicture)) {
         fos.write(values.characterPicture());
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        return Result.errorResult("failed to save image");
       }
       newPlayerCharacter.setCharacterPicture(pictureId);
     }
@@ -90,7 +87,7 @@ public class PlayerCharacterService {
     if (user != null) {
       newPlayerCharacter.setUser(user);
     } else {
-      throw new RuntimeException("PlayerCharacterService.save: The user is null");
+      return Result.errorResult("PlayerCharacterService.save: The user is null");
     }
 
     return Result.succesResult(playerCharacterRepository.save(newPlayerCharacter));

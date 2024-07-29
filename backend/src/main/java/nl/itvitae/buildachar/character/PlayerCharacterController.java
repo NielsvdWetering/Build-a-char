@@ -23,6 +23,8 @@ import nl.itvitae.buildachar.tool.ToolService;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -41,6 +43,7 @@ public class PlayerCharacterController {
   private final WeaponService weaponService;
   private final ToolService toolService;
   private final ArmorService armorService;
+  @Autowired private Environment environment;
 
   @PostMapping
   public ResponseEntity<CreatedCharacterDTO> create(
@@ -197,11 +200,8 @@ public class PlayerCharacterController {
   @GetMapping("/image/{imageId}")
   public @ResponseBody byte[] getImage(@PathVariable UUID imageId) throws IOException {
 
-    // Define the directory where uploaded images are stored
-    String uploadDir = "../characterImages/";
-
     // Construct the full file path
-    File file = new File(uploadDir + imageId.toString());
+    File file = new File(environment.getProperty("image_path") + imageId.toString());
 
     // Check if the file exists and is readable
     if (file.exists() && file.isFile()) {
