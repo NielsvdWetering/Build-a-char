@@ -19,7 +19,6 @@ import nl.itvitae.buildachar.tool.ToolRepository;
 import nl.itvitae.buildachar.user.User;
 import nl.itvitae.buildachar.weapon.Weapon;
 import nl.itvitae.buildachar.weapon.WeaponRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ public class PlayerCharacterService {
   private final CharacterClassRepository characterClassRepository;
   private final RaceRepository raceRepository;
   private final PlayerCharacterRepository playerCharacterRepository;
-  @Autowired private Environment environment;
+  private Environment environment;
 
   public Set<PlayerCharacter> getAll() {
     return new HashSet<>(playerCharacterRepository.findAll());
